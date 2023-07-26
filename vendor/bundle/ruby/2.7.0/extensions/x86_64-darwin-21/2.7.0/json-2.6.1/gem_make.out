@@ -1,0 +1,16 @@
+current directory: /Users/teammapa/Desktop/Project/react_native_temp/vendor/bundle/ruby/2.7.0/gems/json-2.6.1/ext/json
+/Users/teammapa/.rvm/rubies/ruby-2.7.4/bin/ruby -I /Users/teammapa/.rvm/rubies/ruby-2.7.4/lib/ruby/site_ruby/2.7.0 extconf.rb
+creating Makefile
+
+current directory: /Users/teammapa/Desktop/Project/react_native_temp/vendor/bundle/ruby/2.7.0/gems/json-2.6.1/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20230719-59325-1gusq6e sitelibdir\=./.gem.20230719-59325-1gusq6e clean
+
+current directory: /Users/teammapa/Desktop/Project/react_native_temp/vendor/bundle/ruby/2.7.0/gems/json-2.6.1/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20230719-59325-1gusq6e sitelibdir\=./.gem.20230719-59325-1gusq6e
+make: Nothing to be done for `all'.
+
+current directory: /Users/teammapa/Desktop/Project/react_native_temp/vendor/bundle/ruby/2.7.0/gems/json-2.6.1/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20230719-59325-1gusq6e sitelibdir\=./.gem.20230719-59325-1gusq6e install
+
+current directory: /Users/teammapa/Desktop/Project/react_native_temp/vendor/bundle/ruby/2.7.0/gems/json-2.6.1/ext/json
+make DESTDIR\= sitearchdir\=./.gem.20230719-59325-1gusq6e sitelibdir\=./.gem.20230719-59325-1gusq6e clean
