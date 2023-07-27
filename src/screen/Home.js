@@ -11,6 +11,8 @@ import { modalOpen } from '../recoil/control';
 import AlertModal from '../components/modal/AlertModal';
 import { COLORS } from '../asset/colors';
 import HeaderBar from '../components/HeaderBar';
+import { MotiView } from 'moti';
+import Banner from '../components/Banner';
 
 const Home = () => {
 
@@ -18,10 +20,10 @@ const Home = () => {
     const [modal, setModal] = useRecoilState(modalOpen);
 
     return (
-        <View style={{ flex: 1, backgroundColor: COLORS.main }}>
-            <CustomSafeAreaView backColor={COLORS.white}>
-            </CustomSafeAreaView>
-        </View>
+        <CustomSafeAreaView backColor={COLORS.white}>
+            <HeaderBar />
+            <Banner />
+        </CustomSafeAreaView>
     )
 }
 
