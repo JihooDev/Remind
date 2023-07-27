@@ -14,6 +14,10 @@
 #import <React/RCTSurfacePresenterBridgeAdapter.h>
 #import <ReactCommon/RCTTurboModuleManager.h>
 
+// 스플래쉬 <jihoo custom>
+#import "RNSplashScreen.h"  // SplashScreen
+
+
 #import <react/config/ReactNativeConfig.h>
 
 @interface AppDelegate () <RCTCxxBridgeDelegate, RCTTurboModuleManagerDelegate> {
@@ -39,6 +43,8 @@
   _contextContainer->insert("ReactNativeConfig", _reactNativeConfig);
   _bridgeAdapter = [[RCTSurfacePresenterBridgeAdapter alloc] initWithBridge:bridge contextContainer:_contextContainer];
   bridge.surfacePresenter = _bridgeAdapter.surfacePresenter;
+  [RNSplashScreen show];  // SplashScreen
+  return YES;
 #endif
 
   UIView *rootView = RCTAppSetupDefaultRootView(bridge, @"react_native_temp", nil,true);

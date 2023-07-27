@@ -13,7 +13,7 @@ import { font } from '../../responsive/responsive';
  */
 const CustomText = ({ text, size = 15, color = "#000", type = "Medium" }) => {
     return (
-        <Text style={{ color, fontSize: font(size), fontFamily: `NotoSansKR-${type}` }}>
+        <Text style={{ color, fontSize: font(size), fontFamily: `Pretendard-${type}` }}>
             {text}
         </Text>
     )

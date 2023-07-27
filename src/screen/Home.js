@@ -17,7 +17,7 @@ const Home = () => {
 
     return (
         <CustomSafeAreaView>
-            <AlertModal />
+
         </CustomSafeAreaView>
     )
 }
