@@ -421,9 +421,42 @@ PODS:
     - React-jsi (= 0.71.7)
     - React-logger (= 0.71.7)
     - React-perflogger (= 0.71.7)
+  - RNGestureHandler (2.12.0):
+    - React-Core
+  - RNReanimated (3.4.0):
+    - DoubleConversion
+    - FBLazyVector
+    - FBReactNativeSpec
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React-callinvoker
+    - React-Core
+    - React-Core/DevSupport
+    - React-Core/RCTWebSocket
+    - React-CoreModules
+    - React-cxxreact
+    - React-hermes
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-RCTActionSheet
+    - React-RCTAnimation
+    - React-RCTBlob
+    - React-RCTImage
+    - React-RCTLinking
+    - React-RCTNetwork
+    - React-RCTSettings
+    - React-RCTText
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (3.23.0):
     - React-Core
     - React-RCTImage
+  - RNSVG (13.10.0):
+    - React-Core
   - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -490,7 +523,10 @@ DEPENDENCIES:
   - React-RCTVibration (from `../node_modules/react-native/Libraries/Vibration`)
   - React-runtimeexecutor (from `../node_modules/react-native/ReactCommon/runtimeexecutor`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNSVG (from `../node_modules/react-native-svg`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -585,8 +621,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/runtimeexecutor"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSVG:
+    :path: "../node_modules/react-native-svg"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -641,7 +683,10 @@ SPEC CHECKSUMS:
   React-RCTVibration: 08f132cad9896458776f37c112e71d60aef1c6ae
   React-runtimeexecutor: c5c89f8f543842dd864b63ded1b0bbb9c9445328
   ReactCommon: dbfbe2f7f3c5ce4ce44f43f2fd0d5950d1eb67c5
+  RNGestureHandler: dec4645026e7401a0899f2846d864403478ff6a5
+  RNReanimated: 532818a3578a0832d95ea9d0a6a9dc0e73bbce29
   RNScreens: 6a8a3c6b808aa48dca1780df7b73ea524f602c63
+  RNSVG: 80584470ff1ffc7994923ea135a3e5ad825546b9
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: d56980c8914db0b51692f55533409e844b66133c
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
