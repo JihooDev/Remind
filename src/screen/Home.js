@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ICON } from '../asset/asset';
 import { ht, wt } from '../../responsive/responsive';
 import CustomSafeAreaView from '../components/CustomSafeAreaView';
@@ -22,7 +22,9 @@ const Home = () => {
     return (
         <CustomSafeAreaView backColor={COLORS.white}>
             <HeaderBar />
-            <Banner />
+            <View style={{ padding: wt(50) }}>
+                <Banner />
+            </View>
         </CustomSafeAreaView>
     )
 }
