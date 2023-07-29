@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { font } from '../../responsive/responsive';
+import { COLORS } from '../asset/colors';
 
 
 /**
@@ -11,7 +12,7 @@ import { font } from '../../responsive/responsive';
  * @param {string} type = Black | Bold | Light | Medium | Regular | Thin
  * @returns {React.ReactElement}
  */
-const CustomText = ({ text, size = 15, color = "#000", type = "Medium" }) => {
+const CustomText = ({ text, size = 15, color = COLORS.text, type = "Medium" }) => {
     return (
         <Text style={{ color, fontSize: font(size), fontFamily: `Pretendard-${type}` }}>
             {text}
