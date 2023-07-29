@@ -6,6 +6,7 @@ install! 'cocoapods', :deterministic_uuids => false
 
 target 'react_native_temp' do
   config = use_native_modules!
+  pod 'GoogleUtilities', :modular_headers => true
 
   # Flags change depending on the env values.
   flags = get_default_flags()

@@ -4,6 +4,10 @@ export const ICON = {
     close: require('./icon/close.png')
 }
 
+export const IMAGE = {
+    main: require('./image/main.png')
+}
+
 export const APPTEXT = {
     app_name: "떠오르다"
 }
