@@ -1,17 +1,22 @@
 import React from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import { styled } from 'styled-components'
-import { font, ht } from '../../responsive/responsive'
+import { font, ht, wt } from '../../responsive/responsive'
 import CustomCenterView from '../components/CustomCenterView'
 import CustomText from '../components/CustomText'
 import { MotiView } from 'moti'
 import { Image } from 'react-native'
 import { IMAGE } from '../asset/asset'
+import SignInButton from '../components/SignInButton'
 
 const Splash = () => {
+
+    const loginData = {
+
+    }
+
     return (
         <CustomSafeAreaView>
-
             <MotiView
                 from={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -29,7 +34,7 @@ const Splash = () => {
                 />
             </MotiView>
             <BottomLoginView>
-
+                <SignInButton />
             </BottomLoginView>
             <TopView>
                 <CustomCenterView>
@@ -56,6 +61,10 @@ const TopView = styled.View`
 const BottomLoginView = styled.View`
     width: 100%;
     height: ${ht(800)}px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 ${wt(120)}px;
 `
 
 export default Splash
