@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import { styled } from 'styled-components'
 import { font, ht, wt } from '../../responsive/responsive'
@@ -8,8 +8,15 @@ import { MotiView } from 'moti'
 import { Image } from 'react-native'
 import { ICON, IMAGE } from '../asset/asset'
 import SignInButton from '../components/SignInButton'
+import { GoogleSignin } from '@react-native-google-signin/google-signin'
 
 const Splash = () => {
+
+    useEffect(() => {
+        GoogleSignin.configure({
+            webClientId: "258051050356-c5jgao6j1hj54tt6e2eguhh09309bt2u.apps.googleusercontent.com"
+        })
+    }, [])
 
     const loginData = [
         {

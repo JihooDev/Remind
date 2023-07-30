@@ -14,6 +14,7 @@
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9658EFE72A71E3A30012A66D /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 9658EFE62A71E3A30012A66D /* Fonts */; };
 		9658EFE92A71E9740012A66D /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 9658EFE82A71E9740012A66D /* logo.png */; };
+		9658EFEB2A7726BE0012A66D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9658EFEA2A7726BE0012A66D /* GoogleService-Info.plist */; };
 		9854D7077A3E9BA397B5F6FE /* libPods-react_native_temp-react_native_tempTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C7E77AD34A55143203472792 /* libPods-react_native_temp-react_native_tempTests.a */; };
 		9D6DA4FD661B206A29647F58 /* libPods-react_native_temp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D045CE8AA318DC1D9D80EC4F /* libPods-react_native_temp.a */; };
 /* End PBXBuildFile section */
@@ -43,6 +44,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = react_native_temp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9658EFE62A71E3A30012A66D /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		9658EFE82A71E9740012A66D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../src/asset/icon/logo.png; sourceTree = "<group>"; };
+		9658EFEA2A7726BE0012A66D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "react_native_temp/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A70D944933F4D8D91A519D2F /* Pods-react_native_temp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_temp.debug.xcconfig"; path = "Target Support Files/Pods-react_native_temp/Pods-react_native_temp.debug.xcconfig"; sourceTree = "<group>"; };
 		C7E77AD34A55143203472792 /* libPods-react_native_temp-react_native_tempTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-react_native_temp-react_native_tempTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D045CE8AA318DC1D9D80EC4F /* libPods-react_native_temp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-react_native_temp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
+				9658EFEA2A7726BE0012A66D /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
@@ -251,6 +254,7 @@
 			files = (
 				9658EFE92A71E9740012A66D /* logo.png in Resources */,
 				9658EFE72A71E3A30012A66D /* Fonts in Resources */,
+				9658EFEB2A7726BE0012A66D /* GoogleService-Info.plist in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
