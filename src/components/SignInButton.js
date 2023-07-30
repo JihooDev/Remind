@@ -5,6 +5,13 @@ import { COLORS } from '../asset/colors'
 import { Image } from 'react-native'
 
 const SignInButton = ({ data }) => {
+
+    const signIn = async () => {
+        if (data?.type === 'google') {
+
+        }
+    }
+
     return (
         <LoginButton>
             <Image
