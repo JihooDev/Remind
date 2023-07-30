@@ -6,8 +6,6 @@
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
 	<string>떠오르다</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.258051050356-3b37e3lcphosuisrfm85pda4v4u2ou68</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -22,6 +20,18 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.258051050356-3b37e3lcphosuisrfm85pda4v4u2ou68</string>
+			</array>
+		</dict>
+		<dict/>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
@@ -41,6 +51,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.258051050356-3b37e3lcphosuisrfm85pda4v4u2ou68</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/Pretendard-Black.woff</string>

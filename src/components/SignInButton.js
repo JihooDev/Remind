@@ -13,7 +13,9 @@ const SignInButton = ({ data }) => {
                 await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
                 const { idToken } = await GoogleSignin.signIn();
 
-                console.log(idToken);
+                if (idToken) {
+
+                }
             }
         } catch (error) {
             console.error(error, 'google 로그인 에러');

@@ -9,12 +9,13 @@ import { Image } from 'react-native'
 import { ICON, IMAGE } from '../asset/asset'
 import SignInButton from '../components/SignInButton'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import { GOOGLE_CLIENT_ID } from '@env';
 
 const Splash = () => {
 
     useEffect(() => {
         GoogleSignin.configure({
-            webClientId: "258051050356-c5jgao6j1hj54tt6e2eguhh09309bt2u.apps.googleusercontent.com"
+            webClientId: GOOGLE_CLIENT_ID
         })
     }, [])
 
