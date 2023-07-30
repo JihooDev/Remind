@@ -1,7 +1,8 @@
 export const ICON = {
     logo: require('../asset/icon/logo.png'),
     search: require('./icon/search.png'),
-    close: require('./icon/close.png')
+    close: require('./icon/close.png'),
+    google: require('./icon/google.png')
 }
 
 export const IMAGE = {

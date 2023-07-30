@@ -6,14 +6,17 @@ import CustomCenterView from '../components/CustomCenterView'
 import CustomText from '../components/CustomText'
 import { MotiView } from 'moti'
 import { Image } from 'react-native'
-import { IMAGE } from '../asset/asset'
+import { ICON, IMAGE } from '../asset/asset'
 import SignInButton from '../components/SignInButton'
 
 const Splash = () => {
 
-    const loginData = {
-
-    }
+    const loginData = [
+        {
+            type: 'google',
+            logo: ICON.google
+        }
+    ]
 
     return (
         <CustomSafeAreaView>
@@ -34,11 +37,17 @@ const Splash = () => {
                 />
             </MotiView>
             <BottomLoginView>
-                <SignInButton />
+                {
+                    loginData?.map(item => (
+                        <SignInButton
+                            key={item?.type}
+                            data={item}
+                        />
+                    ))
+                }
             </BottomLoginView>
             <TopView>
                 <CustomCenterView>
-
                     <MotiView style={{ width: "100%", height: "100%", justifyContent: "flex-end", alignItems: "center" }}>
                         <Image
                             source={IMAGE.main}
