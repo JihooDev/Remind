@@ -3,17 +3,37 @@ import { styled } from 'styled-components'
 import { ht, wt } from '../../responsive/responsive'
 import { COLORS } from '../asset/colors'
 import { Image } from 'react-native'
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import auth, { firebase } from '@react-native-firebase/auth';
+import { FIREBASE_API_KEY } from '@env';
 
 const SignInButton = ({ data }) => {
 
     const signIn = async () => {
-        if (data?.type === 'google') {
 
+        try {
+            if (data?.type === 'google') {
+                await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true });
+                const { idToken } = await GoogleSignin.signIn();
+
+                if (idToken) {
+                    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+                    const res = await auth().signInWithCredential(googleCredential);
+
+                    console.log(res);
+                }
+
+
+            }
+        } catch (error) {
+            console.error(error, 'google 로그인 에러');
         }
     }
 
     return (
-        <LoginButton>
+        <LoginButton
+            onPress={signIn}
+        >
             <Image
                 source={data?.logo}
                 style={{
@@ -26,8 +46,8 @@ const SignInButton = ({ data }) => {
 }
 
 const LoginButton = styled.TouchableOpacity`
-    width: ${wt(450)}px;
-    height: ${ht(450)}px;
+    width: ${wt(350)}px;
+    height: ${ht(350)}px;
     border-radius: 10px;
     border-color: ${COLORS.success};
     border-width: 3px;
