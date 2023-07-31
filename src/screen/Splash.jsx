@@ -9,29 +9,17 @@ import { Image } from 'react-native'
 import { ICON, IMAGE } from '../asset/asset'
 import SignInButton from '../components/SignInButton'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
-import { GOOGLE_CLIENT_ID, FIREBASE_API_KEY } from '@env';
 import { firebase } from '@react-native-firebase/auth'
+import { GOOGLE_CLIENT_ID } from '@env';
+import { initConfig } from '../functions/init'
 
 const Splash = () => {
 
     useEffect(() => {
-        initFirebase();
         GoogleSignin.configure({
             webClientId: GOOGLE_CLIENT_ID
         })
     }, [])
-
-    const initFirebase = async () => {
-        await firebase.initializeApp({
-            clientId: GOOGLE_CLIENT_ID,
-            appId: '1:258051050356:ios:98ee971e28144bfb68ba21',
-            apiKey: FIREBASE_API_KEY,
-            // databaseURL: 'x',
-            // storageBucket: 'x',
-            // messagingSenderId: 'x',
-            // projectId: 'x',
-        });
-    }
 
     const loginData = [
         {
