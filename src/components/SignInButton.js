@@ -26,7 +26,7 @@ const SignInButton = ({ data }) => {
 
                     await AsyncStorage.setItem('uid', res.user.uid);
 
-                    // navigation.reset({routes : [{name : ''}]})
+                    navigation.reset({ routes: [{ name: 'SignUp' }] })
                 }
             }
         } catch (error) {
