@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import Loading from '../components/Loading'
 import { MotiView } from 'moti'
 import CustomText from '../components/CustomText'
 import CustomCenterView from '../components/CustomCenterView'
-import { StyleSheet } from 'react-native'
+import { StyleSheet, TouchableOpacity } from 'react-native'
 import { font, ht } from '../../responsive/responsive'
+import SignInput from '../components/input/SignInput'
 
 const SignUp = () => {
+
+    const [userName, setUserName] = useState('');
+
     return (
         <CustomSafeAreaView>
             <MotiView
@@ -19,7 +23,7 @@ const SignUp = () => {
                 }}
             >
                 <CustomText
-                    text={'회원가입'}
+                    text={'회원님의 이름을 적어주세요'}
                     size={font(20)}
                     type={'Bold'}
                 />
@@ -30,8 +34,7 @@ const SignUp = () => {
 
 const styles = StyleSheet.create({
     header: {
-        width: "100%",
-        height: ht(250),
+        flex: 1,
         justifyContent: "center",
         alignItems: "center"
     }
