@@ -12,3 +12,7 @@ export const IMAGE = {
 export const APPTEXT = {
     app_name: "떠오르다"
 }
+
+export const LOTTIE = {
+    loading: require('./lottie/loading.json')
+}

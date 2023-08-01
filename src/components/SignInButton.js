@@ -6,8 +6,12 @@ import { Image } from 'react-native'
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { FIREBASE_API_KEY } from '@env';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useNavigation } from '@react-navigation/native'
 
 const SignInButton = ({ data }) => {
+
+    const navigation = useNavigation();
 
     const signIn = async () => {
 
@@ -20,10 +24,10 @@ const SignInButton = ({ data }) => {
                     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
                     const res = await auth().signInWithCredential(googleCredential);
 
-                    console.log(res);
+                    await AsyncStorage.setItem('uid', res.user.uid);
+
+                    navigation.reset({ routes: [{ name: 'SignUp' }] })
                 }
-
-
             }
         } catch (error) {
             console.error(error, 'google 로그인 에러');

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import { styled } from 'styled-components'
 import { font, ht, wt } from '../../responsive/responsive'
@@ -9,29 +9,21 @@ import { Image } from 'react-native'
 import { ICON, IMAGE } from '../asset/asset'
 import SignInButton from '../components/SignInButton'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
-import { GOOGLE_CLIENT_ID, FIREBASE_API_KEY } from '@env';
 import { firebase } from '@react-native-firebase/auth'
+import { GOOGLE_CLIENT_ID } from '@env';
+import { initConfig } from '../functions/init'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const Splash = () => {
+const Splash = ({ navigation: { reset } }) => {
+
+    const [checkUid, setCheckUid] = useState(false);
 
     useEffect(() => {
-        initFirebase();
+        userCheck();
         GoogleSignin.configure({
             webClientId: GOOGLE_CLIENT_ID
         })
     }, [])
-
-    const initFirebase = async () => {
-        await firebase.initializeApp({
-            clientId: GOOGLE_CLIENT_ID,
-            appId: '1:258051050356:ios:98ee971e28144bfb68ba21',
-            apiKey: FIREBASE_API_KEY,
-            // databaseURL: 'x',
-            // storageBucket: 'x',
-            // messagingSenderId: 'x',
-            // projectId: 'x',
-        });
-    }
 
     const loginData = [
         {
@@ -40,11 +32,23 @@ const Splash = () => {
         }
     ]
 
+    const userCheck = async () => {
+        const uid = await AsyncStorage.getItem('uid');
+
+        if (uid) {
+            setCheckUid(true);
+
+            setTimeout(() => {
+                reset({ routes: [{ name: "SignUp" }] })
+            }, 2000)
+        }
+    }
+
     return (
         <CustomSafeAreaView>
             <MotiView
-                from={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                from={{ opacity: 0, translateY: !checkUid ? ht(800) : ht(200) }}
+                animate={{ opacity: 1, translateY: checkUid ? ht(200) : ht(800) }}
                 style={{ width: "100%", height: "20%", justifyContent: "center", alignItems: "center" }}
             >
                 <CustomText
@@ -60,12 +64,15 @@ const Splash = () => {
             </MotiView>
             <BottomLoginView>
                 {
-                    loginData?.map(item => (
-                        <SignInButton
-                            key={item?.type}
-                            data={item}
-                        />
-                    ))
+                    !checkUid
+                        ?
+                        loginData?.map(item => (
+                            <SignInButton
+                                key={item?.type}
+                                data={item}
+                            />
+                        ))
+                        : null
                 }
             </BottomLoginView>
             <TopView>
