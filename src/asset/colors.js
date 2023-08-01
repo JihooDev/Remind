@@ -4,5 +4,6 @@ export const COLORS = {
     success: "#0EAD69",
     failed: "#FA4169",
     white: "#fff",
-    app: "#3CB371"
+    app: "#3CB371",
+    border: "#FE9870"
 }
