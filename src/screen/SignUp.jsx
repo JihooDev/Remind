@@ -9,6 +9,7 @@ import { font, ht, wt } from '../../responsive/responsive'
 import SignInput from '../components/input/SignInput'
 import SignUpInput from '../components/input/SignUpInput'
 import { styled } from 'styled-components'
+import CustomButton from '../components/CustomButton'
 
 const SignUp = () => {
 
@@ -33,9 +34,23 @@ const SignUp = () => {
                     <SignUpInput
                         value={userName}
                         setValue={setUserName}
-                        placeholder={'이름'}
                     />
                 </NameInputView>
+            </MotiView>
+            <MotiView
+                style={{
+                    width: "100%",
+                    height: ht(400),
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingVertical: wt(30),
+                    paddingHorizontal: wt(80)
+                }}
+                animate={{ translateY: userName.length > 0 ? 0 : 200 }}
+            >
+                <CustomButton
+                    title={'가입하기'}
+                />
             </MotiView>
         </CustomSafeAreaView>
     )
@@ -54,6 +69,14 @@ const NameInputView = styled.View`
     height: ${ht(230)}px;
     padding: 0 ${wt(80)}px;
     margin-top: ${ht(120)}px;
+`
+
+const CustomButtonView = styled.View`
+    width: 100%;
+    height: ${ht(400)}px;
+    justify-content: center;
+    align-items: center;
+    padding: ${wt(30)}px ${wt(80)}px;
 `
 
 export default SignUp
