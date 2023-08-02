@@ -1,11 +1,10 @@
 import React from 'react'
 import { SafeAreaView } from 'react-native'
+import CustomSafeAreaView from '../components/CustomSafeAreaView'
 
 const Main = () => {
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "red" }}>
-
-        </SafeAreaView>
+        <CustomSafeAreaView></CustomSafeAreaView>
     )
 }
 
