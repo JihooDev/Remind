@@ -10,10 +10,20 @@ import SignInput from '../components/input/SignInput'
 import SignUpInput from '../components/input/SignUpInput'
 import { styled } from 'styled-components'
 import CustomButton from '../components/CustomButton'
+import { addUser } from '../functions/firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const SignUp = () => {
 
     const [userName, setUserName] = useState('');
+
+    const onSignUp = async () => {
+        const uid = await AsyncStorage.getItem('uid');
+
+        const postAddUser = await addUser(uid, userName);
+
+        console.log(postAddUser);
+    }
 
     return (
         <CustomSafeAreaView>
@@ -26,7 +36,7 @@ const SignUp = () => {
                 }}
             >
                 <CustomText
-                    text={'회원님의 이름을 적어주세요'}
+                    text={'사용하실 닉네임을 적어주세요'}
                     size={font(20)}
                     type={'Bold'}
                 />
@@ -50,6 +60,7 @@ const SignUp = () => {
             >
                 <CustomButton
                     title={'가입하기'}
+                    onPress={onSignUp}
                 />
             </MotiView>
         </CustomSafeAreaView>
