@@ -13,7 +13,7 @@ import CustomButton from '../components/CustomButton'
 import { addUser } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-const SignUp = () => {
+const SignUp = ({ navigation: { reset } }) => {
 
     const [userName, setUserName] = useState('');
 
@@ -22,7 +22,11 @@ const SignUp = () => {
 
         const postAddUser = await addUser(uid, userName);
 
-        console.log(postAddUser);
+        if (postAddUser['status']) {
+            await AsyncStorage.setItem('user', JSON.stringify({ uid, user_name: userName }));
+
+            reset({ routes: [{ name: "Home" }] });
+        }
     }
 
     return (

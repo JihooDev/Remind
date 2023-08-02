@@ -34,8 +34,15 @@ const Splash = ({ navigation: { reset } }) => {
 
     const userCheck = async () => {
         const uid = await AsyncStorage.getItem('uid');
+        const user = await AsyncStorage.getItem('user');
 
-        if (uid) {
+        if (user) {
+            setCheckUid(true);
+
+            setTimeout(() => {
+                reset({ routes: [{ name: "Home" }] })
+            }, 2000)
+        } else if (uid) {
             setCheckUid(true);
 
             setTimeout(() => {
