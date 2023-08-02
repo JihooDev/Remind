@@ -13,10 +13,13 @@ import { firebase } from '@react-native-firebase/auth'
 import { GOOGLE_CLIENT_ID } from '@env';
 import { initConfig } from '../functions/init'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useRecoilState } from 'recoil'
+import { userData } from '../recoil/user'
 
 const Splash = ({ navigation: { reset } }) => {
 
     const [checkUid, setCheckUid] = useState(false);
+    const [userDataBox, setUserDataBox] = useRecoilState(userData);
 
     useEffect(() => {
         userCheck();
@@ -39,11 +42,14 @@ const Splash = ({ navigation: { reset } }) => {
         if (user) {
             setCheckUid(true);
 
+            setUserDataBox(JSON.parse(user));
+
             setTimeout(() => {
                 reset({ routes: [{ name: "Home" }] })
             }, 2000)
         } else if (uid) {
             setCheckUid(true);
+
 
             setTimeout(() => {
                 reset({ routes: [{ name: "SignUp" }] })
