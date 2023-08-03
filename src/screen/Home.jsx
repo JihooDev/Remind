@@ -20,11 +20,8 @@ const Home = () => {
     const [modal, setModal] = useRecoilState(modalOpen);
 
     return (
-        <CustomSafeAreaView backColor={COLORS.white}>
+        <CustomSafeAreaView backColor={'#212121'}>
             <HeaderBar />
-            <View style={{ padding: wt(50) }}>
-                <Banner />
-            </View>
         </CustomSafeAreaView>
     )
 }

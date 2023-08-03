@@ -22,29 +22,32 @@ const HeaderBar = ({
     }, [])
 
     return (
-        <>
-            {
-                searchState
-                    ? <SearchBar />
-                    : <Header>
-                        <CustomText
-                            text={`${userDataBox.user_name}님 환영해요`}
-                            color={COLORS.text}
-                            type={"Bold"}
-                            size={font(20)}
-                        />
-                        <SearchButton
-                        >
-                            <Image
-                                source={ICON.search}
-                                style={{ width: "100%", height: "100%", tintColor: COLORS.text }}
-                                resizeMode='cover'
-                            />
-                        </SearchButton>
-                    </Header>
-            }
-
-        </>
+        <Header>
+            <CustomText
+                text={`${userDataBox.user_name}님의 폴더`}
+                color={'#FDFDFD'}
+                type={"Bold"}
+                size={font(20)}
+            />
+            <LeftView>
+                <MenuButton
+                >
+                    <Image
+                        source={ICON.calandar}
+                        style={{ width: "90%", height: "90%", tintColor: '#FDFDFD' }}
+                        resizeMode='cover'
+                    />
+                </MenuButton>
+                <MenuButton
+                >
+                    <Image
+                        source={ICON.setting}
+                        style={{ width: "90%", height: "90%", tintColor: '#FDFDFD' }}
+                        resizeMode='cover'
+                    />
+                </MenuButton>
+            </LeftView>
+        </Header>
     )
 }
 
@@ -55,12 +58,14 @@ const Header = styled.View`
     justify-content: space-between;
     align-items: center;
     padding: 0 ${wt(50)}px;
-    background-color: ${COLORS.white};
 `
 
-const SearchButton = styled.TouchableOpacity`
+const MenuButton = styled.TouchableOpacity`
     width: ${wt(120)}px;
     height: ${ht(120)}px;
+    justify-content: center;
+    align-items: center;
+    margin: 0 ${wt(30)}px;
 `
 
 const LeftView = styled.View`
@@ -68,7 +73,7 @@ const LeftView = styled.View`
     height: 100%;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
 `
 
 export default HeaderBar
