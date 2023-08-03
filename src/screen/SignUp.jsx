@@ -12,17 +12,25 @@ import { styled } from 'styled-components'
 import CustomButton from '../components/CustomButton'
 import { addUser } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useRecoilState } from 'recoil'
+import { userData } from '../recoil/user'
 
-const SignUp = () => {
+const SignUp = ({ navigation: { reset } }) => {
 
     const [userName, setUserName] = useState('');
+    const [userDataBox, setUserDataBox] = useRecoilState(userData);
 
     const onSignUp = async () => {
         const uid = await AsyncStorage.getItem('uid');
 
         const postAddUser = await addUser(uid, userName);
 
-        console.log(postAddUser);
+        if (postAddUser['status']) {
+            await AsyncStorage.setItem('user', JSON.stringify({ uid, user_name: userName }));
+            setUserDataBox({ uid, user_name: userName })
+
+            reset({ routes: [{ name: "Home" }] });
+        }
     }
 
     return (

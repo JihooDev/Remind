@@ -5,13 +5,11 @@ const user_list = firestore().collection('user_list');
 
 export const addUser = async (uid, user_name) => {
     try {
-        await user_list.add({
-            user_name,
+        await user_list.doc(uid).set({
             uid,
-            time_stamp: moment().unix()
+            user_name,
+            date_created: moment().unix()
         })
-
-        console.log('유저추가 성공');
 
         return {
             status: true,

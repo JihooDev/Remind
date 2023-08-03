@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import { font, ht, wt } from '../../responsive/responsive'
 import { COLORS } from '../asset/colors'
@@ -7,12 +7,19 @@ import { Image } from 'react-native'
 import CustomImage from './CustomImage'
 import { APPTEXT, ICON } from '../asset/asset'
 import SearchBar from './SearchBar'
+import { useRecoilValue } from 'recoil'
+import { userData } from '../recoil/user'
 
 const HeaderBar = ({
     back = false
 }) => {
 
     const [searchState, setSearchState] = useState(false);
+    const userDataBox = useRecoilValue(userData);
+
+    useEffect(() => {
+        console.log(userDataBox)
+    }, [])
 
     return (
         <>
@@ -20,12 +27,11 @@ const HeaderBar = ({
                 searchState
                     ? <SearchBar />
                     : <Header>
-
                         <CustomText
-                            text={APPTEXT.app_name}
-                            color={COLORS.app}
+                            text={`${userDataBox.user_name}님 환영해요`}
+                            color={COLORS.text}
                             type={"Bold"}
-                            size={font(23)}
+                            size={font(20)}
                         />
                         <SearchButton
                         >
