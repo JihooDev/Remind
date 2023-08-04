@@ -15,7 +15,7 @@ const App = () => {
     initFirebase();
     setTimeout(() => {
       SplashScreen.hide();
-    }, 5000)
+    }, 3000)
   }, [])
 
   // firebase init

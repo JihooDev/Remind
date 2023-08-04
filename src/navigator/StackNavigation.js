@@ -22,12 +22,12 @@ const StackNavigation = () => {
                 {/* 스플래시 */}
                 <Stack.Screen name="Splash" component={Splash} />
                 {/* 홈화면 */}
-                {/* <Stack.Screen name="Home" component={Home} /> */}
+                <Stack.Screen name="Home" component={Home} />
                 {/* 회원가입 */}
                 <Stack.Screen name="SignUp" component={SignUp} />
 
                 {/* Bottom Navigation */}
-                <Stack.Screen name="Home" component={BottomNavigation} />
+                {/* <Stack.Screen name="Home" component={BottomNavigation} /> */}
             </Stack.Navigator>
         </NavigationContainer>
     )

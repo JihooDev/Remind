@@ -8,6 +8,7 @@ export const ICON = {
     plus: require('./icon/plus.png'),
     social: require('./icon/social.png'),
     setting: require('./icon/setting.png'),
+    calandar: require('./icon/calendar.png'),
 }
 
 export const IMAGE = {
