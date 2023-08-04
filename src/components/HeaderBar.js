@@ -17,9 +17,6 @@ const HeaderBar = ({
     const [searchState, setSearchState] = useState(false);
     const userDataBox = useRecoilValue(userData);
 
-    useEffect(() => {
-        console.log(userDataBox)
-    }, [])
 
     return (
         <Header>
