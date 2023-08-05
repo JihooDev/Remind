@@ -5,7 +5,7 @@ export const modalOpen = atom({
     default: false
 })
 
-export const lodingControl = atom({
+export const loadingControl = atom({
     key: "loadingControl",
     default: false
 })
