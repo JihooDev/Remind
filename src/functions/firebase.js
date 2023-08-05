@@ -48,3 +48,31 @@ export const getUser = async (uid, setLoading) => {
         setLoading(false);
     }
 }
+
+// 폴더 추가
+export const createFolderPost = async (uid, data, setLoading) => {
+    try {
+        setLoading(true);
+
+        const documentRef = user_list.doc(uid);
+        const doc = await documentRef.get();
+        const targetArray = doc.data()['folder'];
+
+        targetArray.push(data);
+
+        const updatedData = { ['folder']: targetArray };
+
+        await documentRef.update(updatedData);
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        return {
+            status: false,
+            error_message: error
+        }
+    } finally {
+        setLoading(false);
+    }
+}

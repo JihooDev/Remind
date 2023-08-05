@@ -8,12 +8,14 @@ const SignInput = ({
     placeholder = '',
     value = '',
     setValue,
+    textColor,
     type
 }) => {
     return (
         <MotiView>
             <CustomText
                 text={label}
+                color={textColor && textColor}
             />
             <TextInput
                 value={value}
