@@ -9,6 +9,7 @@ import { loadingControl } from '../recoil/control';
 import { useRecoilValue } from 'recoil';
 import Loading from '../components/Loading';
 import AddFolder from '../screen/AddFolder';
+import FolderDetail from '../screen/FolderDetail';
 
 const StackNavigation = () => {
 
@@ -18,9 +19,7 @@ const StackNavigation = () => {
 
     return (
         <NavigationContainer>
-            {
-                loading && <Loading />
-            }
+
             <Stack.Navigator
                 initialRouteName='Splash'
                 screenOptions={{
@@ -34,8 +33,10 @@ const StackNavigation = () => {
                 <Stack.Screen name="Home" component={Home} />
                 {/* 회원가입 */}
                 <Stack.Screen name="SignUp" component={SignUp} />
-
+                {/* 폴더 추가 */}
                 <Stack.Screen name="AddFolder" component={AddFolder} />
+                {/* 폴더 디테일 */}
+                <Stack.Screen name="FolderDetail" component={FolderDetail} />
 
                 {/* Bottom Navigation */}
                 {/* <Stack.Screen name="Home" component={BottomNavigation} /> */}

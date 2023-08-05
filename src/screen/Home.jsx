@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ICON } from '../asset/asset';
 import { ht, wt } from '../../responsive/responsive';
 import CustomSafeAreaView from '../components/CustomSafeAreaView';
@@ -17,6 +17,7 @@ import { styled } from 'styled-components';
 import { getUser } from '../functions/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../components/Loading';
+import FolderList from '../components/FolderList';
 
 const Home = ({ navigation }) => {
 
@@ -35,11 +36,16 @@ const Home = ({ navigation }) => {
 
         const folder = await getUser(uid, setLoading);
 
+        console.log(folder.data['folder'])
+
         setFolderData(folder.data['folder'])
     }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
+            {
+                loading && <Loading />
+            }
             <HeaderBar />
             {
                 folderData.length === 0
@@ -81,7 +87,18 @@ const Home = ({ navigation }) => {
                             </PlusButton>
                         </MotiView>
                     </CustomCenterView>
-                    : null
+                    :
+                    <CustomCenterView backColor={COLORS.black}>
+                        <FlatList
+                            data={folderData}
+                            renderItem={item => { return <FolderList item={item} /> }}
+                            style={{
+                                width: "100%",
+                                paddingHorizontal: wt(50),
+                                paddingTop: ht(80)
+                            }}
+                        />
+                    </CustomCenterView>
             }
         </CustomSafeAreaView>
     )

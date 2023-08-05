@@ -9,7 +9,8 @@ export const ICON = {
     social: require('./icon/social.png'),
     setting: require('./icon/setting.png'),
     calandar: require('./icon/calendar.png'),
-    back: require('./icon/back.png')
+    back: require('./icon/back.png'),
+    right: require('./icon/right.png')
 }
 
 export const IMAGE = {
