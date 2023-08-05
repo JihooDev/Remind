@@ -28,12 +28,23 @@ export const addUser = async (uid, user_name) => {
 }
 
 // 유저가 로그인 했을 때 데이터 가져오기
-export const getUser = async (uid) => {
-    const query = await user_list.where('uid', '==', uid).get();
+export const getUser = async (uid, setLoading) => {
+    try {
+        setLoading(true);
+        const query = await user_list.where('uid', '==', uid).get();
 
-    console.log(query);
+        const userData = query.docs.map(doc => doc.data());
 
-    // const userData = query.docs.map(doc => doc.data());
-
-    // return userData[0];
+        return {
+            status: true,
+            data: userData[0],
+        };
+    } catch (error) {
+        return {
+            status: false,
+            error_message: error
+        }
+    } finally {
+        setLoading(false);
+    }
 }

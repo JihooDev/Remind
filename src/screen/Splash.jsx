@@ -39,7 +39,7 @@ const Splash = ({ navigation: { reset } }) => {
         const uid = await AsyncStorage.getItem('uid');
         const user = await AsyncStorage.getItem('user');
 
-        if (!user) {
+        if (user) {
             setCheckUid(true);
 
             setUserDataBox(JSON.parse(user));

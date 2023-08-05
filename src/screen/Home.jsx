@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ICON } from '../asset/asset';
 import { ht, wt } from '../../responsive/responsive';
@@ -7,19 +7,36 @@ import CustomText from '../components/CustomText';
 import CustomCenterView from '../components/CustomCenterView';
 import { useRecoilState } from 'recoil';
 import { test } from '../recoil/test';
-import { modalOpen } from '../recoil/control';
+import { loadingControl, modalOpen } from '../recoil/control';
 import AlertModal from '../components/modal/AlertModal';
 import { COLORS } from '../asset/colors';
 import HeaderBar from '../components/HeaderBar';
 import { MotiView } from 'moti';
 import Banner from '../components/Banner';
 import { styled } from 'styled-components';
+import { getUser } from '../functions/firebase';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Loading from '../components/Loading';
 
-const Home = () => {
+const Home = ({ navigation }) => {
 
     const [recoilTest, setRecoilTest] = useRecoilState(test);
     const [modal, setModal] = useRecoilState(modalOpen);
     const [folderData, setFolderData] = useState([]);
+    const [loading, setLoading] = useRecoilState(loadingControl);
+    const { push, reset } = navigation;
+
+    useEffect(() => {
+        getFolder();
+    }, [])
+
+    const getFolder = async () => {
+        const uid = await AsyncStorage.getItem('uid');
+
+        const folder = await getUser(uid, setLoading);
+
+        setFolderData(folder.data['folder'])
+    }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
@@ -51,6 +68,7 @@ const Home = () => {
                         >
                             <PlusButton
                                 activeOpacity={.9}
+                                onPress={() => push('AddFolder')}
                             >
                                 <Image
                                     source={ICON.plus}

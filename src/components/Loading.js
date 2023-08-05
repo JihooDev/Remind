@@ -27,6 +27,7 @@ const LoadingView = styled.View`
     align-items: center;
     position: absolute;
     top: 0;
+    z-index: 999;
 `
 
 export default Loading

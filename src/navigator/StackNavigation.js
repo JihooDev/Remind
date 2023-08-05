@@ -5,13 +5,22 @@ import Home from '../screen/Home';
 import BottomNavigation from './BottomNavigation';
 import Splash from '../screen/Splash';
 import SignUp from '../screen/SignUp';
+import { loadingControl } from '../recoil/control';
+import { useRecoilValue } from 'recoil';
+import Loading from '../components/Loading';
+import AddFolder from '../screen/AddFolder';
 
 const StackNavigation = () => {
 
     const Stack = createNativeStackNavigator();
+    const loading = useRecoilValue(loadingControl);
+
 
     return (
         <NavigationContainer>
+            {
+                loading && <Loading />
+            }
             <Stack.Navigator
                 initialRouteName='Splash'
                 screenOptions={{
@@ -25,6 +34,8 @@ const StackNavigation = () => {
                 <Stack.Screen name="Home" component={Home} />
                 {/* 회원가입 */}
                 <Stack.Screen name="SignUp" component={SignUp} />
+
+                <Stack.Screen name="AddFolder" component={AddFolder} />
 
                 {/* Bottom Navigation */}
                 {/* <Stack.Screen name="Home" component={BottomNavigation} /> */}
