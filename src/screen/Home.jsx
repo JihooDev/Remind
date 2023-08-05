@@ -95,11 +95,42 @@ const Home = ({ navigation }) => {
                             style={{
                                 width: "100%",
                                 paddingHorizontal: wt(50),
-                                paddingTop: ht(80)
                             }}
                         />
+
                     </CustomCenterView>
             }
+            {
+                folderData?.length > 0 &&
+                <MotiView
+                    style={{
+                        position: "absolute",
+                        bottom: ht(300),
+                        right: wt(50),
+                        width: wt(260),
+                        height: ht(260),
+                        zIndex: 998
+                    }}
+                    from={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    delay={1000}
+                >
+                    <AddFolderButton
+                        activeOpacity={.9}
+                        onPress={() => push('AddFolder')}
+                    >
+                        <Image
+                            source={ICON.plus}
+                            style={{
+                                tintColor: COLORS.white,
+                                width: wt(100),
+                                height: ht(100)
+                            }}
+                        />
+                    </AddFolderButton>
+                </MotiView>
+            }
+
         </CustomSafeAreaView>
     )
 }
@@ -110,6 +141,15 @@ const PlusButton = styled.TouchableOpacity`
     background-color: #CC4F4F;
     justify-content: center;
     align-items: center;
+    border-radius: 15px;
+`
+
+const AddFolderButton = styled.TouchableOpacity`
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: ${COLORS.red};
     border-radius: 15px;
 `
 
