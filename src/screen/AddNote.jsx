@@ -32,6 +32,9 @@ const AddNote = ({ navigation: { pop } }) => {
         const uid = await AsyncStorage.getItem('uid');
         const postData = await createMemoPost(pageData.id, uid, valueData);
 
+        if (postData['status']) {
+            pop();
+        }
     }
 
     return (
