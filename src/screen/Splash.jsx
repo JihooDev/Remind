@@ -61,16 +61,16 @@ const Splash = ({ navigation: { reset } }) => {
         <CustomSafeAreaView>
             <MotiView
                 from={{ opacity: 0, translateY: !checkUid ? ht(800) : ht(200) }}
-                animate={{ opacity: 1, translateY: checkUid ? ht(200) : ht(800) }}
+                animate={{ opacity: 1, translateY: ht(200) }}
                 style={{ width: "100%", height: "20%", justifyContent: "center", alignItems: "center" }}
             >
                 <CustomText
-                    text={'당신의'}
+                    text={'모든 순간을'}
                     type={'Bold'}
                     size={font(25)}
                 />
                 <CustomText
-                    text={'생각을 보관하세요'}
+                    text={'기록 해보세요'}
                     type={'Bold'}
                     size={font(25)}
                 />

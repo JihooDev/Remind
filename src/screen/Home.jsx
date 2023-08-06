@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ICON } from '../asset/asset';
 import { ht, wt } from '../../responsive/responsive';
 import CustomSafeAreaView from '../components/CustomSafeAreaView';
@@ -17,6 +17,8 @@ import { styled } from 'styled-components';
 import { getUser } from '../functions/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../components/Loading';
+import FolderList from '../components/FolderList';
+import PinCodeModal from '../components/modal/PinCodeModal';
 
 const Home = ({ navigation }) => {
 
@@ -35,11 +37,16 @@ const Home = ({ navigation }) => {
 
         const folder = await getUser(uid, setLoading);
 
+        console.log(folder.data['folder'])
+
         setFolderData(folder.data['folder'])
     }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
+            {
+                loading && <Loading />
+            }
             <HeaderBar />
             {
                 folderData.length === 0
@@ -81,8 +88,50 @@ const Home = ({ navigation }) => {
                             </PlusButton>
                         </MotiView>
                     </CustomCenterView>
-                    : null
+                    :
+                    <CustomCenterView backColor={COLORS.black}>
+                        <FlatList
+                            data={folderData}
+                            renderItem={item => { return <FolderList item={item} /> }}
+                            style={{
+                                width: "100%",
+                                paddingHorizontal: wt(50),
+                            }}
+                        />
+
+                    </CustomCenterView>
             }
+            {
+                folderData?.length > 0 &&
+                <MotiView
+                    style={{
+                        position: "absolute",
+                        bottom: ht(300),
+                        right: wt(50),
+                        width: wt(260),
+                        height: ht(260),
+                        zIndex: 998
+                    }}
+                    from={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    delay={1000}
+                >
+                    <AddFolderButton
+                        activeOpacity={.9}
+                        onPress={() => push('AddFolder')}
+                    >
+                        <Image
+                            source={ICON.plus}
+                            style={{
+                                tintColor: COLORS.white,
+                                width: wt(100),
+                                height: ht(100)
+                            }}
+                        />
+                    </AddFolderButton>
+                </MotiView>
+            }
+
         </CustomSafeAreaView>
     )
 }
@@ -93,6 +142,15 @@ const PlusButton = styled.TouchableOpacity`
     background-color: #CC4F4F;
     justify-content: center;
     align-items: center;
+    border-radius: 15px;
+`
+
+const AddFolderButton = styled.TouchableOpacity`
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: ${COLORS.red};
     border-radius: 15px;
 `
 

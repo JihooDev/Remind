@@ -9,7 +9,9 @@ import { useNavigation } from '@react-navigation/native'
 
 const CustomStatusBar = ({
     back = false,
-    title
+    title,
+    type,
+    closeFuc
 }) => {
 
     const navigation = useNavigation();
@@ -20,7 +22,13 @@ const CustomStatusBar = ({
                 {
                     back &&
                     <BackButton
-                        onPress={() => navigation.pop()}
+                        onPress={() => {
+                            if (type === 'modal') {
+                                closeFuc();
+                            } else {
+                                navigation.pop()
+                            }
+                        }}
                         activeOpacity={.9}
                     >
                         <Image

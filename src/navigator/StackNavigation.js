@@ -5,10 +5,12 @@ import Home from '../screen/Home';
 import BottomNavigation from './BottomNavigation';
 import Splash from '../screen/Splash';
 import SignUp from '../screen/SignUp';
-import { loadingControl } from '../recoil/control';
+import { loadingControl, pinCodeState } from '../recoil/control';
 import { useRecoilValue } from 'recoil';
 import Loading from '../components/Loading';
 import AddFolder from '../screen/AddFolder';
+import FolderDetail from '../screen/FolderDetail';
+import PinCodeModal from '../components/modal/PinCodeModal';
 
 const StackNavigation = () => {
 
@@ -18,9 +20,6 @@ const StackNavigation = () => {
 
     return (
         <NavigationContainer>
-            {
-                loading && <Loading />
-            }
             <Stack.Navigator
                 initialRouteName='Splash'
                 screenOptions={{
@@ -34,8 +33,10 @@ const StackNavigation = () => {
                 <Stack.Screen name="Home" component={Home} />
                 {/* 회원가입 */}
                 <Stack.Screen name="SignUp" component={SignUp} />
-
+                {/* 폴더 추가 */}
                 <Stack.Screen name="AddFolder" component={AddFolder} />
+                {/* 폴더 디테일 */}
+                <Stack.Screen name="FolderDetail" component={FolderDetail} />
 
                 {/* Bottom Navigation */}
                 {/* <Stack.Screen name="Home" component={BottomNavigation} /> */}
