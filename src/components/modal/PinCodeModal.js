@@ -21,9 +21,15 @@ const PinCodeModal = ({
     const [modalState, setModalState] = useRecoilState(pinCodeState);
     const [pincodeValue, setPinCodeValue] = useState([null, null, null, null]);
     const [copyPinCode, setCopyPinCode] = useState([]);
+    const [alertText, setAlertText] = useState({
+        text: "핀코드를 입력 해주세요",
+        color: COLORS.white
+    })
 
     useEffect(() => {
-        console.log(pincodeValue);
+        if (pincodeValue.join('').length === 4) {
+            actionPinCode();
+        }
     }, [pincodeValue])
 
     // 핀코드 입력 시 실행 함수
@@ -39,7 +45,17 @@ const PinCodeModal = ({
     // 핀코드 입력이 완료되면 실행되야 할 함수
     const actionPinCode = async () => {
         if (type === 'setting') {
-
+            if (copyPinCode.length === 0) {
+                setTimeout(() => {
+                    setCopyPinCode(pincodeValue);
+                    setPinCodeValue([null, null, null, null]);
+                }, 200)
+            } else {
+                console.log(pincodeValue.join('') === copyPinCode.join(''));
+                if (pincodeValue.join('') === copyPinCode.join('')) {
+                    setModalState(false);
+                }
+            }
         }
     }
 
@@ -53,7 +69,10 @@ const PinCodeModal = ({
             style={{
                 margin: 0,
             }}
-            onModalHide={() => setPinCodeValue([null, null, null, null])}
+            onModalHide={() => {
+                setPinCodeValue([null, null, null, null]);
+                setCopyPinCode([]);
+            }}
             backdropOpacity={1}
         >
             <CustomSafeAreaView backColor={COLORS.black}>
@@ -65,6 +84,7 @@ const PinCodeModal = ({
                             closeFuc={() => setModalState(false)}
                             back={true}
                         />
+
                         <PinCodeResultView>
                             {
                                 pincodeValue.map((val, idx) => (
@@ -83,7 +103,12 @@ const PinCodeModal = ({
                                     </PinCodeResultBox>
                                 ))
                             }
+
                         </PinCodeResultView>
+                        <CustomText
+                            text={alertText.text}
+                            color={alertText.color}
+                        />
                     </ResultView>
                     <PressView>
                         <VirtualKeyboard
@@ -112,6 +137,8 @@ const ModalView = styled.View`
 
 const ResultView = styled.View`
     flex: 1;
+    justify-content: center;
+    align-items: center;
 `
 
 const PinCodeResultView = styled.View`
