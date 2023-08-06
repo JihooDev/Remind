@@ -19,7 +19,8 @@ const PinCodeModal = ({
 }) => {
 
     const [modalState, setModalState] = useRecoilState(pinCodeState);
-    const [pincodeValue, setPinCodeValue] = useState([null, null, null, null])
+    const [pincodeValue, setPinCodeValue] = useState([null, null, null, null]);
+    const [copyPinCode, setCopyPinCode] = useState([]);
 
     useEffect(() => {
         console.log(pincodeValue);
@@ -37,7 +38,9 @@ const PinCodeModal = ({
 
     // 핀코드 입력이 완료되면 실행되야 할 함수
     const actionPinCode = async () => {
+        if (type === 'setting') {
 
+        }
     }
 
 
