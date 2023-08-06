@@ -12,6 +12,8 @@ import { useRecoilState } from 'recoil'
 import { detailData } from '../recoil/user'
 import { createMemoPost } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import moment from 'moment'
+import uuid from 'react-native-uuid'
 
 const AddNote = ({ navigation: { pop } }) => {
 
@@ -21,8 +23,14 @@ const AddNote = ({ navigation: { pop } }) => {
 
     // 메모를 생성하는 함수
     const createMemo = async () => {
+        const valueData = {
+            name: memoName,
+            date_created: moment().unix(),
+            content: content,
+            id: uuid.v4()
+        }
         const uid = await AsyncStorage.getItem('uid');
-        const postData = await createMemoPost(pageData.id, uid);
+        const postData = await createMemoPost(pageData.id, uid, valueData);
     }
 
     return (

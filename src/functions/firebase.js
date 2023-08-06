@@ -79,18 +79,35 @@ export const createFolderPost = async (uid, data, setLoading) => {
 }
 
 // 메모 추가
-export const createMemoPost = async (folderId, uid) => {
-    await user_list.where('uid', '==', uid).get().then((query) => {
-        query.forEach(doc => {
-            const documentId = doc.id;
-            const folderData = doc.data().folder;
+export const createMemoPost = async (folderId, uid, postData) => {
+    try {
 
-            // console.log(folderData);
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const documentId = doc.id;
+                const folderData = doc.data().folder;
 
-            const updateFolder = folderData.map(item => {
-                if (item.id === folderId) {
-                }
+                // console.log(folderData);
+
+                const updateFolder = folderData.map(item => {
+                    if (item.id === folderId) {
+                        console.log(item);
+
+                        return {
+                            ...item,
+                            content: [...item.content, postData]
+                        }
+                    }
+
+                    return item;
+                })
+
+                user_list.doc(uid).update({
+                    folder: updateFolder
+                })
             })
         })
-    })
+    } catch (error) {
+        console.error(error, '메모 추가 실패');
+    }
 }
