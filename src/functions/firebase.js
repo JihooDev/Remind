@@ -107,6 +107,10 @@ export const createMemoPost = async (folderId, uid, postData) => {
                 })
             })
         })
+
+        return {
+            status: true
+        }
     } catch (error) {
         console.error(error, '메모 추가 실패');
     }
