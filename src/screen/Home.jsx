@@ -96,6 +96,7 @@ const Home = ({ navigation }) => {
                             style={{
                                 width: "100%",
                                 paddingHorizontal: wt(50),
+                                marginBottom: ht(300)
                             }}
                         />
                     </CustomCenterView>

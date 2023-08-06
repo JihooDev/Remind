@@ -31,7 +31,7 @@ const FolderDetail = ({ navigation: { push } }) => {
                         <MotiView
                             from={{ opacity: 0, translateY: -50 }}
                             animate={{ opacity: 1, translateY: 0 }}
-                            delay={1000}
+                            delay={500}
                         >
                             <CustomText
                                 text={'내용을 추가해보세요!'}
@@ -42,14 +42,14 @@ const FolderDetail = ({ navigation: { push } }) => {
                         <MotiView
                             from={{ opacity: 0, translateY: 50 }}
                             animate={{ opacity: 1, translateY: 0 }}
-                            delay={1500}
+                            delay={1000}
                             style={{
                                 marginTop: ht(80)
                             }}
                         >
                             <PlusButton
                                 activeOpacity={.9}
-                                onPress={() => push('AddFolder')}
+                                onPress={() => push('AddNote')}
                             >
                                 <Image
                                     source={ICON.plus}
