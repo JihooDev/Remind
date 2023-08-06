@@ -77,3 +77,20 @@ export const createFolderPost = async (uid, data, setLoading) => {
         setLoading(false);
     }
 }
+
+// 메모 추가
+export const createMemoPost = async (folderId, uid) => {
+    await user_list.where('uid', '==', uid).get().then((query) => {
+        query.forEach(doc => {
+            const documentId = doc.id;
+            const folderData = doc.data().folder;
+
+            // console.log(folderData);
+
+            const updateFolder = folderData.map(item => {
+                if (item.id === folderId) {
+                }
+            })
+        })
+    })
+}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import CustomText from '../components/CustomText'
 import { COLORS } from '../asset/colors'
@@ -7,11 +7,23 @@ import { styled } from 'styled-components'
 import { font, ht, wt } from '../../responsive/responsive'
 import { TextInput } from 'react-native'
 import { MotiView, ScrollView } from 'moti'
+import CustomButton from '../components/CustomButton'
+import { useRecoilState } from 'recoil'
+import { detailData } from '../recoil/user'
+import { createMemoPost } from '../functions/firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const AddNote = ({ navigation: { pop } }) => {
 
     const [memoName, setMemoName] = useState('');
     const [content, setContent] = useState('');
+    const [pageData, setPageData] = useRecoilState(detailData);
+
+    // 메모를 생성하는 함수
+    const createMemo = async () => {
+        const uid = await AsyncStorage.getItem('uid');
+        const postData = await createMemoPost(pageData.id, uid);
+    }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
@@ -61,15 +73,39 @@ const AddNote = ({ navigation: { pop } }) => {
                             style={{
                                 width: "100%",
                                 fontSize: font(16),
-                                color: COLORS.white
+                                color: COLORS.white,
+                                fontFamily: "Pretendard-Medium"
                             }}
                             multiline={true}
                             value={content}
                             onChangeText={text => setContent(text)}
+                            placeholder='기록 하실 내용을 입력해주세요'
+                            placeholderTextColor={COLORS.gray}
                         />
                     </ScrollView>
                 </MotiView>
             </MainView>
+            <MotiView
+                style={{
+                    width: "100%",
+                    height: ht(400),
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingVertical: wt(30),
+                    paddingHorizontal: wt(80)
+                }}
+                animate={{
+                    translateY: content.length > 0 && memoName.length > 0
+                        ? 0
+                        : 200
+                }}
+            >
+                <CustomButton
+                    title={'추가하기'}
+                    type='success'
+                    onPress={createMemo}
+                />
+            </MotiView>
         </CustomSafeAreaView>
     )
 }
