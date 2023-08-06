@@ -11,7 +11,12 @@ import CustomSafeAreaView from '../CustomSafeAreaView';
 import CustomStatusBar from '../CustomStatusBar';
 import CustomText from '../CustomText';
 
-const PinCodeModal = () => {
+// type = 'setting' | 'confirm' | 'resetting'
+
+const PinCodeModal = ({
+    actionFuc,
+    type = "setting"
+}) => {
 
     const [modalState, setModalState] = useRecoilState(pinCodeState);
     const [pincodeValue, setPinCodeValue] = useState([null, null, null, null])

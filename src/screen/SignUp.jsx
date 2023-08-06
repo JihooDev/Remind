@@ -14,11 +14,14 @@ import { addUser } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRecoilState } from 'recoil'
 import { userData } from '../recoil/user'
+import { pinCodeState } from '../recoil/control'
+import PinCodeModal from '../components/modal/PinCodeModal'
 
 const SignUp = ({ navigation: { reset } }) => {
 
     const [userName, setUserName] = useState('');
     const [userDataBox, setUserDataBox] = useRecoilState(userData);
+    const [modalState, setModalState] = useRecoilState(pinCodeState);
 
     const onSignUp = async () => {
         const uid = await AsyncStorage.getItem('uid');
@@ -35,6 +38,7 @@ const SignUp = ({ navigation: { reset } }) => {
 
     return (
         <CustomSafeAreaView>
+            <PinCodeModal />
             <MotiView
                 from={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -68,7 +72,7 @@ const SignUp = ({ navigation: { reset } }) => {
             >
                 <CustomButton
                     title={'가입하기'}
-                    onPress={onSignUp}
+                    onPress={() => setModalState(true)}
                 />
             </MotiView>
         </CustomSafeAreaView>
