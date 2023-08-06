@@ -44,18 +44,40 @@ const PinCodeModal = ({
 
     // 핀코드 입력이 완료되면 실행되야 할 함수
     const actionPinCode = async () => {
+        // 새롭게 생성일 때
         if (type === 'setting') {
             if (copyPinCode.length === 0) {
                 setTimeout(() => {
                     setCopyPinCode(pincodeValue);
                     setPinCodeValue([null, null, null, null]);
+                    setAlertText({
+                        ...alertText,
+                        text: "한번 더 입력해주세요"
+                    })
                 }, 200)
             } else {
-                console.log(pincodeValue.join('') === copyPinCode.join(''));
                 if (pincodeValue.join('') === copyPinCode.join('')) {
-                    setModalState(false);
+                    setAlertText({
+                        text: "저장 되었습니다",
+                        color: COLORS.success
+                    })
+                    setTimeout(() => {
+                        actionFuc(pincodeValue.join(''))
+                    }, 200)
+                } else {
+                    setCopyPinCode([]);
+                    setPinCodeValue([null, null, null, null]);
+                    setAlertText({
+                        color: COLORS.red,
+                        text: "일치하지 않습니다. 다시 입력해주세요"
+                    })
                 }
             }
+        }
+
+        // 확인 일 때
+        if (type === 'confirm') {
+
         }
     }
 
@@ -72,6 +94,10 @@ const PinCodeModal = ({
             onModalHide={() => {
                 setPinCodeValue([null, null, null, null]);
                 setCopyPinCode([]);
+                setAlertText({
+                    color: COLORS.white,
+                    text: "핀코드를 입력해주세요"
+                })
             }}
             backdropOpacity={1}
         >
