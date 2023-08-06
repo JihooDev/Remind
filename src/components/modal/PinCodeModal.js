@@ -10,6 +10,7 @@ import { SafeAreaView, StatusBar } from 'react-native';
 import CustomSafeAreaView from '../CustomSafeAreaView';
 import CustomStatusBar from '../CustomStatusBar';
 import CustomText from '../CustomText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // type = 'setting' | 'confirm' | 'resetting'
 
@@ -77,7 +78,23 @@ const PinCodeModal = ({
 
         // 확인 일 때
         if (type === 'confirm') {
+            const userPinCode = await AsyncStorage.getItem('pincode');
 
+            if (pincodeValue.join('') === userPinCode) {
+                setAlertText({
+                    color: COLORS.success,
+                    text: "확인 되었습니다"
+                })
+                setTimeout(() => {
+                    actionFuc();
+                }, 200)
+            } else {
+                setPinCodeValue([null, null, null, null]);
+                setAlertText({
+                    color: COLORS.red,
+                    text: "일치하지 않습니다. 다시 입력해주세요"
+                })
+            }
         }
     }
 

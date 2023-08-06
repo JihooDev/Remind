@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native'
 import PinCodeModal from './modal/PinCodeModal'
 import { pinCodeState } from '../recoil/control'
 import { useRecoilState } from 'recoil'
+import { detailData } from '../recoil/user'
 
 const FolderList = ({
     item
@@ -18,18 +19,30 @@ const FolderList = ({
     const data = item.item;
     const navigation = useNavigation();
     const [modalState, setModalState] = useRecoilState(pinCodeState);
+    const [detailState, setDetailState] = useRecoilState(detailData);
 
     const openFolder = () => {
+        setDetailState(data);
         if (data.security) {
             setModalState(true);
         } else {
-            navigation.navigate('FolderDetail');
+            navigation.navigate('FolderDetail', { data: detailState });
         }
+    }
+
+    const modalActionFuc = () => {
+        setModalState(false);
+
+        console.log(data, '넘어가는 값');
+
+        setTimeout(() => {
+            navigation.navigate('FolderDetail', { data: detailState });
+        }, 200)
     }
 
     return (
         <>
-            <PinCodeModal />
+            <PinCodeModal type={'confirm'} actionFuc={modalActionFuc} />
             <MotiPressable
                 onPress={openFolder}
                 style={{

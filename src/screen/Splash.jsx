@@ -49,11 +49,6 @@ const Splash = ({ navigation: { reset } }) => {
             }, 2000)
         } else if (uid) {
             setCheckUid(false);
-
-
-            // setTimeout(() => {
-            //     reset({ routes: [{ name: "SignUp" }] })
-            // }, 2000)
         }
     }
 

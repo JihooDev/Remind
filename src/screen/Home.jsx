@@ -98,7 +98,6 @@ const Home = ({ navigation }) => {
                                 paddingHorizontal: wt(50),
                             }}
                         />
-
                     </CustomCenterView>
             }
             {
