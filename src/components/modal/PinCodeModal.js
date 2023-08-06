@@ -10,6 +10,7 @@ import { SafeAreaView, StatusBar } from 'react-native';
 import CustomSafeAreaView from '../CustomSafeAreaView';
 import CustomStatusBar from '../CustomStatusBar';
 import CustomText from '../CustomText';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // type = 'setting' | 'confirm' | 'resetting'
 
@@ -21,9 +22,15 @@ const PinCodeModal = ({
     const [modalState, setModalState] = useRecoilState(pinCodeState);
     const [pincodeValue, setPinCodeValue] = useState([null, null, null, null]);
     const [copyPinCode, setCopyPinCode] = useState([]);
+    const [alertText, setAlertText] = useState({
+        text: "핀코드를 입력 해주세요",
+        color: COLORS.white
+    })
 
     useEffect(() => {
-        console.log(pincodeValue);
+        if (pincodeValue.join('').length === 4) {
+            actionPinCode();
+        }
     }, [pincodeValue])
 
     // 핀코드 입력 시 실행 함수
@@ -38,8 +45,56 @@ const PinCodeModal = ({
 
     // 핀코드 입력이 완료되면 실행되야 할 함수
     const actionPinCode = async () => {
+        // 새롭게 생성일 때
         if (type === 'setting') {
+            if (copyPinCode.length === 0) {
+                setTimeout(() => {
+                    setCopyPinCode(pincodeValue);
+                    setPinCodeValue([null, null, null, null]);
+                    setAlertText({
+                        ...alertText,
+                        text: "한번 더 입력해주세요"
+                    })
+                }, 200)
+            } else {
+                if (pincodeValue.join('') === copyPinCode.join('')) {
+                    setAlertText({
+                        text: "저장 되었습니다",
+                        color: COLORS.success
+                    })
+                    setTimeout(() => {
+                        actionFuc(pincodeValue.join(''))
+                    }, 200)
+                } else {
+                    setCopyPinCode([]);
+                    setPinCodeValue([null, null, null, null]);
+                    setAlertText({
+                        color: COLORS.red,
+                        text: "일치하지 않습니다. 다시 입력해주세요"
+                    })
+                }
+            }
+        }
 
+        // 확인 일 때
+        if (type === 'confirm') {
+            const userPinCode = await AsyncStorage.getItem('pincode');
+
+            if (pincodeValue.join('') === userPinCode) {
+                setAlertText({
+                    color: COLORS.success,
+                    text: "확인 되었습니다"
+                })
+                setTimeout(() => {
+                    actionFuc();
+                }, 200)
+            } else {
+                setPinCodeValue([null, null, null, null]);
+                setAlertText({
+                    color: COLORS.red,
+                    text: "일치하지 않습니다. 다시 입력해주세요"
+                })
+            }
         }
     }
 
@@ -53,7 +108,14 @@ const PinCodeModal = ({
             style={{
                 margin: 0,
             }}
-            onModalHide={() => setPinCodeValue([null, null, null, null])}
+            onModalHide={() => {
+                setPinCodeValue([null, null, null, null]);
+                setCopyPinCode([]);
+                setAlertText({
+                    color: COLORS.white,
+                    text: "핀코드를 입력해주세요"
+                })
+            }}
             backdropOpacity={1}
         >
             <CustomSafeAreaView backColor={COLORS.black}>
@@ -65,6 +127,7 @@ const PinCodeModal = ({
                             closeFuc={() => setModalState(false)}
                             back={true}
                         />
+
                         <PinCodeResultView>
                             {
                                 pincodeValue.map((val, idx) => (
@@ -83,7 +146,12 @@ const PinCodeModal = ({
                                     </PinCodeResultBox>
                                 ))
                             }
+
                         </PinCodeResultView>
+                        <CustomText
+                            text={alertText.text}
+                            color={alertText.color}
+                        />
                     </ResultView>
                     <PressView>
                         <VirtualKeyboard
@@ -112,6 +180,8 @@ const ModalView = styled.View`
 
 const ResultView = styled.View`
     flex: 1;
+    justify-content: center;
+    align-items: center;
 `
 
 const PinCodeResultView = styled.View`

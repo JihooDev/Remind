@@ -23,13 +23,14 @@ const SignUp = ({ navigation: { reset } }) => {
     const [userDataBox, setUserDataBox] = useRecoilState(userData);
     const [modalState, setModalState] = useRecoilState(pinCodeState);
 
-    const onSignUp = async () => {
+    const onSignUp = async (pinCode) => {
         const uid = await AsyncStorage.getItem('uid');
 
-        const postAddUser = await addUser(uid, userName);
+        const postAddUser = await addUser(uid, userName, pinCode);
 
         if (postAddUser['status']) {
             await AsyncStorage.setItem('user', JSON.stringify({ uid, user_name: userName }));
+            await AsyncStorage.setItem('pincode', pinCode);
             setUserDataBox({ uid, user_name: userName })
 
             reset({ routes: [{ name: "Home" }] });
@@ -38,7 +39,14 @@ const SignUp = ({ navigation: { reset } }) => {
 
     return (
         <CustomSafeAreaView>
-            <PinCodeModal />
+            <PinCodeModal
+                actionFuc={(pinCode) => {
+                    setModalState(false);
+                    setTimeout(() => {
+                        onSignUp(pinCode);
+                    }, 200)
+                }}
+            />
             <MotiView
                 from={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

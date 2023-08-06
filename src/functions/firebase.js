@@ -5,13 +5,14 @@ const user_list = firestore().collection('user_list');
 const folder = firestore().collection('folder');
 
 // 회원가입
-export const addUser = async (uid, user_name) => {
+export const addUser = async (uid, user_name, pinCode) => {
     try {
         await user_list.doc(uid).set({
             uid,
             user_name,
             date_created: moment().unix(),
-            folder: []
+            folder: [],
+            pin_code: pinCode
         })
 
         return {
