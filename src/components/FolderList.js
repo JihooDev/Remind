@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
 import { ht, wt } from '../../responsive/responsive'
 import { COLORS } from '../asset/colors'
@@ -7,6 +7,9 @@ import { Image } from 'react-native'
 import { ICON } from '../asset/asset'
 import { MotiPressable } from 'moti/interactions'
 import { useNavigation } from '@react-navigation/native'
+import PinCodeModal from './modal/PinCodeModal'
+import { pinCodeState } from '../recoil/control'
+import { useRecoilState } from 'recoil'
 
 const FolderList = ({
     item
@@ -14,57 +17,61 @@ const FolderList = ({
 
     const data = item.item;
     const navigation = useNavigation();
+    const [modalState, setModalState] = useRecoilState(pinCodeState);
 
     const openFolder = () => {
         if (data.security) {
-
+            setModalState(true);
         } else {
             navigation.navigate('FolderDetail');
         }
     }
 
     return (
-        <MotiPressable
-            onPress={openFolder}
-            style={{
-                width: "100%",
-                height: ht(500),
-                backgroundColor: COLORS.white,
-                borderRadius: 10,
-                overflow: "hidden",
-                marginTop: ht(80)
-            }}
-            from={{ opacity: 0, translateY: -500 }}
-            animate={{ opacity: 1, translateY: 0 }}
-            transition={{ delay: 500 }}
-        >
-            <TopView>
-                <CustomText
-                    color={COLORS.black}
-                    text={data.name}
-                    size={20}
-                    type={'Bold'}
-                />
-                <Image
-                    source={ICON.right}
-                    style={{
-                        width: wt(80),
-                        height: ht(80)
-                    }}
-                />
-            </TopView>
-            <BottomView>
-                <CustomText
-                    size={50}
-                    text={data.content.length}
-                    type={'ExtraBold'}
-                />
-                {/* <CustomText
+        <>
+            <PinCodeModal />
+            <MotiPressable
+                onPress={openFolder}
+                style={{
+                    width: "100%",
+                    height: ht(500),
+                    backgroundColor: COLORS.white,
+                    borderRadius: 10,
+                    overflow: "hidden",
+                    marginTop: ht(80)
+                }}
+                from={{ opacity: 0, translateY: -500 }}
+                animate={{ opacity: 1, translateY: 0 }}
+                transition={{ delay: 500 }}
+            >
+                <TopView>
+                    <CustomText
+                        color={COLORS.black}
+                        text={data.name}
+                        size={20}
+                        type={'Bold'}
+                    />
+                    <Image
+                        source={ICON.right}
+                        style={{
+                            width: wt(80),
+                            height: ht(80)
+                        }}
+                    />
+                </TopView>
+                <BottomView>
+                    <CustomText
+                        size={50}
+                        text={data.content.length}
+                        type={'ExtraBold'}
+                    />
+                    {/* <CustomText
                     size={20}
                     text={'개의 내용'}
                 /> */}
-            </BottomView>
-        </MotiPressable>
+                </BottomView>
+            </MotiPressable>
+        </>
     )
 }
 

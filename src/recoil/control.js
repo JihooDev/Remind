@@ -9,3 +9,8 @@ export const loadingControl = atom({
     key: "loadingControl",
     default: false
 })
+
+export const pinCodeState = atom({
+    key: "pinCodeState",
+    default: false
+})

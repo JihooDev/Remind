@@ -18,6 +18,7 @@ import { getUser } from '../functions/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../components/Loading';
 import FolderList from '../components/FolderList';
+import PinCodeModal from '../components/modal/PinCodeModal';
 
 const Home = ({ navigation }) => {
 

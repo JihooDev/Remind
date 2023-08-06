@@ -5,11 +5,12 @@ import Home from '../screen/Home';
 import BottomNavigation from './BottomNavigation';
 import Splash from '../screen/Splash';
 import SignUp from '../screen/SignUp';
-import { loadingControl } from '../recoil/control';
+import { loadingControl, pinCodeState } from '../recoil/control';
 import { useRecoilValue } from 'recoil';
 import Loading from '../components/Loading';
 import AddFolder from '../screen/AddFolder';
 import FolderDetail from '../screen/FolderDetail';
+import PinCodeModal from '../components/modal/PinCodeModal';
 
 const StackNavigation = () => {
 
@@ -19,7 +20,6 @@ const StackNavigation = () => {
 
     return (
         <NavigationContainer>
-
             <Stack.Navigator
                 initialRouteName='Splash'
                 screenOptions={{
