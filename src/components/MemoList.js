@@ -13,6 +13,7 @@ const MemoList = ({ item }) => {
             style={{
                 width: "100%",
                 height: ht(450),
+                marginBottom: ht(80)
             }}
             from={{ opacity: 0, translateY: -200 }}
             animate={{ opacity: 1, translateY: 0 }}
