@@ -105,6 +105,7 @@ const PinCodeModal = ({
             isVisible={modalState}
             animationIn={'fadeIn'}
             animationOut={'fadeOut'}
+            animationInTiming={1000}
             style={{
                 margin: 0,
             }}
