@@ -10,7 +10,8 @@ import CustomText from '../components/CustomText'
 import { MotiView } from 'moti'
 import { ht, wt } from '../../responsive/responsive'
 import { ICON } from '../asset/asset'
-import { Image } from 'react-native'
+import { FlatList, Image } from 'react-native'
+import MemoList from '../components/MemoList'
 
 const FolderDetail = ({ navigation: { push } }) => {
 
@@ -25,7 +26,13 @@ const FolderDetail = ({ navigation: { push } }) => {
             />
             {
                 contentList?.length > 0
-                    ? null
+                    ?
+                    <FlatList
+                        data={contentList}
+                        style={{ paddingHorizontal: wt(50), paddingTop: ht(80) }}
+                        renderItem={(item) => { return <MemoList item={item.item} /> }}
+                        keyExtractor={(item) => item.id}
+                    />
                     :
                     <NoContentView>
                         <MotiView
