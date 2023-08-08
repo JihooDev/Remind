@@ -24,6 +24,9 @@ const AddNote = ({ navigation: { pop } }) => {
     const [pageData, setPageData] = useRecoilState(detailData);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
     const [keyboardShowState, setKeyboardShowState] = useState(false);
+    const [bold, setBold] = useState(false);
+    const [thin, setThin] = useState(false);
+    const [colorList, setColorList] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
@@ -39,6 +42,21 @@ const AddNote = ({ navigation: { pop } }) => {
             keyboardDidHideListener.remove();
         };
     }, []);
+
+    // 옵션을 변경하는 함수
+    const changeOption = type => {
+        switch (type) {
+            case "bold":
+                return setBold(!bold);
+            case "thin":
+                return () => {
+                    setBold(false);
+                    setThin(!thin);
+                }
+            case "color":
+                return setColorList(!colorList)
+        }
+    }
 
     // 메모를 생성하는 함수
     const createMemo = async () => {
@@ -70,7 +88,13 @@ const AddNote = ({ navigation: { pop } }) => {
                     keyboardShouldPersistTaps="handled"
                     stickyHeaderIndices={[0]}
                 >
-                    <NoteSettingBar show={keyboardShowState} />
+                    <NoteSettingBar
+                        show={keyboardShowState}
+                        changeOption={changeOption}
+                        bold={bold}
+                        thin={thin}
+                        colorList={colorList}
+                    />
                     <CustomInputView>
                         <TextInput
                             value={memoName}
