@@ -7,15 +7,17 @@ import { detailData } from '../recoil/user';
 import { styled } from 'styled-components';
 import { font, ht, wt } from '../../responsive/responsive';
 import { MotiPressable } from 'moti/interactions';
-import { TextInput } from 'react-native';
+import { TextInput, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { MotiView } from 'moti';
+import CustomButton from '../components/CustomButton';
 
 const MemoDetail = ({ route }) => {
 
     const [folderData, setFolderData] = useRecoilState(detailData);
     const [noteData, setNoteData] = useState(route.params.data);
     const [editName, setEditName] = useState(noteData.name);
+    const [editContent, setEditContent] = useState(noteData.content);
     const nameInputRef = useRef();
 
     return (
@@ -24,8 +26,8 @@ const MemoDetail = ({ route }) => {
                 back={true}
                 title={folderData.name}
             />
-            <KeyboardAwareScrollView>
-                <MainView>
+            <MainView>
+                <KeyboardAwareScrollView>
                     <CustomInputView>
                         <TextInput
                             value={editName}
@@ -49,9 +51,58 @@ const MemoDetail = ({ route }) => {
                                 backgroundColor: editName.length > 0 ? COLORS.success : COLORS.gray
                             }}
                         />
+
                     </CustomInputView>
-                </MainView>
-            </KeyboardAwareScrollView>
+                    <MotiView
+                        style={{
+                            width: "100%",
+                            height: ht(1400),
+                            borderRadius: 15,
+                            borderWidth: ht(10),
+                            padding: ht(50)
+                        }}
+                        animate={{
+                            borderColor: editContent.length > 0 ? COLORS.success : COLORS.gray
+                        }}
+                    >
+                        <ScrollView>
+                            <TextInput
+                                style={{
+                                    width: "100%",
+                                    fontSize: font(16),
+                                    color: COLORS.white,
+                                    fontFamily: "Pretendard-Medium"
+                                }}
+                                multiline={true}
+                                value={editContent}
+                                onChangeText={text => setEditContent(text)}
+                                placeholder='기록 하실 내용을 입력해주세요'
+                                placeholderTextColor={COLORS.gray}
+                            />
+                        </ScrollView>
+                    </MotiView>
+                </KeyboardAwareScrollView>
+            </MainView>
+            <MotiView
+                style={{
+                    width: "100%",
+                    height: ht(400),
+                    justifyContent: "center",
+                    alignItems: "center",
+                    paddingVertical: wt(30),
+                    paddingHorizontal: wt(80)
+                }}
+                animate={{
+                    translateY: editName.length > 0 && editContent.length > 0
+                        ? 0
+                        : 200
+                }}
+            >
+                <CustomButton
+                    title={'추가하기'}
+                    type='success'
+                />
+            </MotiView>
         </CustomSafeAreaView>
     )
 }
