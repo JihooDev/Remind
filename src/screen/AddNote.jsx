@@ -29,7 +29,8 @@ const AddNote = ({ navigation: { pop } }) => {
             name: memoName,
             date_created: moment().unix(),
             content: content,
-            id: uuid.v4()
+            id: uuid.v4(),
+            time: moment().format('YYYY-MM-DD')
         }
         const postData = await createMemoPost(pageData.id, uid, valueData);
 
