@@ -10,7 +10,7 @@ import { MotiView, ScrollView } from 'moti'
 import CustomButton from '../components/CustomButton'
 import { useRecoilState } from 'recoil'
 import { detailData } from '../recoil/user'
-import { createMemoPost } from '../functions/firebase'
+import { createMemoPost, getRefleshMemoData } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import moment from 'moment'
 import uuid from 'react-native-uuid'
@@ -23,13 +23,15 @@ const AddNote = ({ navigation: { pop } }) => {
 
     // 메모를 생성하는 함수
     const createMemo = async () => {
+        const uid = await AsyncStorage.getItem('uid');
+
         const valueData = {
             name: memoName,
             date_created: moment().unix(),
             content: content,
-            id: uuid.v4()
+            id: uuid.v4(),
+            time: moment().format('YYYY-MM-DD')
         }
-        const uid = await AsyncStorage.getItem('uid');
         const postData = await createMemoPost(pageData.id, uid, valueData);
 
         if (postData['status']) {

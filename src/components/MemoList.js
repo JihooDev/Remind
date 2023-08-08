@@ -6,13 +6,18 @@ import { MotiView } from 'moti'
 import CustomText from './CustomText'
 import moment from 'moment'
 import { sliceText } from '../functions/utils'
+import { useNavigation } from '@react-navigation/native'
 
 const MemoList = ({ item }) => {
+
+    const navigation = useNavigation();
+
     return (
         <MotiView
             style={{
                 width: "100%",
                 height: ht(450),
+                marginBottom: ht(80)
             }}
             from={{ opacity: 0, translateY: -200 }}
             animate={{ opacity: 1, translateY: 0 }}
@@ -20,6 +25,7 @@ const MemoList = ({ item }) => {
         >
             <MemoListView
                 activeOpacity={.9}
+                onPress={() => navigation.navigate('MemoDetail', { data: item })}
             >
                 <MemoHeader>
                     <CustomText
@@ -28,7 +34,7 @@ const MemoList = ({ item }) => {
                         size={20}
                     />
                     <CustomText
-                        text={moment(item.time).format('YYYY-MM-DD')}
+                        text={item.time}
                         size={13}
                         color={COLORS.gray}
                     />

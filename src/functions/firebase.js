@@ -120,3 +120,30 @@ export const createMemoPost = async (folderId, uid, postData) => {
         }
     }
 }
+
+// 메모 추가 이후 데이터 다시 불러오기
+export const getRefleshMemoData = async (folderId, uid) => {
+    try {
+        let targetFolder;
+
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const folderData = doc.data().folder;
+
+                targetFolder = folderData.filter(item => item.id === folderId)[0];
+
+            })
+        })
+
+        return {
+            status: true,
+            data: targetFolder
+        }
+    } catch (error) {
+        console.error(error, '메모 추가 이후 데이터 불러오기 실패');
+        return {
+            status: false,
+            error_message: error
+        }
+    }
+}

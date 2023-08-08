@@ -36,10 +36,21 @@ const PinCodeModal = ({
     // 핀코드 입력 시 실행 함수
     const pressPinCode = (val) => {
         const newPincodeValue = [...pincodeValue];
-        const nullIndex = newPincodeValue.findIndex((item) => item === null);
-        if (nullIndex !== -1) {
-            newPincodeValue[nullIndex] = val;
-            setPinCodeValue(newPincodeValue);
+        console.log(val);
+        if (val !== 'back') {
+            const nullIndex = newPincodeValue.findIndex((item) => item === null);
+            if (nullIndex !== -1) {
+                newPincodeValue[nullIndex] = val;
+                setPinCodeValue(newPincodeValue);
+            }
+        } else {
+            for (let i = 0; i < newPincodeValue.length; i++) {
+                if (newPincodeValue[i] === null && typeof newPincodeValue[i - 1] === 'string') {
+                    newPincodeValue[i - 1] = null;
+                    setPinCodeValue(newPincodeValue);
+                    break;
+                }
+            }
         }
     }
 
@@ -105,6 +116,7 @@ const PinCodeModal = ({
             isVisible={modalState}
             animationIn={'fadeIn'}
             animationOut={'fadeOut'}
+            animationInTiming={1000}
             style={{
                 margin: 0,
             }}

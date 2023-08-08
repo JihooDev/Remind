@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { ICON } from '../asset/asset';
 import { ht, wt } from '../../responsive/responsive';
@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Loading from '../components/Loading';
 import FolderList from '../components/FolderList';
 import PinCodeModal from '../components/modal/PinCodeModal';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Home = ({ navigation }) => {
 
@@ -28,9 +29,11 @@ const Home = ({ navigation }) => {
     const [loading, setLoading] = useRecoilState(loadingControl);
     const { push, reset } = navigation;
 
-    useEffect(() => {
-        getFolder();
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            getFolder();
+        }, [])
+    )
 
     const getFolder = async () => {
         const uid = await AsyncStorage.getItem('uid');

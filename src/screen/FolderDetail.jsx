@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import { COLORS } from '../asset/colors'
 import { useRecoilState } from 'recoil'
@@ -12,11 +12,29 @@ import { ht, wt } from '../../responsive/responsive'
 import { ICON } from '../asset/asset'
 import { FlatList, Image } from 'react-native'
 import MemoList from '../components/MemoList'
+import { getRefleshMemoData } from '../functions/firebase'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { useFocusEffect } from '@react-navigation/native'
 
 const FolderDetail = ({ navigation: { push } }) => {
 
     const [pageData, setPageData] = useRecoilState(detailData);
     const [contentList, setContentList] = useState(pageData?.content);
+
+    useFocusEffect(
+        useCallback(() => {
+            getMemoData();
+        }, [])
+    )
+
+    const getMemoData = async () => {
+        const uid = await AsyncStorage.getItem('uid');
+        const reflashData = await getRefleshMemoData(pageData.id, uid);
+
+        if (reflashData['status']) {
+            setContentList(reflashData['data'].content);
+        }
+    }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
@@ -27,12 +45,37 @@ const FolderDetail = ({ navigation: { push } }) => {
             {
                 contentList?.length > 0
                     ?
-                    <FlatList
-                        data={contentList}
-                        style={{ paddingHorizontal: wt(50), paddingTop: ht(80) }}
-                        renderItem={(item) => { return <MemoList item={item.item} /> }}
-                        keyExtractor={(item) => item.id}
-                    />
+                    <>
+                        <FlatList
+                            data={contentList}
+                            style={{ paddingHorizontal: wt(50), paddingTop: ht(80) }}
+                            renderItem={(item) => { return <MemoList item={item.item} /> }}
+                            keyExtractor={(item) => item.id}
+                        />
+                        <MotiView
+                            from={{ opacity: 0, translateY: 50 }}
+                            animate={{ opacity: 1, translateY: 0 }}
+                            delay={1000}
+                            style={{
+                                marginTop: ht(80)
+                            }}
+                        >
+                            <PlusButton
+                                activeOpacity={.9}
+                                style={{ position: "absolute", bottom: wt(350), right: wt(100), zIndex: 998 }}
+                                onPress={() => push('AddNote')}
+                            >
+                                <Image
+                                    source={ICON.plus}
+                                    style={{
+                                        tintColor: COLORS.white,
+                                        width: wt(100),
+                                        height: ht(100)
+                                    }}
+                                />
+                            </PlusButton>
+                        </MotiView>
+                    </>
                     :
                     <NoContentView>
                         <MotiView
