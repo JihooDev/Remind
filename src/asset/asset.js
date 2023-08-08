@@ -10,7 +10,10 @@ export const ICON = {
     setting: require('./icon/setting.png'),
     calandar: require('./icon/calendar.png'),
     back: require('./icon/back.png'),
-    right: require('./icon/right.png')
+    right: require('./icon/right.png'),
+    colorList: require('./icon/colorList.png'),
+    bold: require('./icon/bold.png'),
+    medium: require('./icon/medium.png'),
 }
 
 export const IMAGE = {
