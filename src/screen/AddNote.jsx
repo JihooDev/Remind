@@ -47,12 +47,13 @@ const AddNote = ({ navigation: { pop } }) => {
     const changeOption = type => {
         switch (type) {
             case "bold":
-                return setBold(!bold);
+                setBold(!bold);
+                setThin(false);
+                return
             case "thin":
-                return () => {
-                    setBold(false);
-                    setThin(!thin);
-                }
+                setBold(false);
+                setThin(!thin);
+                return;
             case "color":
                 return setColorList(!colorList)
         }
@@ -86,15 +87,14 @@ const AddNote = ({ navigation: { pop } }) => {
                 <KeyboardAwareScrollView
                     contentContainerStyle={{ flexGrow: 1 }}
                     keyboardShouldPersistTaps="handled"
-                    stickyHeaderIndices={[0]}
                 >
-                    <NoteSettingBar
+                    {/* <NoteSettingBar
                         show={keyboardShowState}
                         changeOption={changeOption}
                         bold={bold}
                         thin={thin}
                         colorList={colorList}
-                    />
+                    /> */}
                     <CustomInputView>
                         <TextInput
                             value={memoName}

@@ -17,15 +17,21 @@ const NoteSettingBar = ({
     const optionList = [
         {
             id: 1,
-            image: ICON.bold
+            image: ICON.bold,
+            state: bold,
+            name: 'bold'
         },
         {
             id: 2,
-            image: ICON.medium
+            image: ICON.medium,
+            state: thin,
+            name: "thin"
         },
         {
             id: 3,
-            image: ICON.colorList
+            image: ICON.colorList,
+            state: colorList,
+            name: "color"
         },
     ]
 
@@ -52,12 +58,17 @@ const NoteSettingBar = ({
                 optionList.map(item => (
                     <ButtonView
                         key={item.id}
+                        onPress={() => changeOption(item.name)}
+                        style={{
+                            backgroundColor: item.state ? COLORS.black : null
+                        }}
                     >
                         <Image
                             source={item.image}
                             style={{
                                 width: "40%",
-                                height: "40%"
+                                height: "40%",
+                                tintColor: item.state ? COLORS.white : COLORS.black
                             }}
                         />
                     </ButtonView>
@@ -68,9 +79,9 @@ const NoteSettingBar = ({
 }
 
 const ButtonView = styled.TouchableOpacity`
-    width: ${wt(230)}px;
+    width: ${wt(200)}px;
     border-radius: 50px;
-    height: 90%;
+    height: 70%;
     justify-content: center;
     align-items: center;
     margin: 0 ${wt(50)}px;
