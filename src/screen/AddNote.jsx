@@ -5,7 +5,7 @@ import { COLORS } from '../asset/colors'
 import CustomStatusBar from '../components/CustomStatusBar'
 import { styled } from 'styled-components'
 import { font, ht, wt } from '../../responsive/responsive'
-import { TextInput } from 'react-native'
+import { Keyboard, KeyboardAvoidingView, TextInput } from 'react-native'
 import { MotiView, ScrollView } from 'moti'
 import CustomButton from '../components/CustomButton'
 import { useRecoilState } from 'recoil'
@@ -14,12 +14,31 @@ import { createMemoPost, getRefleshMemoData } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import moment from 'moment'
 import uuid from 'react-native-uuid'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import NoteSettingBar from '../components/NoteSettingBar'
 
 const AddNote = ({ navigation: { pop } }) => {
 
     const [memoName, setMemoName] = useState('');
     const [content, setContent] = useState('');
     const [pageData, setPageData] = useRecoilState(detailData);
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
+    const [keyboardShowState, setKeyboardShowState] = useState(false);
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
+            setKeyboardShowState(true);
+        });
+
+        const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardShowState(false);
+        });
+
+        return () => {
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
     // 메모를 생성하는 함수
     const createMemo = async () => {
@@ -46,58 +65,66 @@ const AddNote = ({ navigation: { pop } }) => {
                 back={true}
             />
             <MainView>
-                <CustomInputView>
-                    <TextInput
-                        value={memoName}
-                        onChangeText={text => setMemoName(text)}
-                        style={{
-                            color: COLORS.white,
-                            fontSize: font(16),
-                            fontFamily: "Pretendard-Medium"
-                        }}
-                        placeholder="메모의 이름을 입력해주세요"
-                        placeholderTextColor={COLORS.gray}
-                    />
-                    <MotiView
-                        style={{
-                            position: "absolute",
-                            bottom: 0,
-                            width: "100%",
-                            height: ht(10),
-                        }}
-                        animate={{
-                            backgroundColor: memoName.length > 0 ? COLORS.success : COLORS.gray
-                        }}
-                    />
-                </CustomInputView>
-                <MotiView
-                    style={{
-                        width: "100%",
-                        height: ht(1400),
-                        borderRadius: 15,
-                        borderWidth: ht(10),
-                        padding: ht(50)
-                    }}
-                    animate={{
-                        borderColor: content.length > 0 ? COLORS.success : COLORS.gray
-                    }}
+                <KeyboardAwareScrollView
+                    contentContainerStyle={{ flexGrow: 1 }}
+                    keyboardShouldPersistTaps="handled"
+                    stickyHeaderIndices={[0]}
                 >
-                    <ScrollView>
+                    <NoteSettingBar show={keyboardShowState} />
+                    <CustomInputView>
                         <TextInput
+                            value={memoName}
+                            onChangeText={text => setMemoName(text)}
                             style={{
-                                width: "100%",
-                                fontSize: font(16),
                                 color: COLORS.white,
+                                fontSize: font(16),
                                 fontFamily: "Pretendard-Medium"
                             }}
-                            multiline={true}
-                            value={content}
-                            onChangeText={text => setContent(text)}
-                            placeholder='기록 하실 내용을 입력해주세요'
+                            placeholder="메모의 이름을 입력해주세요"
                             placeholderTextColor={COLORS.gray}
                         />
-                    </ScrollView>
-                </MotiView>
+                        <MotiView
+                            style={{
+                                position: "absolute",
+                                bottom: 0,
+                                width: "100%",
+                                height: ht(10),
+                            }}
+                            animate={{
+                                backgroundColor: memoName.length > 0 ? COLORS.success : COLORS.gray
+                            }}
+                        />
+                    </CustomInputView>
+                    <MotiView
+                        style={{
+                            width: "100%",
+                            height: ht(1400),
+                            borderRadius: 15,
+                            borderWidth: ht(10),
+                            padding: ht(50)
+                        }}
+                        animate={{
+                            borderColor: content.length > 0 ? COLORS.success : COLORS.gray
+                        }}
+                    >
+                        <ScrollView>
+                            <TextInput
+                                style={{
+                                    width: "100%",
+                                    fontSize: font(16),
+                                    color: COLORS.white,
+                                    fontFamily: "Pretendard-Medium"
+                                }}
+                                multiline={true}
+                                value={content}
+                                onChangeText={text => setContent(text)}
+                                placeholder='기록 하실 내용을 입력해주세요'
+                                placeholderTextColor={COLORS.gray}
+                            />
+                        </ScrollView>
+                    </MotiView>
+                </KeyboardAwareScrollView>
+
             </MainView>
             <MotiView
                 style={{
@@ -120,7 +147,7 @@ const AddNote = ({ navigation: { pop } }) => {
                     onPress={createMemo}
                 />
             </MotiView>
-        </CustomSafeAreaView>
+        </CustomSafeAreaView >
     )
 }
 
