@@ -7,10 +7,6 @@ import { ICON } from '../asset/asset'
 
 const CustomBottomTab = ({ state, navigation, descriptors }) => {
 
-    useEffect(() => {
-        console.log(state);
-    }, [])
-
     const getIcon = label => {
         switch (label) {
             case "Main":

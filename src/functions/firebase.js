@@ -87,11 +87,9 @@ export const createMemoPost = async (folderId, uid, postData) => {
                 const documentId = doc.id;
                 const folderData = doc.data().folder;
 
-                // console.log(folderData);
 
                 const updateFolder = folderData.map(item => {
                     if (item.id === folderId) {
-                        console.log(item);
 
                         return {
                             ...item,
