@@ -20,13 +20,12 @@ import NoteSettingBar from '../components/NoteSettingBar'
 const AddNote = ({ navigation: { pop } }) => {
 
     const [memoName, setMemoName] = useState('');
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState([]);
     const [pageData, setPageData] = useRecoilState(detailData);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
     const [keyboardShowState, setKeyboardShowState] = useState(false);
-    const [bold, setBold] = useState(false);
-    const [thin, setThin] = useState(false);
-    const [colorList, setColorList] = useState(false);
+    const [fontType, setFontType] = useState('Medium');
+    const [fontColor, setFontColor] = useState(COLORS.white);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', (e) => {
@@ -46,16 +45,14 @@ const AddNote = ({ navigation: { pop } }) => {
     // 옵션을 변경하는 함수
     const changeOption = type => {
         switch (type) {
-            case "bold":
-                setBold(!bold);
-                setThin(false);
+            case "Bold":
+                setFontType('Bold')
                 return
-            case "thin":
-                setBold(false);
-                setThin(!thin);
+            case "Medium":
+                setFontType('Medium')
                 return;
-            case "color":
-                return setColorList(!colorList)
+            case "Color":
+                return setColorList('Red')
         }
     }
 
@@ -77,6 +74,15 @@ const AddNote = ({ navigation: { pop } }) => {
         }
     }
 
+    // 글자 입력 시 들어오는 함수
+    const pressText = React.memo((text) => {
+
+        const copyArr = [...content, { type: fontType, text: text, color: fontColor }]
+
+        setContent(copyArr);
+    })
+
+
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
             <CustomStatusBar
@@ -87,14 +93,14 @@ const AddNote = ({ navigation: { pop } }) => {
                 <KeyboardAwareScrollView
                     contentContainerStyle={{ flexGrow: 1 }}
                     keyboardShouldPersistTaps="handled"
+                    stickyHeaderIndices={[0]}
                 >
-                    {/* <NoteSettingBar
+                    <NoteSettingBar
                         show={keyboardShowState}
                         changeOption={changeOption}
-                        bold={bold}
-                        thin={thin}
-                        colorList={colorList}
-                    /> */}
+                        fontType={fontType}
+                        fontColor={fontColor}
+                    />
                     <CustomInputView>
                         <TextInput
                             value={memoName}
@@ -136,15 +142,25 @@ const AddNote = ({ navigation: { pop } }) => {
                                 style={{
                                     width: "100%",
                                     fontSize: font(16),
-                                    color: COLORS.white,
-                                    fontFamily: "Pretendard-Medium"
                                 }}
                                 multiline={true}
-                                value={content}
-                                onChangeText={text => setContent(text)}
+                                onChangeText={text => pressText(text)}
                                 placeholder='기록 하실 내용을 입력해주세요'
                                 placeholderTextColor={COLORS.gray}
-                            />
+                            >
+                                {
+                                    content.map((item, index) => {
+                                        return (
+                                            <CustomText
+                                                key={index}
+                                                text={item.text}
+                                                color={item.color}
+                                                type={item.fontType}
+                                            />
+                                        )
+                                    })
+                                }
+                            </TextInput>
                         </ScrollView>
                     </MotiView>
                 </KeyboardAwareScrollView>
