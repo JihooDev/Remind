@@ -20,7 +20,7 @@ import NoteSettingBar from '../components/NoteSettingBar'
 const AddNote = ({ navigation: { pop } }) => {
 
     const [memoName, setMemoName] = useState('');
-    const [content, setContent] = useState([]);
+    const [content, setContent] = useState('');
     const [pageData, setPageData] = useRecoilState(detailData);
     const [keyboardHeight, setKeyboardHeight] = useState(0);
     const [keyboardShowState, setKeyboardShowState] = useState(false);
@@ -75,12 +75,12 @@ const AddNote = ({ navigation: { pop } }) => {
     }
 
     // 글자 입력 시 들어오는 함수
-    const pressText = React.memo((text) => {
+    const pressText = (text) => {
 
-        const copyArr = [...content, { type: fontType, text: text, color: fontColor }]
+        // const copyArr = [...content, { type: fontType, text: text, color: fontColor }]
 
-        setContent(copyArr);
-    })
+        setContent(text);
+    }
 
 
     return (
@@ -93,14 +93,14 @@ const AddNote = ({ navigation: { pop } }) => {
                 <KeyboardAwareScrollView
                     contentContainerStyle={{ flexGrow: 1 }}
                     keyboardShouldPersistTaps="handled"
-                    stickyHeaderIndices={[0]}
+                // stickyHeaderIndices={[0]}
                 >
-                    <NoteSettingBar
+                    {/* <NoteSettingBar
                         show={keyboardShowState}
                         changeOption={changeOption}
                         fontType={fontType}
                         fontColor={fontColor}
-                    />
+                    /> */}
                     <CustomInputView>
                         <TextInput
                             value={memoName}
@@ -142,13 +142,16 @@ const AddNote = ({ navigation: { pop } }) => {
                                 style={{
                                     width: "100%",
                                     fontSize: font(16),
+                                    fontFamily: "Pretendard-Medium",
+                                    color: COLORS.white
                                 }}
+                                value={content}
                                 multiline={true}
                                 onChangeText={text => pressText(text)}
                                 placeholder='기록 하실 내용을 입력해주세요'
                                 placeholderTextColor={COLORS.gray}
                             >
-                                {
+                                {/* {
                                     content.map((item, index) => {
                                         return (
                                             <CustomText
@@ -159,7 +162,7 @@ const AddNote = ({ navigation: { pop } }) => {
                                             />
                                         )
                                     })
-                                }
+                                } */}
                             </TextInput>
                         </ScrollView>
                     </MotiView>
