@@ -3,38 +3,89 @@ import { styled } from 'styled-components'
 import { ht, wt } from '../../responsive/responsive'
 import CustomText from './CustomText';
 import { COLORS } from '../asset/colors';
+import { MotiView } from 'moti';
 
 const FIlterBar = ({
     data,
     setData,
-    updateFuc
+    updateFuc,
+    selectStatus,
+    menuStatus,
+    statusTabBarAction,
+    tabSideMenu,
+    selectContent
 }) => {
 
-    const [menuStatus, setMenuStatus] = useState('최신순');
-    const [selectStatus, setSelectStatus] = useState('선택');
     const tabMenuList = [
         {
             id: 1,
-            title: selectStatus,
+            title: selectStatus ? '전체선택' : '선택하기',
+            type: selectStatus ? "select_all" : "select"
         },
         {
             id: 2,
-            title: menuStatus
+            title: menuStatus,
+            type: "filter"
         }
     ]
+
+    // 탭 메뉴를 상태에 따라 리턴하는 함수
+    const tabMenuRenderItem = () => {
+        if (!tabSideMenu) {
+            return [
+                {
+                    id: 1,
+                    title: selectStatus ? '전체선택' : '선택하기',
+                    type: selectStatus ? "select_all" : "select",
+                    color: COLORS.main
+                },
+                {
+                    id: 2,
+                    title: menuStatus,
+                    type: "filter",
+                    color: COLORS.main
+                }
+            ]
+        } else {
+            return [
+                {
+                    id: 1,
+                    title: selectContent.length > 0
+                        ? `${selectContent.length}개`
+                        : '취소',
+                    type: selectContent.length === 0 && 'none_select',
+                    color: selectContent.length === 0 ? COLORS.gray : COLORS.red
+                },
+                {
+                    id: 2,
+                    title: "삭제하기",
+                    type: "delete",
+                    color: COLORS.red
+                }
+            ]
+        }
+    }
 
     return (
         <FilterView>
             {
-                tabMenuList.map(({ id, title }) => (
-                    <FilterButton
-                        activeOpacity={.9}
+                tabMenuRenderItem().map(({ id, title, type, color }) => (
+                    <MotiView
+                        from={{ translateX: id % 2 === 0 ? 200 : -200, opacity: 0 }}
+                        animate={{ translateX: 0, opacity: 1 }}
+                        delay={1500}
                     >
-                        <CustomText
-                            text={title}
-                            color={COLORS.white}
-                        />
-                    </FilterButton>
+                        <FilterButton
+                            activeOpacity={.9}
+                            onPress={() => statusTabBarAction(type)}
+                            color={color}
+                        >
+                            <CustomText
+                                text={title}
+                                color={COLORS.white}
+                            />
+                        </FilterButton>
+                    </MotiView>
                 ))
             }
         </FilterView>
@@ -53,10 +104,9 @@ const FilterView = styled.View`
 const FilterButton = styled.TouchableOpacity`
     width: ${wt(350)}px;
     height: ${ht(130)}px;
-    background-color: red;
     justify-content: center;
     align-items: center;
-    background-color: ${props => props.status ? COLORS.red : COLORS.success};
+    background-color: ${props => props.color};
     border-radius: 5px;
 `
 

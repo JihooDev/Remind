@@ -21,6 +21,10 @@ const FolderDetail = ({ navigation: { push } }) => {
 
     const [pageData, setPageData] = useRecoilState(detailData);
     const [contentList, setContentList] = useState(pageData?.content);
+    const [menuStatus, setMenuStatus] = useState('최신순');
+    const [selectStatus, setSelectStatus] = useState(false);
+    const [tabSideMenu, setTabSideMenu] = useState(false);
+    const [selectContent, setSelectContent] = useState([]);
 
     useFocusEffect(
         useCallback(() => {
@@ -28,6 +32,7 @@ const FolderDetail = ({ navigation: { push } }) => {
         }, [])
     )
 
+    // 메모 데이터를 가져오는 함수
     const getMemoData = async () => {
         const uid = await AsyncStorage.getItem('uid');
         const reflashData = await getRefleshMemoData(pageData.id, uid);
@@ -37,17 +42,39 @@ const FolderDetail = ({ navigation: { push } }) => {
         }
     }
 
+    // 필터 탭을 클릭했을 때 동작하는 함수
+    const statusTabBarAction = (type) => {
+        switch (type) {
+            case "select":
+                setSelectStatus(true);
+                return setTabSideMenu(true);
+            case "filter":
+                return setMenuStatus('오래된 순');
+            case "none_select":
+                setSelectStatus(false);
+                return setTabSideMenu(false);
+        }
+    }
+
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
             <CustomStatusBar
                 title={pageData?.name}
                 back={true}
             />
-            <FIlterBar
-                setData={setContentList}
-                data={contentList}
-                updateFuc={getMemoData}
-            />
+            {
+                contentList.length > 0 &&
+                <FIlterBar
+                    setData={setContentList}
+                    data={contentList}
+                    updateFuc={getMemoData}
+                    menuStatus={menuStatus}
+                    selectStatus={selectStatus}
+                    statusTabBarAction={statusTabBarAction}
+                    tabSideMenu={tabSideMenu}
+                    selectContent={selectContent}
+                />
+            }
             {
                 contentList?.length > 0
                     ?
@@ -55,7 +82,7 @@ const FolderDetail = ({ navigation: { push } }) => {
                         <FlatList
                             data={contentList}
                             style={{ paddingHorizontal: wt(50), paddingTop: ht(80) }}
-                            renderItem={(item) => { return <MemoList item={item.item} /> }}
+                            renderItem={(item) => { return <MemoList item={item.item} selectStatus={selectStatus} /> }}
                             keyExtractor={(item) => item.id}
                         />
                         <MotiView
