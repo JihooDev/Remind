@@ -21,7 +21,7 @@ const FolderDetail = ({ navigation: { push } }) => {
 
     const [pageData, setPageData] = useRecoilState(detailData);
     const [contentList, setContentList] = useState(pageData?.content);
-    const [menuStatus, setMenuStatus] = useState('최신순');
+    const [menuStatus, setMenuStatus] = useState(false); // false 최신 순 | true 오래된 순
     const [selectStatus, setSelectStatus] = useState(false);
     const [tabSideMenu, setTabSideMenu] = useState(false);
     const [selectContent, setSelectContent] = useState([]);
@@ -49,10 +49,24 @@ const FolderDetail = ({ navigation: { push } }) => {
                 setSelectStatus(true);
                 return setTabSideMenu(true);
             case "filter":
-                return setMenuStatus('오래된 순');
+                dateFilter();
+                return setMenuStatus(!menuStatus);
             case "none_select":
                 setSelectStatus(false);
                 return setTabSideMenu(false);
+        }
+    }
+
+    // 최신/오래된 순 정렬
+    const dateFilter = () => {
+        if (menuStatus) {
+            setContentList(contentList.sort((a, b) => {
+                return b.date_created - a.date_created;
+            }))
+        } else {
+            setContentList(contentList.sort((a, b) => {
+                return a.date_created - b.date_created;
+            }))
         }
     }
 

@@ -41,7 +41,7 @@ const FIlterBar = ({
                 },
                 {
                     id: 2,
-                    title: menuStatus,
+                    title: menuStatus ? '오래된순' : '최신순',
                     type: "filter",
                     color: COLORS.main
                 }
@@ -60,7 +60,7 @@ const FIlterBar = ({
                     id: 2,
                     title: "삭제하기",
                     type: "delete",
-                    color: COLORS.red
+                    color: selectContent.length === 0 ? COLORS.gray : COLORS.red
                 }
             ]
         }
@@ -71,7 +71,7 @@ const FIlterBar = ({
             {
                 tabMenuRenderItem().map(({ id, title, type, color }) => (
                     <MotiView
-                        from={{ translateX: id % 2 === 0 ? 200 : -200, opacity: 0 }}
+                        from={{ translateX: id % 2 === 0 ? 100 : -100, opacity: 0 }}
                         animate={{ translateX: 0, opacity: 1 }}
                         delay={1500}
                     >
