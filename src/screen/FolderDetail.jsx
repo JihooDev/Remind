@@ -15,6 +15,7 @@ import MemoList from '../components/MemoList'
 import { getRefleshMemoData } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
+import FIlterBar from '../components/FIlterBar'
 
 const FolderDetail = ({ navigation: { push } }) => {
 
@@ -41,6 +42,11 @@ const FolderDetail = ({ navigation: { push } }) => {
             <CustomStatusBar
                 title={pageData?.name}
                 back={true}
+            />
+            <FIlterBar
+                setData={setContentList}
+                data={contentList}
+                updateFuc={getMemoData}
             />
             {
                 contentList?.length > 0
