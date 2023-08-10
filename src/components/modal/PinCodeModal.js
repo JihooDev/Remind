@@ -36,7 +36,6 @@ const PinCodeModal = ({
     // 핀코드 입력 시 실행 함수
     const pressPinCode = (val) => {
         const newPincodeValue = [...pincodeValue];
-        console.log(val);
         if (val !== 'back') {
             const nullIndex = newPincodeValue.findIndex((item) => item === null);
             if (nullIndex !== -1) {

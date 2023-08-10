@@ -34,7 +34,6 @@ const SignInButton = ({ data }) => {
                     const userCheck = await getUser(res.user.uid, setLoading);
 
                     if (userCheck.data) {
-                        console.log(userCheck);
                         await AsyncStorage.setItem('user', JSON.stringify({ uid: userCheck.data.uid, user_name: userCheck.data.user_name }));
                         await AsyncStorage.setItem('pincode', userCheck.data.pin_code);
                         setUserDataBox({ uid: userCheck.data.uid, user_name: userCheck.data.user_name });

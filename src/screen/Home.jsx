@@ -40,7 +40,6 @@ const Home = ({ navigation }) => {
 
         const folder = await getUser(uid, setLoading);
 
-        console.log(folder.data['folder'])
 
         setFolderData(folder.data['folder'])
     }

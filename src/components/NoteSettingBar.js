@@ -9,29 +9,25 @@ import { Image } from 'react-native'
 const NoteSettingBar = ({
     show,
     changeOption,
-    bold,
-    thin,
-    colorList
+    fontType,
+    fontColor
 }) => {
 
     const optionList = [
         {
             id: 1,
             image: ICON.bold,
-            state: bold,
-            name: 'bold'
+            name: 'Bold'
         },
         {
             id: 2,
             image: ICON.medium,
-            state: thin,
-            name: "thin"
+            name: "Medium"
         },
         {
             id: 3,
             image: ICON.colorList,
-            state: colorList,
-            name: "color"
+            name: COLORS.white
         },
     ]
 
@@ -60,7 +56,7 @@ const NoteSettingBar = ({
                         key={item.id}
                         onPress={() => changeOption(item.name)}
                         style={{
-                            backgroundColor: item.state ? COLORS.black : null
+                            backgroundColor: item.name === fontType || item.name === fontColor ? COLORS.black : null
                         }}
                     >
                         <Image
@@ -68,13 +64,15 @@ const NoteSettingBar = ({
                             style={{
                                 width: "40%",
                                 height: "40%",
-                                tintColor: item.state ? COLORS.white : COLORS.black
+                                tintColor: item.name === fontType || item.name === fontColor
+                                    ? COLORS.white
+                                    : COLORS.black
                             }}
                         />
                     </ButtonView>
                 ))
             }
-        </MotiView>
+        </MotiView >
     )
 }
 

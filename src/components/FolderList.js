@@ -33,8 +33,6 @@ const FolderList = ({
     const modalActionFuc = () => {
         setModalState(false);
 
-        console.log(data, '넘어가는 값');
-
         setTimeout(() => {
             navigation.navigate('FolderDetail', { data: detailState });
         }, 200)
