@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { SafeAreaView, Text } from 'react-native'
+import { SafeAreaView, StatusBar, Text } from 'react-native'
 import StackNavigation from './src/navigator/StackNavigation'
 import { RecoilRoot, useRecoilValue } from 'recoil'
 import SplashScreen from 'react-native-splash-screen'
@@ -29,6 +29,7 @@ const App = () => {
 
   return (
     <RecoilRoot>
+      <StatusBar barStyle="light-content" />
       <StackNavigation />
     </RecoilRoot>
   )

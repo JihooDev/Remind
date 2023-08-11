@@ -21,6 +21,10 @@ const FolderDetail = ({ navigation: { push } }) => {
 
     const [pageData, setPageData] = useRecoilState(detailData);
     const [contentList, setContentList] = useState(pageData?.content);
+    const [menuStatus, setMenuStatus] = useState(false); // false 최신 순 | true 오래된 순
+    const [selectStatus, setSelectStatus] = useState(false);
+    const [tabSideMenu, setTabSideMenu] = useState(false);
+    const [selectContent, setSelectContent] = useState([]);
 
     useFocusEffect(
         useCallback(() => {
@@ -28,12 +32,53 @@ const FolderDetail = ({ navigation: { push } }) => {
         }, [])
     )
 
+    // 메모 데이터를 가져오는 함수
     const getMemoData = async () => {
         const uid = await AsyncStorage.getItem('uid');
         const reflashData = await getRefleshMemoData(pageData.id, uid);
 
         if (reflashData['status']) {
-            setContentList(reflashData['data'].content);
+            const memoDataArr = reflashData['data'].content;
+            setContentList(reflashData['data'].content.sort((a, b) => { return b.date_created - a.date_created }));
+        }
+    }
+
+    // 필터 탭을 클릭했을 때 동작하는 함수
+    const statusTabBarAction = (type) => {
+        switch (type) {
+            case "select":
+                setSelectStatus(true);
+                return setTabSideMenu(true);
+            case "filter":
+                dateFilter();
+                return setMenuStatus(!menuStatus);
+            case "none_select":
+                setSelectStatus(false);
+                return setTabSideMenu(false);
+        }
+    }
+
+    // 최신/오래된 순 정렬
+    const dateFilter = () => {
+        if (menuStatus) {
+            setContentList(contentList.sort((a, b) => {
+                return b.date_created - a.date_created;
+            }))
+        } else {
+            setContentList(contentList.sort((a, b) => {
+                return a.date_created - b.date_created;
+            }))
+        }
+    }
+
+    // 메모를 선택했을 시 배열에 추가/제거 하는 함수
+    const selectMemoAction = item => {
+        const checkData = selectContent.filter(arrItem => arrItem.id === item.id);
+
+        if (checkData.length > 0) {
+            setSelectContent(selectContent.filter(arrItem => arrItem.id !== item.id));
+        } else {
+            setSelectContent([...selectContent, item]);
         }
     }
 
@@ -43,11 +88,19 @@ const FolderDetail = ({ navigation: { push } }) => {
                 title={pageData?.name}
                 back={true}
             />
-            <FIlterBar
-                setData={setContentList}
-                data={contentList}
-                updateFuc={getMemoData}
-            />
+            {
+                contentList.length > 0 &&
+                <FIlterBar
+                    setData={setContentList}
+                    data={contentList}
+                    updateFuc={getMemoData}
+                    menuStatus={menuStatus}
+                    selectStatus={selectStatus}
+                    statusTabBarAction={statusTabBarAction}
+                    tabSideMenu={tabSideMenu}
+                    selectContent={selectContent}
+                />
+            }
             {
                 contentList?.length > 0
                     ?
@@ -55,7 +108,7 @@ const FolderDetail = ({ navigation: { push } }) => {
                         <FlatList
                             data={contentList}
                             style={{ paddingHorizontal: wt(50), paddingTop: ht(80) }}
-                            renderItem={(item) => { return <MemoList item={item.item} /> }}
+                            renderItem={(item) => { return <MemoList item={item.item} selectStatus={selectStatus} selectMemoAction={selectMemoAction} /> }}
                             keyExtractor={(item) => item.id}
                         />
                         <MotiView
