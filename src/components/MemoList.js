@@ -8,9 +8,18 @@ import moment from 'moment'
 import { sliceText } from '../functions/utils'
 import { useNavigation } from '@react-navigation/native'
 
-const MemoList = ({ item }) => {
+const MemoList = ({ item, selectStatus, selectMemoAction }) => {
 
     const navigation = useNavigation();
+
+    // selectStatus에 따라 클릭 시 동작하는 함수
+    const selectItemAction = () => {
+        if (!selectStatus) {
+            navigation.navigate('MemoDetail', { data: item })
+        } else {
+            selectMemoAction(item);
+        }
+    }
 
     return (
         <MotiView
@@ -25,7 +34,7 @@ const MemoList = ({ item }) => {
         >
             <MemoListView
                 activeOpacity={.9}
-                onPress={() => navigation.navigate('MemoDetail', { data: item })}
+                onPress={selectItemAction}
             >
                 <MemoHeader>
                     <CustomText

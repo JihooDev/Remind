@@ -38,7 +38,8 @@ const FolderDetail = ({ navigation: { push } }) => {
         const reflashData = await getRefleshMemoData(pageData.id, uid);
 
         if (reflashData['status']) {
-            setContentList(reflashData['data'].content);
+            const memoDataArr = reflashData['data'].content;
+            setContentList(reflashData['data'].content.sort((a, b) => { return b.date_created - a.date_created }));
         }
     }
 
@@ -70,6 +71,17 @@ const FolderDetail = ({ navigation: { push } }) => {
         }
     }
 
+    // 메모를 선택했을 시 배열에 추가/제거 하는 함수
+    const selectMemoAction = item => {
+        const checkData = selectContent.filter(arrItem => arrItem.id === item.id);
+
+        if (checkData.length > 0) {
+            setSelectContent(selectContent.filter(arrItem => arrItem.id !== item.id));
+        } else {
+            setSelectContent([...selectContent, item]);
+        }
+    }
+
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
             <CustomStatusBar
@@ -96,7 +108,7 @@ const FolderDetail = ({ navigation: { push } }) => {
                         <FlatList
                             data={contentList}
                             style={{ paddingHorizontal: wt(50), paddingTop: ht(80) }}
-                            renderItem={(item) => { return <MemoList item={item.item} selectStatus={selectStatus} /> }}
+                            renderItem={(item) => { return <MemoList item={item.item} selectStatus={selectStatus} selectMemoAction={selectMemoAction} /> }}
                             keyExtractor={(item) => item.id}
                         />
                         <MotiView
