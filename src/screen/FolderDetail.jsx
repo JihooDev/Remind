@@ -108,7 +108,14 @@ const FolderDetail = ({ navigation: { push } }) => {
                         <FlatList
                             data={contentList}
                             style={{ paddingHorizontal: wt(50), paddingTop: ht(80) }}
-                            renderItem={(item) => { return <MemoList item={item.item} selectStatus={selectStatus} selectMemoAction={selectMemoAction} /> }}
+                            renderItem={(item) => {
+                                return <MemoList
+                                    item={item.item}
+                                    selectStatus={selectStatus}
+                                    selectMemoAction={selectMemoAction}
+                                    selectContent={selectContent}
+                                />
+                            }}
                             keyExtractor={(item) => item.id}
                         />
                         <MotiView

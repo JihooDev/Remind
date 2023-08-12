@@ -74,6 +74,7 @@ const FIlterBar = ({
                         from={{ translateX: id % 2 === 0 ? 100 : -100, opacity: 0 }}
                         animate={{ translateX: 0, opacity: 1 }}
                         delay={1500}
+                        key={id}
                     >
                         <FilterButton
                             activeOpacity={.9}
