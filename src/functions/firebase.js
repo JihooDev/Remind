@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
 import moment from 'moment';
 
@@ -81,7 +82,6 @@ export const createFolderPost = async (uid, data, setLoading) => {
 // 메모 추가
 export const createMemoPost = async (folderId, uid, postData) => {
     try {
-
         await user_list.where('uid', '==', uid).get().then((query) => {
             query.forEach(doc => {
                 const documentId = doc.id;
@@ -94,6 +94,47 @@ export const createMemoPost = async (folderId, uid, postData) => {
                         return {
                             ...item,
                             content: [...item.content, postData]
+                        }
+                    }
+
+                    return item;
+                })
+
+                user_list.doc(uid).update({
+                    folder: updateFolder
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        console.error(error, '메모 추가 실패');
+
+        return {
+            status: false,
+            error_message: error
+        }
+    }
+}
+
+// 메모 삭제 함수
+export const deleteMemo = async (folderId, postData) => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const documentId = doc.id;
+                const folderData = doc.data().folder;
+
+
+                const updateFolder = folderData.map(item => {
+                    if (item.id === folderId) {
+
+                        return {
+                            ...item,
+                            content: [...item.content]
                         }
                     }
 

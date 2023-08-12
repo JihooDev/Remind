@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import { ht, wt } from '../../responsive/responsive'
 import { COLORS } from '../asset/colors'
@@ -8,9 +8,23 @@ import moment from 'moment'
 import { sliceText } from '../functions/utils'
 import { useNavigation } from '@react-navigation/native'
 
-const MemoList = ({ item, selectStatus, selectMemoAction }) => {
+const MemoList = ({
+    item,
+    selectStatus,
+    selectMemoAction,
+    selectContent
+}) => {
 
     const navigation = useNavigation();
+    const [selectInCheck, setSelectInCheck] = useState(false);
+
+    useEffect(() => {
+        setSelectInCheck(
+            selectContent.filter(val => val.id === item.id).length > 0
+                ? true
+                : false
+        );
+    }, [selectContent])
 
     // selectStatus에 따라 클릭 시 동작하는 함수
     const selectItemAction = () => {
@@ -20,6 +34,7 @@ const MemoList = ({ item, selectStatus, selectMemoAction }) => {
             selectMemoAction(item);
         }
     }
+
 
     return (
         <MotiView
@@ -36,6 +51,27 @@ const MemoList = ({ item, selectStatus, selectMemoAction }) => {
                 activeOpacity={.9}
                 onPress={selectItemAction}
             >
+                {selectStatus &&
+                    <MotiView
+                        style={{
+                            position: "absolute",
+                            top: -ht(50),
+                            left: -wt(20)
+                        }}
+                        from={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <CheckBox
+                            activeOpacity={1}
+                            style={{
+                                backgroundColor: selectInCheck ? COLORS.border : COLORS.white,
+                                borderWidth: !selectInCheck ? 2 : 0,
+                                borderColor: COLORS.gray
+                            }}
+                        />
+                    </MotiView>
+                }
                 <MemoHeader>
                     <CustomText
                         text={item.name}
@@ -79,6 +115,12 @@ const MemoHeader = styled.View`
 const ContentView = styled.View`
     flex: 1;
     justify-content: center;
+`
+
+const CheckBox = styled.TouchableOpacity`
+    width: ${wt(90)}px;
+    height: ${ht(90)}px;
+    border-radius: 3px;
 `
 
 export default MemoList
