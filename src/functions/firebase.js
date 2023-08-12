@@ -123,23 +123,23 @@ export const createMemoPost = async (folderId, uid, postData) => {
 export const deleteMemo = async (folderId, postData) => {
     try {
         const uid = await AsyncStorage.getItem('uid');
+        let refleshData = [];
         await user_list.where('uid', '==', uid).get().then((query) => {
             query.forEach(doc => {
-                const documentId = doc.id;
-                const folderData = doc.data().folder;
 
+                const folderData = doc.data().folder;
 
                 const updateFolder = folderData.map(item => {
                     if (item.id === folderId) {
-
-                        return {
-                            ...item,
-                            content: [...item.content]
-                        }
+                        item.content = item.content.filter(contentItem =>
+                            contentItem.id !== postData.id
+                        )
                     }
+
 
                     return item;
                 })
+
 
                 user_list.doc(uid).update({
                     folder: updateFolder
