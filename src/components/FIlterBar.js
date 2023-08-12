@@ -58,8 +58,8 @@ const FIlterBar = ({
                 },
                 {
                     id: 2,
-                    title: "삭제하기",
-                    type: "delete",
+                    title: selectContent.length === 0 ? '전체선택' : "삭제하기",
+                    type: selectContent.length === 0 ? 'select_all' : "delete",
                     color: selectContent.length === 0 ? COLORS.gray : COLORS.red
                 }
             ]
