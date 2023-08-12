@@ -12,7 +12,7 @@ import { ht, wt } from '../../responsive/responsive'
 import { ICON } from '../asset/asset'
 import { FlatList, Image } from 'react-native'
 import MemoList from '../components/MemoList'
-import { getRefleshMemoData } from '../functions/firebase'
+import { deleteMemo, getRefleshMemoData } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
 import FIlterBar from '../components/FIlterBar'
@@ -44,19 +44,29 @@ const FolderDetail = ({ navigation: { push } }) => {
     }
 
     // 필터 탭을 클릭했을 때 동작하는 함수
-    const statusTabBarAction = (type) => {
-        switch (type) {
-            case "select":
-                setSelectStatus(true);
-                return setTabSideMenu(true);
-            case "filter":
-                dateFilter();
-                return setMenuStatus(!menuStatus);
-            case "none_select":
-                setSelectStatus(false);
-                return setTabSideMenu(false);
-            case "select_all":
-                return setSelectContent(contentList);
+    const statusTabBarAction = async (type) => {
+        if (type !== 'delete') {
+            switch (type) {
+                case "select":
+                    setSelectStatus(true);
+                    return setTabSideMenu(true);
+                case "filter":
+                    dateFilter();
+                    return setMenuStatus(!menuStatus);
+                case "none_select":
+                    setSelectStatus(false);
+                    return setTabSideMenu(false);
+                case "select_all":
+                    return setSelectContent(contentList);
+            }
+        } else {
+            selectContent.forEach(async (item) => {
+                const deleteData = await deleteMemo(item);
+
+                if (deleteData['status']) {
+                    await getMemoData();
+                }
+            })
         }
     }
 
