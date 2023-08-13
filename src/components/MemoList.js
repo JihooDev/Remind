@@ -50,28 +50,8 @@ const MemoList = ({
             <MemoListView
                 activeOpacity={.9}
                 onPress={selectItemAction}
+                check={selectInCheck}
             >
-                {selectStatus &&
-                    <MotiView
-                        style={{
-                            position: "absolute",
-                            top: -ht(50),
-                            left: -wt(20)
-                        }}
-                        from={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                    >
-                        <CheckBox
-                            activeOpacity={1}
-                            style={{
-                                backgroundColor: selectInCheck ? COLORS.border : COLORS.white,
-                                borderWidth: !selectInCheck ? 2 : 0,
-                                borderColor: COLORS.gray
-                            }}
-                        />
-                    </MotiView>
-                }
                 <MemoHeader>
                     <CustomText
                         text={item.name}
@@ -102,6 +82,8 @@ const MemoListView = styled.TouchableOpacity`
     border-radius: 10px;
     background-color: ${COLORS.white};
     padding: ${wt(50)}px;
+    border-color: ${props => props.check ? COLORS.border : COLORS.white};
+    border-width: ${props => props.check ? '4px' : '0px'};
 `
 
 const MemoHeader = styled.View`
