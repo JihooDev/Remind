@@ -18,7 +18,12 @@ const MemoDetail = ({ route }) => {
     const [noteData, setNoteData] = useState(route.params.data);
     const [editName, setEditName] = useState(noteData.name);
     const [editContent, setEditContent] = useState(noteData.content);
-    const nameInputRef = useRef();
+
+    const postEditFuc = async () => {
+        const valueData = {
+
+        }
+    }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
@@ -93,14 +98,18 @@ const MemoDetail = ({ route }) => {
                     paddingHorizontal: wt(80)
                 }}
                 animate={{
-                    translateY: editName.length > 0 && editContent.length > 0
-                        ? 0
-                        : 200
+                    translateY:
+                        editName.length > 0 &&
+                            editContent.length > 0 &&
+                            (noteData.name !== editName || noteData.content !== editContent)
+                            ? 0
+                            : 200
                 }}
             >
                 <CustomButton
-                    title={'추가하기'}
+                    title={'수정하기'}
                     type='success'
+                    onPress={postEditFuc}
                 />
             </MotiView>
         </CustomSafeAreaView>

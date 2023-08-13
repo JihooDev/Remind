@@ -63,7 +63,6 @@ const FolderDetail = ({ navigation: { push } }) => {
         } else if (type === 'delete') {
             selectContent.forEach(async (item) => {
                 const deleteData = await deleteMemo(pageData.id, item);
-
                 if (deleteData['status']) {
                     await getMemoData();
                 }
