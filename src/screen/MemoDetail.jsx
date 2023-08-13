@@ -11,8 +11,10 @@ import { TextInput, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { MotiView } from 'moti';
 import CustomButton from '../components/CustomButton';
+import moment from 'moment';
+import { editMemoPost } from '../functions/firebase';
 
-const MemoDetail = ({ route }) => {
+const MemoDetail = ({ route, navigation: { pop } }) => {
 
     const [folderData, setFolderData] = useRecoilState(detailData);
     const [noteData, setNoteData] = useState(route.params.data);
@@ -21,7 +23,16 @@ const MemoDetail = ({ route }) => {
 
     const postEditFuc = async () => {
         const valueData = {
+            ...noteData,
+            content: editContent,
+            name: editName,
+            edit_time: moment().format('YYYY-MM-DD hh:mm')
+        }
 
+        const postServer = await editMemoPost(folderData.id, valueData);
+
+        if (postServer['status']) {
+            pop();
         }
     }
 
