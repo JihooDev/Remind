@@ -11,14 +11,30 @@ import { TextInput, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { MotiView } from 'moti';
 import CustomButton from '../components/CustomButton';
+import moment from 'moment';
+import { editMemoPost } from '../functions/firebase';
 
-const MemoDetail = ({ route }) => {
+const MemoDetail = ({ route, navigation: { pop } }) => {
 
     const [folderData, setFolderData] = useRecoilState(detailData);
     const [noteData, setNoteData] = useState(route.params.data);
     const [editName, setEditName] = useState(noteData.name);
     const [editContent, setEditContent] = useState(noteData.content);
-    const nameInputRef = useRef();
+
+    const postEditFuc = async () => {
+        const valueData = {
+            ...noteData,
+            content: editContent,
+            name: editName,
+            edit_time: moment().format('YYYY-MM-DD hh:mm')
+        }
+
+        const postServer = await editMemoPost(folderData.id, valueData);
+
+        if (postServer['status']) {
+            pop();
+        }
+    }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
@@ -93,14 +109,18 @@ const MemoDetail = ({ route }) => {
                     paddingHorizontal: wt(80)
                 }}
                 animate={{
-                    translateY: editName.length > 0 && editContent.length > 0
-                        ? 0
-                        : 200
+                    translateY:
+                        editName.length > 0 &&
+                            editContent.length > 0 &&
+                            (noteData.name !== editName || noteData.content !== editContent)
+                            ? 0
+                            : 200
                 }}
             >
                 <CustomButton
-                    title={'추가하기'}
+                    title={'수정하기'}
                     type='success'
+                    onPress={postEditFuc}
                 />
             </MotiView>
         </CustomSafeAreaView>

@@ -123,23 +123,23 @@ export const createMemoPost = async (folderId, uid, postData) => {
 export const deleteMemo = async (folderId, postData) => {
     try {
         const uid = await AsyncStorage.getItem('uid');
+        let refleshData = [];
         await user_list.where('uid', '==', uid).get().then((query) => {
             query.forEach(doc => {
-                const documentId = doc.id;
-                const folderData = doc.data().folder;
 
+                const folderData = doc.data().folder;
 
                 const updateFolder = folderData.map(item => {
                     if (item.id === folderId) {
-
-                        return {
-                            ...item,
-                            content: [...item.content]
-                        }
+                        item.content = item.content.filter(contentItem =>
+                            contentItem.id !== postData.id
+                        )
                     }
+
 
                     return item;
                 })
+
 
                 user_list.doc(uid).update({
                     folder: updateFolder
@@ -180,6 +180,46 @@ export const getRefleshMemoData = async (folderId, uid) => {
         }
     } catch (error) {
         console.error(error, '메모 추가 이후 데이터 불러오기 실패');
+        return {
+            status: false,
+            error_message: error
+        }
+    }
+}
+
+// 메모 추가
+export const editMemoPost = async (folderId, postData) => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const folderData = doc.data().folder;
+
+
+                const updateFolder = folderData.map(item => {
+                    if (item.id === folderId) {
+                        item.content = item.content.map(contentValue => {
+                            if (contentValue.id === postData.id) {
+                                return postData;
+                            }
+                        })
+                    }
+
+                    return item;
+                })
+
+                user_list.doc(uid).update({
+                    folder: updateFolder
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        console.error(error, '메모 추가 실패');
+
         return {
             status: false,
             error_message: error

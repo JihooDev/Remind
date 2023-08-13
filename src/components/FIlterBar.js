@@ -51,9 +51,9 @@ const FIlterBar = ({
                 {
                     id: 1,
                     title: selectContent.length > 0
-                        ? `${selectContent.length}개`
+                        ? `선택 해제`
                         : '취소',
-                    type: selectContent.length === 0 && 'none_select',
+                    type: 'none_select',
                     color: selectContent.length === 0 ? COLORS.gray : COLORS.red
                 },
                 {
