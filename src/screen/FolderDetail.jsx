@@ -55,6 +55,7 @@ const FolderDetail = ({ navigation: { push } }) => {
                     return setMenuStatus(!menuStatus);
                 case "none_select":
                     setSelectStatus(false);
+                    setSelectContent([]);
                     return setTabSideMenu(false);
                 case "select_all":
                     return setSelectContent(contentList);
