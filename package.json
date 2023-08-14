@@ -25,6 +25,7 @@
     "moti": "^0.25.3",
     "react": "18.0.0",
     "react-native": "0.71.7",
+    "react-native-calendars": "^1.1300.0",
     "react-native-dotenv": "^3.4.9",
     "react-native-gesture-handler": "^2.12.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
