@@ -7,6 +7,9 @@ import { styled } from 'styled-components'
 import { ht, wt } from '../../responsive/responsive'
 import moment from 'moment'
 import CustomText from '../components/CustomText'
+import { MotiView } from 'moti'
+import { ICON } from '../asset/asset'
+import { Image } from 'react-native'
 
 const Planer = () => {
 
@@ -37,12 +40,38 @@ const Planer = () => {
                             </DateHeader>
                             :
                             <NoDatePlanView>
-                                <CustomText
-                                    text={'이 날에는 계획이 없어요!'}
-                                    color={COLORS.white}
-                                    size={18}
-                                    type={'Bold'}
-                                />
+                                <MotiView
+                                    from={{ opacity: 0, translateY: -50 }}
+                                    animate={{ opacity: 1, translateY: 0 }}
+                                    delay={500}
+                                >
+                                    <CustomText
+                                        text={'이 날은 계획이 없네요!'}
+                                        color={COLORS.gray}
+                                        size={17}
+                                    />
+                                </MotiView>
+                                <MotiView
+                                    from={{ opacity: 0, translateY: 50 }}
+                                    animate={{ opacity: 1, translateY: 0 }}
+                                    delay={800}
+                                    style={{
+                                        marginTop: ht(80)
+                                    }}
+                                >
+                                    <PlusButton
+                                        activeOpacity={.9}
+                                    >
+                                        <Image
+                                            source={ICON.plus}
+                                            style={{
+                                                tintColor: COLORS.white,
+                                                width: wt(100),
+                                                height: ht(100)
+                                            }}
+                                        />
+                                    </PlusButton>
+                                </MotiView>
                             </NoDatePlanView>
                     }
                 </DateView>
@@ -73,6 +102,15 @@ const NoDatePlanView = styled.View`
     flex: 1;
     justify-content: center;
     align-items: center;
+`
+
+const PlusButton = styled.TouchableOpacity`
+    width: ${wt(250)}px;
+    height: ${ht(250)}px;
+    background-color: #CC4F4F;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
 `
 
 export default Planer
