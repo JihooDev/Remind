@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { Calendar } from 'react-native-calendars'
 import { COLORS } from '../asset/colors'
 import { calandarTheme } from '../module/calendarModule'
+import moment from 'moment'
 
-const CalendarView = () => {
-    const [selected, setSelected] = useState('');
+const CalendarView = ({
+    selected,
+    setSelected
+}) => {
 
     return (
         <Calendar
@@ -13,8 +16,9 @@ const CalendarView = () => {
                 setSelected(day.dateString);
             }}
             markedDates={{
-                [selected]: { selected: true, disableTouchEvent: true, selectedDotColor: 'orange' }
+                [selected]: { selected: true, disableTouchEvent: true }
             }}
+            minDate={moment().format('YYYY-MM-DD')}
         />
     )
 }

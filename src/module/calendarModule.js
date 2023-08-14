@@ -1,3 +1,4 @@
+import { font } from "../../responsive/responsive";
 import { COLORS } from "../asset/colors";
 import { LocaleConfig } from "react-native-calendars";
 
@@ -16,10 +17,9 @@ LocaleConfig.locales['fr'] = {
         '11월',
         '12월'
     ],
-    monthNamesShort: ['Janv.', 'Févr.', 'Mars', 'Avril', 'Mai', 'Juin', 'Juil.', 'Août', 'Sept.', 'Oct.', 'Nov.', 'Déc.'],
-    dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-    dayNamesShort: ['Dim.', 'Lun.', 'Mar.', 'Mer.', 'Jeu.', 'Ven.', 'Sam.'],
-    today: "Aujourd'hui"
+    monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+    dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+    dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
 };
 
 LocaleConfig.defaultLocale = 'fr';
@@ -29,11 +29,18 @@ export const calandarTheme = {
     calendarBackground: COLORS.black,
     textSectionTitleColor: COLORS.white,
     selectedDayBackgroundColor: COLORS.white,
-    selectedDayTextColor: COLORS.success,
+    selectedDayTextColor: COLORS.black,
     todayTextColor: COLORS.border,
     monthTextColor: COLORS.white,
     textDisabledColor: COLORS.gray,
     dayTextColor: COLORS.white,
-    textMonthFontFamily: "Pretendard-Bold",
-    arrowColor: COLORS.border
+    arrowColor: COLORS.border,
+    selectedDotColor: COLORS.border,
+    textDayFontFamily: 'Pretendard-Bold',
+    textMonthFontFamily: 'Pretendard-Bold',
+    textDayHeaderFontFamily: 'Pretendard-Bold',
+    textMonthFontWeight: 'bold',
+    textDayFontWeight: '600',
+    textDayFontSize: font(15),
+    textMonthFontSize: font(18),
 }
