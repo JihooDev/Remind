@@ -19,6 +19,9 @@ const Planer = () => {
     const [datePlanList, setDatePlanList] = useState([]);
     const createPlanModal = useRef(null);
 
+    const closeModal = () => {
+        createPlanModal.current.close();
+    }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
@@ -40,6 +43,7 @@ const Planer = () => {
             >
                 <CreatePlanForm
                     selected={selected}
+                    closeModal={closeModal}
                 />
             </RBSheet>
             <CustomStatusBar

@@ -10,11 +10,15 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { ScrollView, TextInput } from 'react-native'
 
 const CreatePlanForm = ({
-    selected
+    selected,
+    closeModal
 }) => {
 
     const [planName, setPlanName] = useState('');
-    const [planContent, setPlanContent] = useState('');
+
+    const postUserPlan = async () => {
+
+    }
 
     return (
         <>
@@ -69,12 +73,13 @@ const CreatePlanForm = ({
                     paddingHorizontal: wt(80)
                 }}
                 animate={{
-                    translateY: 0
+                    translateY: planName.length > 0 ? 0 : 250
                 }}
             >
                 <CustomButton
                     title={'추가하기'}
                     type='success'
+                    onPress={closeModal}
                 />
             </MotiView>
         </>

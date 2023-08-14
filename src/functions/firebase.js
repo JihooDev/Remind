@@ -13,7 +13,8 @@ export const addUser = async (uid, user_name, pinCode) => {
             user_name,
             date_created: moment().unix(),
             folder: [],
-            pin_code: pinCode
+            pin_code: pinCode,
+            plan: []
         })
 
         return {
