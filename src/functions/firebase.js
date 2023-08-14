@@ -259,3 +259,31 @@ export const createPlan = async (postData) => {
         }
     }
 }
+
+// 해당 날짜의 계획을 가져오는 함수
+export const getServerPlan = async (date) => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+        let planList = [];
+
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const planData = doc.data().plan;
+
+                planList = planData.filter(dataValue => dataValue.date === date);
+            })
+        })
+
+        return {
+            status: true,
+            data: planList
+        }
+
+    } catch (error) {
+        console.error(error, '계획 가져오기 실패');
+        return {
+            status: false,
+            error_message: error
+        }
+    }
+}

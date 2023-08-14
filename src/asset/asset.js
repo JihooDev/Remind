@@ -13,6 +13,7 @@ export const ICON = {
     right: require('./icon/right.png'),
     colorList: require('./icon/colorList.png'),
     bold: require('./icon/bold.png'),
+    trash: require('./icon/trash.png'),
     medium: require('./icon/medium.png'),
 }
 

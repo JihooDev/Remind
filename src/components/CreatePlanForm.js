@@ -17,6 +17,7 @@ const CreatePlanForm = ({
 
     const [planName, setPlanName] = useState('');
 
+    // 계획을 저장하는 함수
     const postUserPlan = async () => {
         const postData = {
             date_created: moment().unix(),

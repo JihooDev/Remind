@@ -39,6 +39,7 @@
     "react-native-splash-screen": "^3.3.0",
     "react-native-status-bar-height": "^2.6.0",
     "react-native-svg": "^13.10.0",
+    "react-native-swipe-list-view": "^3.2.9",
     "react-native-uuid": "^2.0.1",
     "react-native-virtual-keyboard": "^1.2.3",
     "recoil": "^0.7.7",

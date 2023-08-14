@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import { COLORS } from '../asset/colors'
 import CustomStatusBar from '../components/CustomStatusBar'
@@ -9,22 +9,57 @@ import moment from 'moment'
 import CustomText from '../components/CustomText'
 import { MotiView } from 'moti'
 import { ICON } from '../asset/asset'
-import { Image } from 'react-native'
+import { Alert, FlatList, Image } from 'react-native'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import CreatePlanForm from '../components/CreatePlanForm'
+import { getServerPlan } from '../functions/firebase'
+import { useRecoilState } from 'recoil'
+import { loadingControl } from '../recoil/control'
+import Loading from '../components/Loading'
+import PlanList from '../components/PlanList'
+import { SwipeListView } from 'react-native-swipe-list-view'
 
 const Planer = () => {
 
     const [selected, setSelected] = useState(moment().format('YYYY-MM-DD'));
     const [datePlanList, setDatePlanList] = useState([]);
     const createPlanModal = useRef(null);
+    const [loading, setLoading] = useRecoilState(loadingControl);
+    const [onDrag, setOnDrag] = useState(false);
 
+    // 처음 / 선택 날짜를 불러오면 실행
+    useEffect(() => {
+        getPlanList();
+    }, [selected])
+
+    // Plan을 불러오는 함수
+    const getPlanList = async () => {
+        try {
+            setLoading(true);
+            setDatePlanList([]);
+            const getPlanData = await getServerPlan(selected);
+
+            if (getPlanData['status']) {
+                setDatePlanList(getPlanData['data']);
+            } else {
+                throw Error(getPlanData['error_message']);
+            }
+        } catch (error) {
+            console.error(error);
+            Alert.alert('다시 시도 해주세요');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    // 모달을 닫는 함수
     const closeModal = () => {
         createPlanModal.current.close();
     }
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
+            {loading && <Loading />}
             <RBSheet
                 ref={createPlanModal}
                 closeOnDragDown={true}
@@ -59,13 +94,35 @@ const Planer = () => {
                     {
                         datePlanList?.length > 0
                             ?
-                            <DateHeader>
-                                <CustomText
-                                    text={`${moment(selected).format('YYYY년 MM월 DD일')} 의 계획`}
-                                    color={COLORS.white}
-                                    size={20}
-                                />
-                            </DateHeader>
+                            <SwipeListView
+                                data={datePlanList}
+                                renderItem={item => { return <PlanList item={item.item} /> }}
+                                style={{
+                                    width: "100%",
+                                    paddingVertical: ht(50)
+                                }}
+                                renderHiddenItem={(data, rowMap) => (
+                                    <MotiView
+                                        style={{
+                                            position: 'absolute',
+                                            right: 0,
+                                            height: "100%"
+                                        }}
+                                        from={{ opacity: 0 }}
+                                        animate={{ opacity: onDrag ? 1 : 0 }}
+                                        transition={{ duration: 500 }}
+                                    >
+                                        <DeleteButton>
+                                            <Image />
+                                        </DeleteButton>
+                                    </MotiView>
+                                )}
+                                disableRightSwipe={true}
+                                onRowOpen={() => setOnDrag(true)}
+                                onRowClose={() => setOnDrag(false)}
+                                leftOpenValue={wt(500)}
+                                rightOpenValue={wt(-500)}
+                            />
                             :
                             <NoDatePlanView>
                                 <MotiView
@@ -133,6 +190,14 @@ const DateHeader = styled.View`
 
 const NoDatePlanView = styled.View`
     flex: 1;
+    justify-content: center;
+    align-items: center;
+`
+
+const DeleteButton = styled.TouchableOpacity`
+    width: ${wt(500)}px;
+    height: 100%;
+    border-radius: 10px;
     justify-content: center;
     align-items: center;
 `
