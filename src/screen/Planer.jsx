@@ -12,7 +12,7 @@ import { ICON } from '../asset/asset'
 import { Alert, FlatList, Image } from 'react-native'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import CreatePlanForm from '../components/CreatePlanForm'
-import { getServerPlan } from '../functions/firebase'
+import { deleteServerPlan, getServerPlan } from '../functions/firebase'
 import { useRecoilState } from 'recoil'
 import { loadingControl } from '../recoil/control'
 import Loading from '../components/Loading'
@@ -57,6 +57,15 @@ const Planer = () => {
         createPlanModal.current.close();
     }
 
+    // 플랜 삭제 함수
+    const deletePlan = async (data) => {
+        const deletaData = await deleteServerPlan(data, setLoading);
+
+        if (deletaData['status']) {
+            await getPlanList();
+        }
+    }
+
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
             {loading && <Loading />}
@@ -79,6 +88,7 @@ const Planer = () => {
                 <CreatePlanForm
                     selected={selected}
                     closeModal={closeModal}
+                    getPlanList={getPlanList}
                 />
             </RBSheet>
             <CustomStatusBar
@@ -105,15 +115,22 @@ const Planer = () => {
                                     <MotiView
                                         style={{
                                             position: 'absolute',
+                                            overflow: "visible",
                                             right: 0,
-                                            height: "100%"
+                                            height: "100%",
                                         }}
-                                        from={{ opacity: 0 }}
+                                        from={{ opacity: onDrag ? 1 : 0 }}
                                         animate={{ opacity: onDrag ? 1 : 0 }}
                                         transition={{ duration: 500 }}
                                     >
-                                        <DeleteButton>
-                                            <Image />
+                                        <DeleteButton
+                                            onPress={() => deletePlan(data.item)}
+                                        >
+                                            <Image
+                                                source={ICON.trash}
+                                                style={{ width: "40%", height: "40%", tintColor: COLORS.red }}
+                                                resizeMode='contain'
+                                            />
                                         </DeleteButton>
                                     </MotiView>
                                 )}
@@ -165,6 +182,35 @@ const Planer = () => {
                             </NoDatePlanView>
                     }
                 </DateView>
+                {
+                    datePlanList.length > 0 &&
+                    <MotiView
+                        style={{
+                            position: "absolute",
+                            zIndex: 998,
+                            bottom: ht(250),
+                            right: wt(80)
+                        }}
+                    >
+                        <PlusButton
+                            activeOpacity={.9}
+                            onPress={
+                                () => {
+                                    createPlanModal.current.open()
+                                }
+                            }
+                        >
+                            <Image
+                                source={ICON.plus}
+                                style={{
+                                    tintColor: COLORS.white,
+                                    width: wt(100),
+                                    height: ht(100)
+                                }}
+                            />
+                        </PlusButton>
+                    </MotiView>
+                }
             </Container>
         </CustomSafeAreaView>
     )
@@ -200,6 +246,8 @@ const DeleteButton = styled.TouchableOpacity`
     border-radius: 10px;
     justify-content: center;
     align-items: center;
+    margin-top: ${ht(50)}px;
+    background-color: red;
 `
 
 const PlusButton = styled.TouchableOpacity`

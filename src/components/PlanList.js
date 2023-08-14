@@ -4,13 +4,11 @@ import { ht, wt } from '../../responsive/responsive'
 import { MotiView } from 'moti'
 import { COLORS } from '../asset/colors'
 import CustomText from './CustomText'
-import { Swipeable, GestureHandlerRootView } from 'react-native-gesture-handler';
+import { sliceText } from '../functions/utils'
 
 const PlanList = ({
     item
 }) => {
-    const [isDragging, setIsDragging] = useState(false);
-
     return (
         <MotiView
             from={{ opacity: 0, scale: .8 }}
@@ -21,7 +19,7 @@ const PlanList = ({
                 activeOpacity={.9}
             >
                 <CustomText
-                    text={item.plan_name}
+                    text={sliceText(item.plan_name)}
                     type={'Bold'}
                     size={18}
                 />

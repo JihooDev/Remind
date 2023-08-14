@@ -9,10 +9,12 @@ import CustomButton from './CustomButton'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ScrollView, TextInput } from 'react-native'
 import { createPlan } from '../functions/firebase'
+import uuid from 'react-native-uuid';
 
 const CreatePlanForm = ({
     selected,
-    closeModal
+    closeModal,
+    getPlanList
 }) => {
 
     const [planName, setPlanName] = useState('');
@@ -22,12 +24,14 @@ const CreatePlanForm = ({
         const postData = {
             date_created: moment().unix(),
             date: selected,
-            plan_name: planName
+            plan_name: planName,
+            id: uuid.v4()
         }
 
         const postServer = await createPlan(postData);
 
         if (postServer['status']) {
+            await getPlanList();
             closeModal();
         }
     }
@@ -42,7 +46,6 @@ const CreatePlanForm = ({
                         size={18}
                         type={'Bold'}
                     />
-
                 </MainHeader>
                 {/* <KeyboardAwareScrollView
                     style={{

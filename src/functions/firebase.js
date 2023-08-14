@@ -287,3 +287,36 @@ export const getServerPlan = async (date) => {
         }
     }
 }
+
+// 계획 삭제 함수
+export const deleteServerPlan = async (data, loading) => {
+    try {
+        loading(true);
+
+        const uid = await AsyncStorage.getItem('uid');
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const planData = doc.data().plan;
+
+                const updateFolder = planData.filter(planValue => planValue.id !== data.id);
+
+                console.log(updateFolder);
+
+                user_list.doc(uid).update({
+                    plan: updateFolder
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        return {
+            status: false,
+            error_message: error
+        }
+    } finally {
+        loading(false);
+    }
+}
