@@ -8,6 +8,7 @@ import { MotiView } from 'moti'
 import CustomButton from './CustomButton'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ScrollView, TextInput } from 'react-native'
+import { createPlan } from '../functions/firebase'
 
 const CreatePlanForm = ({
     selected,
@@ -17,7 +18,17 @@ const CreatePlanForm = ({
     const [planName, setPlanName] = useState('');
 
     const postUserPlan = async () => {
+        const postData = {
+            date_created: moment().unix(),
+            date: selected,
+            plan_name: planName
+        }
 
+        const postServer = await createPlan(postData);
+
+        if (postServer['status']) {
+            closeModal();
+        }
     }
 
     return (
@@ -79,7 +90,7 @@ const CreatePlanForm = ({
                 <CustomButton
                     title={'추가하기'}
                     type='success'
-                    onPress={closeModal}
+                    onPress={postUserPlan}
                 />
             </MotiView>
         </>
