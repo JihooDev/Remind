@@ -125,41 +125,39 @@ export const deleteMemo = async (folderId, postData) => {
     try {
         const uid = await AsyncStorage.getItem('uid');
         let refleshData = [];
-        await user_list.where('uid', '==', uid).get().then((query) => {
-            query.forEach(doc => {
+        const querySnapshot = await user_list.where('uid', '==', uid).get();
 
-                const folderData = doc.data().folder;
+        querySnapshot.forEach(async (doc) => {
+            const folderData = doc.data().folder;
 
-                const updateFolder = folderData.map(item => {
-                    if (item.id === folderId) {
-                        item.content = item.content.filter(contentItem =>
-                            contentItem.id !== postData.id
-                        )
-                    }
+            const updateFolder = folderData.map(item => {
+                if (item.id === folderId) {
+                    item.content = item.content.filter(contentItem =>
+                        contentItem.id !== postData.id
+                    );
+                }
 
+                return item;
+            });
 
-                    return item;
-                })
-
-
-                user_list.doc(uid).update({
-                    folder: updateFolder
-                })
-            })
-        })
+            await user_list.doc(uid).update({
+                folder: updateFolder
+            });
+        });
 
         return {
             status: true
-        }
+        };
     } catch (error) {
-        console.error(error, '메모 추가 실패');
+        console.error(error, '메모 삭제 실패');
 
         return {
             status: false,
             error_message: error
-        }
+        };
     }
-}
+};
+
 
 // 메모 추가 이후 데이터 다시 불러오기
 export const getRefleshMemoData = async (folderId, uid) => {
@@ -257,5 +255,66 @@ export const createPlan = async (postData) => {
             status: false,
             error_message: error
         }
+    }
+}
+
+// 해당 날짜의 계획을 가져오는 함수
+export const getServerPlan = async (date) => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+        let planList = [];
+
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const planData = doc.data().plan;
+
+                planList = planData.filter(dataValue => dataValue.date === date);
+            })
+        })
+
+        return {
+            status: true,
+            data: planList
+        }
+
+    } catch (error) {
+        console.error(error, '계획 가져오기 실패');
+        return {
+            status: false,
+            error_message: error
+        }
+    }
+}
+
+// 계획 삭제 함수
+export const deleteServerPlan = async (data, loading) => {
+    try {
+        loading(true);
+
+        const uid = await AsyncStorage.getItem('uid');
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const planData = doc.data().plan;
+
+                const updateFolder = planData.filter(planValue => planValue.id !== data.id);
+
+                console.log(updateFolder);
+
+                user_list.doc(uid).update({
+                    plan: updateFolder
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        return {
+            status: false,
+            error_message: error
+        }
+    } finally {
+        loading(false);
     }
 }

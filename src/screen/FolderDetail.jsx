@@ -61,14 +61,30 @@ const FolderDetail = ({ navigation: { push } }) => {
                     return setSelectContent(contentList);
             }
         } else if (type === 'delete') {
-            selectContent.forEach(async (item) => {
-                const deleteData = await deleteMemo(pageData.id, item);
-                if (deleteData['status']) {
-                    await getMemoData();
-                }
-            })
+            deleteMultipleData(pageData.id);
         }
     }
+
+    // 여러개의 데이터를 삭제
+    const deleteMultipleData = async (pageId) => {
+        const deleteArray = selectContent.map(async (item) => {
+            const data = await deleteMemo(pageId, item);
+            return data;
+        });
+
+        try {
+            const results = await Promise.all(deleteArray);
+
+            if (results) {
+                setContentList([]);
+                setTabSideMenu(false);
+                await getMemoData();
+            }
+        } catch (error) {
+            console.error('Deletion error:', error);
+        }
+    }
+
 
     // 최신/오래된 순 정렬
     const dateFilter = () => {

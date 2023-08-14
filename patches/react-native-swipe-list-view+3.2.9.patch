@@ -1,0 +1,79 @@
+diff --git a/node_modules/react-native-swipe-list-view/components/SwipeRow.js b/node_modules/react-native-swipe-list-view/components/SwipeRow.js
+index 9e3767f..73888a3 100644
+--- a/node_modules/react-native-swipe-list-view/components/SwipeRow.js
++++ b/node_modules/react-native-swipe-list-view/components/SwipeRow.js
+@@ -100,7 +100,7 @@ class SwipeRow extends Component {
+                 if (
+                     !this.isForceClosing &&
+                     Dimensions.get('window').width + value <
+-                        this.props.forceCloseToRightThreshold
++                    this.props.forceCloseToRightThreshold
+                 ) {
+                     this.isForceClosing = true;
+                     this.forceCloseRow('right');
+@@ -119,7 +119,7 @@ class SwipeRow extends Component {
+                 if (
+                     !this.isForceClosing &&
+                     Dimensions.get('window').width - value <
+-                        this.props.forceCloseToLeftThreshold
++                    this.props.forceCloseToLeftThreshold
+                 ) {
+                     this.isForceClosing = true;
+                     this.forceCloseRow('left');
+@@ -187,7 +187,7 @@ class SwipeRow extends Component {
+             this.state.hiddenWidth !== nextState.hiddenWidth ||
+             this.state.leftActionActivated !== nextState.leftActionActivated ||
+             this.state.rightActionActivated !==
+-                nextState.rightActionActivated ||
++            nextState.rightActionActivated ||
+             this.state.leftActionState !== nextState.leftActionState ||
+             this.state.rightActionState !== nextState.rightActionState ||
+             !this.props.shouldItemUpdate ||
+@@ -227,9 +227,9 @@ class SwipeRow extends Component {
+             dimensionsSet: !this.props.recalculateHiddenLayout,
+             ...(!this.props.disableHiddenLayoutCalculation
+                 ? {
+-                      hiddenHeight: e.nativeEvent.layout.height,
+-                      hiddenWidth: e.nativeEvent.layout.width,
+-                  }
++                    hiddenHeight: e.nativeEvent.layout.height,
++                    hiddenWidth: e.nativeEvent.layout.width,
++                }
+                 : {}),
+         });
+ 
+@@ -425,7 +425,7 @@ class SwipeRow extends Component {
+             if (
+                 this.currentTranslateX - projectedExtraPixels >
+                 this.props.leftOpenValue *
+-                    (1 - this.props.swipeToClosePercent / 100)
++                (1 - this.props.swipeToClosePercent / 100)
+             ) {
+                 toValue = this.isForceClosing ? 0 : this.props.leftOpenValue;
+             }
+@@ -450,7 +450,7 @@ class SwipeRow extends Component {
+             if (
+                 this.currentTranslateX - projectedExtraPixels <
+                 this.props.rightOpenValue *
+-                    (this.props.swipeToOpenPercent / 100)
++                (this.props.swipeToOpenPercent / 100)
+             ) {
+                 // we're more than halfway
+                 toValue = this.isForceClosing ? 0 : this.props.rightOpenValue;
+@@ -473,7 +473,7 @@ class SwipeRow extends Component {
+             if (
+                 this.currentTranslateX - projectedExtraPixels <
+                 this.props.rightActivationValue *
+-                    (1 - this.props.swipeToClosePercent / 100)
++                (1 - this.props.swipeToClosePercent / 100)
+             ) {
+                 toValue = this.isForceClosing ? 0 : rightActionValue;
+                 actionSide = 'right';
+@@ -694,7 +694,6 @@ const styles = StyleSheet.create({
+         zIndex: 1,
+         bottom: 0,
+         left: 0,
+-        overflow: 'hidden',
+         position: 'absolute',
+         right: 0,
+         top: 0,
