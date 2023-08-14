@@ -11,7 +11,7 @@ const PlanList = ({
 }) => {
     return (
         <MotiView
-            from={{ opacity: 0, scale: .8 }}
+            from={{ opacity: 0, scale: .8, marginTop: ht(50) }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 700 }}
         >

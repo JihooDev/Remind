@@ -115,7 +115,6 @@ const Planer = () => {
                                     <MotiView
                                         style={{
                                             position: 'absolute',
-                                            overflow: "visible",
                                             right: 0,
                                             height: "100%",
                                         }}
@@ -247,7 +246,6 @@ const DeleteButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     margin-top: ${ht(50)}px;
-    background-color: red;
 `
 
 const PlusButton = styled.TouchableOpacity`
