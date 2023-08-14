@@ -13,6 +13,7 @@ import FolderDetail from '../screen/FolderDetail';
 import PinCodeModal from '../components/modal/PinCodeModal';
 import AddNote from '../screen/AddNote';
 import MemoDetail from '../screen/MemoDetail';
+import Planer from '../screen/Planer';
 
 const StackNavigation = () => {
 
@@ -43,6 +44,8 @@ const StackNavigation = () => {
                 <Stack.Screen name="AddNote" component={AddNote} />
                 {/* 메모 디테일 */}
                 <Stack.Screen name="MemoDetail" component={MemoDetail} />
+                {/* 플래너 */}
+                <Stack.Screen name="Planer" component={Planer} />
                 {/* Bottom Navigation */}
                 {/* <Stack.Screen name="Home" component={BottomNavigation} /> */}
             </Stack.Navigator>

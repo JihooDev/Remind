@@ -9,6 +9,7 @@ import { APPTEXT, ICON } from '../asset/asset'
 import SearchBar from './SearchBar'
 import { useRecoilValue } from 'recoil'
 import { userData } from '../recoil/user'
+import { useNavigation } from '@react-navigation/native'
 
 const HeaderBar = ({
     back = false
@@ -16,6 +17,7 @@ const HeaderBar = ({
 
     const [searchState, setSearchState] = useState(false);
     const userDataBox = useRecoilValue(userData);
+    const navigation = useNavigation();
 
 
     return (
@@ -28,6 +30,8 @@ const HeaderBar = ({
             />
             <LeftView>
                 <MenuButton
+                    activeOpacity={.9}
+                    onPress={() => navigation.navigate('Planer')}
                 >
                     <Image
                         source={ICON.calandar}
