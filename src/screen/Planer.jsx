@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import { COLORS } from '../asset/colors'
 import CustomStatusBar from '../components/CustomStatusBar'
@@ -10,14 +10,38 @@ import CustomText from '../components/CustomText'
 import { MotiView } from 'moti'
 import { ICON } from '../asset/asset'
 import { Image } from 'react-native'
+import RBSheet from 'react-native-raw-bottom-sheet'
+import CreatePlanForm from '../components/CreatePlanForm'
 
 const Planer = () => {
 
     const [selected, setSelected] = useState(moment().format('YYYY-MM-DD'));
     const [datePlanList, setDatePlanList] = useState([]);
+    const createPlanModal = useRef(null);
+
 
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
+            <RBSheet
+                ref={createPlanModal}
+                closeOnDragDown={true}
+                height={ht(1500)}
+                customStyles={{
+                    draggableIcon: {
+                        backgroundColor: COLORS.white
+                    },
+                    container: {
+                        backgroundColor: COLORS.black,
+                        borderRadius: wt(80),
+                        paddingHorizontal: wt(50),
+                        paddingVertical: ht(50)
+                    }
+                }}
+            >
+                <CreatePlanForm
+                    selected={selected}
+                />
+            </RBSheet>
             <CustomStatusBar
                 back={true}
                 title={'계획 관리'}
@@ -61,6 +85,11 @@ const Planer = () => {
                                 >
                                     <PlusButton
                                         activeOpacity={.9}
+                                        onPress={
+                                            () => {
+                                                createPlanModal.current.open()
+                                            }
+                                        }
                                     >
                                         <Image
                                             source={ICON.plus}
