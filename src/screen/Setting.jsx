@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import CustomText from '../components/CustomText'
 import { COLORS } from '../asset/colors'
@@ -6,21 +6,24 @@ import CustomStatusBar from '../components/CustomStatusBar'
 import { settingMenu } from '../menu/menu_data'
 import SettingList from '../components/SettingList'
 import { styled } from 'styled-components'
-import { wt } from '../../responsive/responsive'
+import { ht, wt } from '../../responsive/responsive'
 import { pinCodeState } from '../recoil/control'
 import { useRecoilState } from 'recoil'
 import PinCodeModal from '../components/modal/PinCodeModal'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { resetPinCode } from '../functions/firebase'
+import RBSheet from 'react-native-raw-bottom-sheet'
+import ResetNicNameForm from '../components/ResetNickNameForm'
 
 const Setting = ({ navigation: { push } }) => {
   const [modalState, setModalState] = useRecoilState(pinCodeState);
+  const nicNameModalRef = useRef(null);
 
   // 메뉴마다 액션 호출하는 함수
   const onPressMenu = type => {
     switch (type) {
       case "nicname":
-        return
+        return nicNameModalRef.current.open();
       case "pincode":
         return setModalState(true);
       case "folder":
@@ -43,6 +46,24 @@ const Setting = ({ navigation: { push } }) => {
 
   return (
     <CustomSafeAreaView backColor={COLORS.black}>
+      <RBSheet
+        ref={nicNameModalRef}
+        closeOnDragDown={true}
+        height={ht(1500)}
+        customStyles={{
+          draggableIcon: {
+            backgroundColor: COLORS.white
+          },
+          container: {
+            backgroundColor: COLORS.black,
+            borderRadius: wt(80),
+            paddingHorizontal: wt(50),
+            paddingVertical: ht(50)
+          }
+        }}
+      >
+        <ResetNicNameForm />
+      </RBSheet>
       <PinCodeModal type={'resetting'} actionFuc={pinCodeResetting} />
       <CustomStatusBar
         back={true}

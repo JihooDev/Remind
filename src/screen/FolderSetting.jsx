@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import { COLORS } from '../asset/colors'
 import CustomStatusBar from '../components/CustomStatusBar'
-import { getUser, lockFolder } from '../functions/firebase'
+import { deleteFolder, getUser, lockFolder } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRecoilState } from 'recoil'
 import { loadingControl, pinCodeState } from '../recoil/control'
@@ -13,12 +13,14 @@ import { wt } from '../../responsive/responsive'
 import { FlatList } from 'react-native'
 import SettingFolderList from '../components/SettingFolderList'
 import Loading from '../components/Loading'
+import PinCodeModal from '../components/modal/PinCodeModal'
 
 const FolderSetting = () => {
 
     const [userDataBox, setUserDataBox] = useRecoilState(userData);
     const [loading, setLoading] = useRecoilState(loadingControl);
     const [folderList, setFolderList] = useState([]);
+    const [modalState, setModalState] = useRecoilState(pinCodeState);
 
     useFocusEffect(
         useCallback(() => {
@@ -48,8 +50,10 @@ const FolderSetting = () => {
     }
 
 
+
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
+
             {loading && <Loading />}
             <CustomStatusBar
                 back={true}
@@ -58,7 +62,7 @@ const FolderSetting = () => {
             <Container>
                 <FlatList
                     data={folderList}
-                    renderItem={item => <SettingFolderList item={item.item} folderLockFuc={folderLockFuc} />}
+                    renderItem={item => <SettingFolderList item={item.item} folderLockFuc={folderLockFuc} getFolderList={getFolderList} />}
                 />
             </Container>
         </CustomSafeAreaView>

@@ -382,4 +382,62 @@ export const lockFolder = async (value, id) => {
     }
 }
 
+// 계획 삭제 함수
+export const deleteFolder = async (data, loading) => {
+    try {
+        loading(true);
+        const uid = await AsyncStorage.getItem('uid');
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const folder = doc.data().folder;
+
+                const updateFolder = folder.filter(folderValue => folderValue.id !== data.id);
+
+                console.log(updateFolder);
+
+                user_list.doc(uid).update({
+                    folder: updateFolder
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            status: false,
+            error_message: error
+        }
+    } finally {
+        loading(false);
+    }
+}
+
+// 닉네임 변경 함수
+export const resetNicName = async (value) => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                user_list.doc(uid).update({
+                    user_name: value
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            status: false,
+            error_message: error
+        }
+    }
+}
+
 

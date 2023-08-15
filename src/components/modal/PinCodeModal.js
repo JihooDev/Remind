@@ -183,7 +183,7 @@ const PinCodeModal = ({
                     text: "핀코드를 입력해주세요"
                 })
             }}
-            onModalShow={() => {
+            onModalWillShow={() => {
                 if (type === 'resetting') {
                     setAlertText({
                         text: "기존의 핀코드를 입력해주세요",
