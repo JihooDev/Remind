@@ -8,7 +8,22 @@ import SettingList from '../components/SettingList'
 import { styled } from 'styled-components'
 import { wt } from '../../responsive/responsive'
 
-const Setting = () => {
+const Setting = ({ navigation: { push } }) => {
+
+  // 메뉴마다 액션 호출하는 함수
+  const onPressMenu = type => {
+    switch (type) {
+      case "nicname":
+        return
+      case "pincode":
+        return
+      case "folder":
+        return push('FolderSetting');
+      case "signout":
+        return
+    }
+  }
+
   return (
     <CustomSafeAreaView backColor={COLORS.black}>
       <CustomStatusBar
@@ -18,7 +33,7 @@ const Setting = () => {
       <ContainerView>
         {
           settingMenu?.map(item => (
-            <SettingList {...item} key={item.id} />
+            <SettingList {...item} key={item.id} onPressMenu={onPressMenu} />
           ))
         }
       </ContainerView>

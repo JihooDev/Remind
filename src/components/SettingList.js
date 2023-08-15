@@ -7,11 +7,14 @@ import { Image } from 'react-native'
 
 const SettingList = ({
     title,
-    icon
+    icon,
+    type,
+    onPressMenu
 }) => {
     return (
         <ListView
             activeOpacity={.9}
+            onPress={() => onPressMenu(type)}
         >
             <PositionView>
                 <Image
