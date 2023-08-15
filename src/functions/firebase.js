@@ -144,7 +144,10 @@ export const deleteMemo = async (folderId, itemIdsToDelete) => {
         batch.update(userRef, { folder: updateFolder });
 
         await batch.commit();
-        console.log('Deletion succeeded.');
+
+        return {
+            status: true
+        }
     } catch (error) {
         console.error(error, '메모 삭제 실패');
 

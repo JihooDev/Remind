@@ -29,6 +29,13 @@ const FolderDetail = ({ navigation: { push } }) => {
     useFocusEffect(
         useCallback(() => {
             getMemoData();
+
+            return () => {
+                setMenuStatus(false);
+                setSelectStatus(false);
+                setTabSideMenu(false);
+                setSelectContent([]);
+            }
         }, [])
     )
 
@@ -75,9 +82,12 @@ const FolderDetail = ({ navigation: { push } }) => {
 
         const deleteFuc = await deleteMemo(pageId, contentIdArr);
 
-        setContentList([]);
-        setTabSideMenu(false);
-        await getMemoData();
+        if (deleteFuc['status']) {
+            setContentList([]);
+            setTabSideMenu(false);
+            setSelectStatus(false);
+            await getMemoData();
+        }
     }
 
 
