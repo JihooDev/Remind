@@ -29,6 +29,13 @@ const FolderDetail = ({ navigation: { push } }) => {
     useFocusEffect(
         useCallback(() => {
             getMemoData();
+
+            return () => {
+                setMenuStatus(false);
+                setSelectStatus(false);
+                setTabSideMenu(false);
+                setSelectContent([]);
+            }
         }, [])
     )
 
@@ -67,21 +74,19 @@ const FolderDetail = ({ navigation: { push } }) => {
 
     // 여러개의 데이터를 삭제
     const deleteMultipleData = async (pageId) => {
-        const deleteArray = selectContent.map(async (item) => {
-            const data = await deleteMemo(pageId, item);
-            return data;
-        });
+        let contentIdArr = [];
 
-        try {
-            const results = await Promise.all(deleteArray);
+        selectContent.forEach(item => {
+            contentIdArr.push(item.id);
+        })
 
-            if (results) {
-                setContentList([]);
-                setTabSideMenu(false);
-                await getMemoData();
-            }
-        } catch (error) {
-            console.error('Deletion error:', error);
+        const deleteFuc = await deleteMemo(pageId, contentIdArr);
+
+        if (deleteFuc['status']) {
+            setContentList([]);
+            setTabSideMenu(false);
+            setSelectStatus(false);
+            await getMemoData();
         }
     }
 

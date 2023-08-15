@@ -15,6 +15,10 @@ export const ICON = {
     bold: require('./icon/bold.png'),
     trash: require('./icon/trash.png'),
     medium: require('./icon/medium.png'),
+    user: require('./icon/user.png'),
+    lock: require('./icon/lock.png'),
+    sign_out: require('./icon/sign_out.png'),
+    folder: require('./icon/folder.png'),
 }
 
 export const IMAGE = {

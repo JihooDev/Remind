@@ -121,33 +121,33 @@ export const createMemoPost = async (folderId, uid, postData) => {
 }
 
 // 메모 삭제 함수
-export const deleteMemo = async (folderId, postData) => {
+export const deleteMemo = async (folderId, itemIdsToDelete) => {
     try {
         const uid = await AsyncStorage.getItem('uid');
-        let refleshData = [];
-        const querySnapshot = await user_list.where('uid', '==', uid).get();
 
-        querySnapshot.forEach(async (doc) => {
-            const folderData = doc.data().folder;
+        const batch = firestore().batch();
+        console.log(batch);
+        const userRef = user_list.doc(uid);
+        const userDoc = await userRef.get();
 
-            const updateFolder = folderData.map(item => {
-                if (item.id === folderId) {
-                    item.content = item.content.filter(contentItem =>
-                        contentItem.id !== postData.id
-                    );
-                }
+        const folderData = userDoc.data().folder;
 
-                return item;
-            });
-
-            await user_list.doc(uid).update({
-                folder: updateFolder
-            });
+        const updateFolder = folderData.map((item) => {
+            if (item.id === folderId) {
+                item.content = item.content.filter(
+                    (contentItem) => !itemIdsToDelete.includes(contentItem.id)
+                );
+            }
+            return item;
         });
+
+        batch.update(userRef, { folder: updateFolder });
+
+        await batch.commit();
 
         return {
             status: true
-        };
+        }
     } catch (error) {
         console.error(error, '메모 삭제 실패');
 
@@ -316,5 +316,45 @@ export const deleteServerPlan = async (data, loading) => {
         }
     } finally {
         loading(false);
+    }
+}
+
+// 폴더 잠금/해제 함수
+export const lockFolder = async (value, id) => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const folderData = doc.data().folder;
+
+                const updateFolder = folderData.map(item => {
+                    if (item.id === id) {
+
+                        return {
+                            ...item,
+                            security: value
+                        }
+                    }
+
+                    return item;
+                })
+
+                user_list.doc(uid).update({
+                    folder: updateFolder
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            status: false,
+            error_message: error
+        }
+
     }
 }

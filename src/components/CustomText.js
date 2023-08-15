@@ -12,9 +12,9 @@ import { COLORS } from '../asset/colors';
  * @param {string} type = Black | Bold | Light | Medium | Regular | Thin
  * @returns {React.ReactElement}
  */
-const CustomText = ({ text, size = 15, color = COLORS.text, type = "Medium" }) => {
+const CustomText = ({ text, size = 15, color = COLORS.text, type = "Medium", style }) => {
     return (
-        <Text style={{ color, fontSize: font(size), fontFamily: `Pretendard-${type}` }}>
+        <Text style={{ color, fontSize: font(size), fontFamily: `Pretendard-${type}`, ...style }}>
             {text}
         </Text>
     )

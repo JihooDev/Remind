@@ -40,6 +40,8 @@ const HeaderBar = ({
                     />
                 </MenuButton>
                 <MenuButton
+                    activeOpacity={.9}
+                    onPress={() => navigation.navigate('Setting')}
                 >
                     <Image
                         source={ICON.setting}
