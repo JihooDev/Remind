@@ -318,3 +318,43 @@ export const deleteServerPlan = async (data, loading) => {
         loading(false);
     }
 }
+
+// 폴더 잠금/해제 함수
+export const lockFolder = async (value, id) => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                const folderData = doc.data().folder;
+
+                const updateFolder = folderData.map(item => {
+                    if (item.id === id) {
+
+                        return {
+                            ...item,
+                            security: value
+                        }
+                    }
+
+                    return item;
+                })
+
+                user_list.doc(uid).update({
+                    folder: updateFolder
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            status: false,
+            error_message: error
+        }
+
+    }
+}

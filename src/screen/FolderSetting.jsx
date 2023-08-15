@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import CustomSafeAreaView from '../components/CustomSafeAreaView'
 import { COLORS } from '../asset/colors'
 import CustomStatusBar from '../components/CustomStatusBar'
-import { getUser } from '../functions/firebase'
+import { getUser, lockFolder } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRecoilState } from 'recoil'
 import { loadingControl } from '../recoil/control'
@@ -12,6 +12,7 @@ import { styled } from 'styled-components'
 import { wt } from '../../responsive/responsive'
 import { FlatList } from 'react-native'
 import SettingFolderList from '../components/SettingFolderList'
+import Loading from '../components/Loading'
 
 const FolderSetting = () => {
 
@@ -37,8 +38,19 @@ const FolderSetting = () => {
         }
     }
 
+    // 잠금을 설정/해제하는 함수
+    const folderLockFuc = async (value, id) => {
+        const postServer = await lockFolder(value, id);
+
+        if (postServer['status']) {
+            getFolderList();
+        }
+    }
+
+
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
+            {loading && <Loading />}
             <CustomStatusBar
                 back={true}
                 title={'폴더 관리'}
@@ -46,7 +58,7 @@ const FolderSetting = () => {
             <Container>
                 <FlatList
                     data={folderList}
-                    renderItem={item => <SettingFolderList item={item.item} />}
+                    renderItem={item => <SettingFolderList item={item.item} folderLockFuc={folderLockFuc} />}
                 />
             </Container>
         </CustomSafeAreaView>
