@@ -290,7 +290,6 @@ export const getServerPlan = async (date) => {
 export const deleteServerPlan = async (data, loading) => {
     try {
         loading(true);
-
         const uid = await AsyncStorage.getItem('uid');
         await user_list.where('uid', '==', uid).get().then((query) => {
             query.forEach(doc => {
@@ -316,6 +315,31 @@ export const deleteServerPlan = async (data, loading) => {
         }
     } finally {
         loading(false);
+    }
+}
+
+// 핀코드 재설정
+export const resetPinCode = async (value) => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                user_list.doc(uid).update({
+                    pin_code: value
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            status: false,
+            error_message: error
+        }
     }
 }
 
@@ -355,6 +379,7 @@ export const lockFolder = async (value, id) => {
             status: false,
             error_message: error
         }
-
     }
 }
+
+

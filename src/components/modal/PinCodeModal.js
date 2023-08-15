@@ -21,11 +21,16 @@ const PinCodeModal = ({
 
     const [modalState, setModalState] = useRecoilState(pinCodeState);
     const [pincodeValue, setPinCodeValue] = useState([null, null, null, null]);
+    const [confirmCheck, setConfirmCheck] = useState(false);
     const [copyPinCode, setCopyPinCode] = useState([]);
     const [alertText, setAlertText] = useState({
         text: "핀코드를 입력 해주세요",
         color: COLORS.white
     })
+
+    useEffect(() => {
+
+    }, [])
 
     useEffect(() => {
         if (pincodeValue.join('').length === 4) {
@@ -106,6 +111,56 @@ const PinCodeModal = ({
                 })
             }
         }
+
+        // 재 설정일 때 
+        if (type === 'resetting') {
+            const userPinCode = await AsyncStorage.getItem('pincode');
+
+            if (!confirmCheck) {
+                if (pincodeValue.join('') === userPinCode) {
+                    setAlertText({
+                        text: '새롭게 설정하실 핀코드를 입력해주세요',
+                        color: COLORS.white
+                    })
+                    setPinCodeValue([null, null, null, null]);
+                    setConfirmCheck(true);
+                } else {
+                    setAlertText({
+                        text: '일치하지 않습니다. 다시 입력해주세요',
+                        color: COLORS.red
+                    })
+                    setPinCodeValue([null, null, null, null]);
+                }
+            } else {
+                if (copyPinCode.length === 0) {
+                    setTimeout(() => {
+                        setCopyPinCode(pincodeValue);
+                        setPinCodeValue([null, null, null, null]);
+                        setAlertText({
+                            ...alertText,
+                            text: "한번 더 입력해주세요"
+                        })
+                    }, 200)
+                } else {
+                    if (pincodeValue.join('') === copyPinCode.join('')) {
+                        setAlertText({
+                            text: "저장 되었습니다",
+                            color: COLORS.success
+                        })
+                        setTimeout(() => {
+                            actionFuc(pincodeValue.join(''))
+                        }, 200)
+                    } else {
+                        setCopyPinCode([]);
+                        setPinCodeValue([null, null, null, null]);
+                        setAlertText({
+                            color: COLORS.red,
+                            text: "일치하지 않습니다. 다시 입력해주세요"
+                        })
+                    }
+                }
+            }
+        }
     }
 
 
@@ -121,11 +176,20 @@ const PinCodeModal = ({
             }}
             onModalHide={() => {
                 setPinCodeValue([null, null, null, null]);
+                setConfirmCheck(false);
                 setCopyPinCode([]);
                 setAlertText({
                     color: COLORS.white,
                     text: "핀코드를 입력해주세요"
                 })
+            }}
+            onModalShow={() => {
+                if (type === 'resetting') {
+                    setAlertText({
+                        text: "기존의 핀코드를 입력해주세요",
+                        color: COLORS.white
+                    })
+                }
             }}
             backdropOpacity={1}
         >

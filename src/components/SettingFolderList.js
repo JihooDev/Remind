@@ -4,11 +4,15 @@ import { ht, wt } from '../../responsive/responsive'
 import { COLORS } from '../asset/colors'
 import CustomText from './CustomText'
 import ToggleSwitch from 'toggle-switch-react-native'
+import { useRecoilState } from 'recoil'
+import { pinCodeState } from '../recoil/control'
 
 const SettingFolderList = ({
     item,
     folderLockFuc
 }) => {
+
+
     return (
         <ListView>
             <TabView>

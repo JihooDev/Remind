@@ -7,8 +7,14 @@ import { settingMenu } from '../menu/menu_data'
 import SettingList from '../components/SettingList'
 import { styled } from 'styled-components'
 import { wt } from '../../responsive/responsive'
+import { pinCodeState } from '../recoil/control'
+import { useRecoilState } from 'recoil'
+import PinCodeModal from '../components/modal/PinCodeModal'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { resetPinCode } from '../functions/firebase'
 
 const Setting = ({ navigation: { push } }) => {
+  const [modalState, setModalState] = useRecoilState(pinCodeState);
 
   // 메뉴마다 액션 호출하는 함수
   const onPressMenu = type => {
@@ -16,7 +22,7 @@ const Setting = ({ navigation: { push } }) => {
       case "nicname":
         return
       case "pincode":
-        return
+        return setModalState(true);
       case "folder":
         return push('FolderSetting');
       case "signout":
@@ -24,8 +30,20 @@ const Setting = ({ navigation: { push } }) => {
     }
   }
 
+  // 핀코드 재 설정 후 실행 함수
+  const pinCodeResetting = async (pincode) => {
+
+    const pincodeServerData = await resetPinCode(pincode);
+
+    if (pincodeServerData['status']) {
+      setModalState(false);
+      await AsyncStorage.setItem('pincode', pincode);
+    }
+  }
+
   return (
     <CustomSafeAreaView backColor={COLORS.black}>
+      <PinCodeModal type={'resetting'} actionFuc={pinCodeResetting} />
       <CustomStatusBar
         back={true}
         title={'설정'}
