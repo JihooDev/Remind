@@ -121,33 +121,30 @@ export const createMemoPost = async (folderId, uid, postData) => {
 }
 
 // 메모 삭제 함수
-export const deleteMemo = async (folderId, postData) => {
+export const deleteMemo = async (folderId, itemIdsToDelete) => {
     try {
         const uid = await AsyncStorage.getItem('uid');
-        let refleshData = [];
-        const querySnapshot = await user_list.where('uid', '==', uid).get();
 
-        querySnapshot.forEach(async (doc) => {
-            const folderData = doc.data().folder;
+        const batch = firestore().batch();
+        console.log(batch);
+        const userRef = user_list.doc(uid);
+        const userDoc = await userRef.get();
 
-            const updateFolder = folderData.map(item => {
-                if (item.id === folderId) {
-                    item.content = item.content.filter(contentItem =>
-                        contentItem.id !== postData.id
-                    );
-                }
+        const folderData = userDoc.data().folder;
 
-                return item;
-            });
-
-            await user_list.doc(uid).update({
-                folder: updateFolder
-            });
+        const updateFolder = folderData.map((item) => {
+            if (item.id === folderId) {
+                item.content = item.content.filter(
+                    (contentItem) => !itemIdsToDelete.includes(contentItem.id)
+                );
+            }
+            return item;
         });
 
-        return {
-            status: true
-        };
+        batch.update(userRef, { folder: updateFolder });
+
+        await batch.commit();
+        console.log('Deletion succeeded.');
     } catch (error) {
         console.error(error, '메모 삭제 실패');
 
