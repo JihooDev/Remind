@@ -14,6 +14,7 @@ import PinCodeModal from '../components/modal/PinCodeModal';
 import AddNote from '../screen/AddNote';
 import MemoDetail from '../screen/MemoDetail';
 import Planer from '../screen/Planer';
+import Setting from '../screen/Setting';
 
 const StackNavigation = () => {
 
@@ -46,6 +47,8 @@ const StackNavigation = () => {
                 <Stack.Screen name="MemoDetail" component={MemoDetail} />
                 {/* 플래너 */}
                 <Stack.Screen name="Planer" component={Planer} />
+                {/* 세팅 */}
+                <Stack.Screen name="Setting" component={Setting} />
                 {/* Bottom Navigation */}
                 {/* <Stack.Screen name="Home" component={BottomNavigation} /> */}
             </Stack.Navigator>
