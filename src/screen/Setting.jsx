@@ -62,7 +62,9 @@ const Setting = ({ navigation: { push } }) => {
           }
         }}
       >
-        <ResetNicNameForm />
+        <ResetNicNameForm
+          closeModal={() => nicNameModalRef.current.close()}
+        />
       </RBSheet>
       <PinCodeModal type={'resetting'} actionFuc={pinCodeResetting} />
       <CustomStatusBar
