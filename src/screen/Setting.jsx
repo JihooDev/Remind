@@ -14,10 +14,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { resetPinCode } from '../functions/firebase'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import ResetNicNameForm from '../components/ResetNickNameForm'
+import { userData } from '../recoil/user'
 
-const Setting = ({ navigation: { push } }) => {
+const Setting = ({ navigation: { push, reset } }) => {
   const [modalState, setModalState] = useRecoilState(pinCodeState);
   const nicNameModalRef = useRef(null);
+  const [userDataBox, setUserDataBox] = useRecoilState(userData);
 
   // 메뉴마다 액션 호출하는 함수
   const onPressMenu = type => {
@@ -29,8 +31,20 @@ const Setting = ({ navigation: { push } }) => {
       case "folder":
         return push('FolderSetting');
       case "signout":
-        return
+        return onLogOut();
     }
+  }
+
+  // 로그아웃 함수
+  const onLogOut = async () => {
+    // console.log(await AsyncStorage.getAllKeys());
+    await AsyncStorage.removeItem('uid');
+    await AsyncStorage.removeItem('user');
+    await AsyncStorage.removeItem('pincode');
+
+    setUserDataBox([]);
+
+    reset({ routes: [{ name: 'Splash' }] })
   }
 
   // 핀코드 재 설정 후 실행 함수
@@ -62,7 +76,9 @@ const Setting = ({ navigation: { push } }) => {
           }
         }}
       >
-        <ResetNicNameForm />
+        <ResetNicNameForm
+          closeModal={() => nicNameModalRef.current.close()}
+        />
       </RBSheet>
       <PinCodeModal type={'resetting'} actionFuc={pinCodeResetting} />
       <CustomStatusBar

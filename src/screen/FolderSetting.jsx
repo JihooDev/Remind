@@ -14,6 +14,7 @@ import { FlatList } from 'react-native'
 import SettingFolderList from '../components/SettingFolderList'
 import Loading from '../components/Loading'
 import PinCodeModal from '../components/modal/PinCodeModal'
+import CustomText from '../components/CustomText'
 
 const FolderSetting = () => {
 
@@ -49,8 +50,6 @@ const FolderSetting = () => {
         }
     }
 
-
-
     return (
         <CustomSafeAreaView backColor={COLORS.black}>
 
@@ -60,10 +59,22 @@ const FolderSetting = () => {
                 title={'폴더 관리'}
             />
             <Container>
-                <FlatList
-                    data={folderList}
-                    renderItem={item => <SettingFolderList item={item.item} folderLockFuc={folderLockFuc} getFolderList={getFolderList} />}
-                />
+                {
+                    folderList.length > 0
+                        ?
+                        <FlatList
+                            data={folderList}
+                            renderItem={item => <SettingFolderList item={item.item} folderLockFuc={folderLockFuc} getFolderList={getFolderList} />}
+                        />
+                        :
+                        <NoFolderView>
+                            <CustomText
+                                text={'사용중인 폴더가 없습니다'}
+                                color={COLORS.gray}
+                                size={20}
+                            />
+                        </NoFolderView>
+                }
             </Container>
         </CustomSafeAreaView>
     )
@@ -72,6 +83,12 @@ const FolderSetting = () => {
 const Container = styled.View`
     flex: 1;
     padding: 0 ${wt(80)}px;
+`
+
+const NoFolderView = styled.View`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
 `
 
 export default FolderSetting

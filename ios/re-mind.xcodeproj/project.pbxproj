@@ -45,6 +45,7 @@
 		9658EFE62A71E3A30012A66D /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		9658EFE82A71E9740012A66D /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../src/asset/icon/logo.png; sourceTree = "<group>"; };
 		9658EFEA2A7726BE0012A66D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "react_native_temp/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		9658EFEE2A8C8B9F0012A66D /* react_native_tempRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = react_native_tempRelease.entitlements; path = react_native_temp/react_native_tempRelease.entitlements; sourceTree = "<group>"; };
 		A70D944933F4D8D91A519D2F /* Pods-react_native_temp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-react_native_temp.debug.xcconfig"; path = "Target Support Files/Pods-react_native_temp/Pods-react_native_temp.debug.xcconfig"; sourceTree = "<group>"; };
 		C7E77AD34A55143203472792 /* libPods-react_native_temp-react_native_tempTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-react_native_temp-react_native_tempTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D045CE8AA318DC1D9D80EC4F /* libPods-react_native_temp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-react_native_temp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +93,7 @@
 		13B07FAE1A68108700A75B9A /* react_native_temp */ = {
 			isa = PBXGroup;
 			children = (
+				9658EFEE2A8C8B9F0012A66D /* react_native_tempRelease.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				9658EFEA2A7726BE0012A66D /* GoogleService-Info.plist */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -221,7 +223,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "react_native_temp" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "re-mind" */;
 			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -510,6 +512,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = BD7FN8T4TL;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = react_native_temp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -521,7 +524,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.memory-app";
 				PRODUCT_NAME = react_native_temp;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -535,6 +538,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = react_native_temp/react_native_tempRelease.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = BD7FN8T4TL;
 				INFOPLIST_FILE = react_native_temp/Info.plist;
@@ -547,7 +551,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.memory.app;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.memory-app";
 				PRODUCT_NAME = react_native_temp;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -712,7 +716,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "react_native_temp" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "re-mind" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

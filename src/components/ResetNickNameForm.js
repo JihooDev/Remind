@@ -8,10 +8,12 @@ import { MotiView } from 'moti'
 import CustomButton from './CustomButton'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { ScrollView, TextInput } from 'react-native'
-import { createPlan } from '../functions/firebase'
+import { createPlan, getUser, resetNicName } from '../functions/firebase'
 import uuid from 'react-native-uuid';
-import { useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { userData } from '../recoil/user'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { loadingControl } from '../recoil/control'
 
 const ResetNicNameForm = ({
     closeModal,
@@ -19,7 +21,24 @@ const ResetNicNameForm = ({
 }) => {
 
     const [name, setName] = useState('');
-    const userDataBox = useRecoilValue(userData);
+    const [userDataBox, setUserDataBox] = useRecoilState(userData);
+    const [loading, setLoding] = useRecoilState(loadingControl);
+
+    // 닉네임 변경 함수
+    const changeNicName = async () => {
+        const changeServer = await resetNicName(name);
+
+        if (changeServer['status']) {
+            const uid = await AsyncStorage.getItem('uid');
+
+            const changeUser = await getUser(uid, setLoding);
+
+            if (changeUser['status']) {
+                setUserDataBox(changeUser['data']);
+                closeModal();
+            }
+        }
+    }
 
     return (
         <>
@@ -79,6 +98,7 @@ const ResetNicNameForm = ({
                 <CustomButton
                     title={'수정하기'}
                     type='success'
+                    onPress={changeNicName}
                 />
             </MotiView>
         </>

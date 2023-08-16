@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/teammapa/Desktop/Toy/Memory_app/ios/re-mind.xcodeproj">
+      location = "group:re-mind.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
