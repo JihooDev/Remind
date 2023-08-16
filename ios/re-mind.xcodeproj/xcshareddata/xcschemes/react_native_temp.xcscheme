@@ -17,7 +17,7 @@
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
                BuildableName = "react_native_temp.app"
                BlueprintName = "react_native_temp"
-               ReferencedContainer = "container:react_native_temp.xcodeproj">
+               ReferencedContainer = "container:&#x1104;&#x1165;&#x110b;&#x1169;&#x1105;&#x1173;&#x1103;&#x1161;.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
                BuildableName = "react_native_tempTests.xctest"
                BlueprintName = "react_native_tempTests"
-               ReferencedContainer = "container:react_native_temp.xcodeproj">
+               ReferencedContainer = "container:&#x1104;&#x1165;&#x110b;&#x1169;&#x1105;&#x1173;&#x1103;&#x1161;.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,7 +57,7 @@
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "react_native_temp.app"
             BlueprintName = "react_native_temp"
-            ReferencedContainer = "container:react_native_temp.xcodeproj">
+            ReferencedContainer = "container:&#x1104;&#x1165;&#x110b;&#x1169;&#x1105;&#x1173;&#x1103;&#x1161;.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -74,7 +74,7 @@
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
             BuildableName = "react_native_temp.app"
             BlueprintName = "react_native_temp"
-            ReferencedContainer = "container:react_native_temp.xcodeproj">
+            ReferencedContainer = "container:&#x1104;&#x1165;&#x110b;&#x1169;&#x1105;&#x1173;&#x1103;&#x1161;.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

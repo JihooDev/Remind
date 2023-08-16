@@ -15,6 +15,7 @@ import { initConfig } from '../functions/init'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRecoilState } from 'recoil'
 import { userData } from '../recoil/user'
+import { COLORS } from '../asset/colors'
 
 const Splash = ({ navigation: { reset } }) => {
 
@@ -53,7 +54,7 @@ const Splash = ({ navigation: { reset } }) => {
     }
 
     return (
-        <CustomSafeAreaView>
+        <CustomSafeAreaView backColor={COLORS.black}>
             <MotiView
                 from={{ opacity: 0, translateY: !checkUid ? ht(800) : ht(200) }}
                 animate={{ opacity: 1, translateY: ht(200) }}
@@ -63,11 +64,13 @@ const Splash = ({ navigation: { reset } }) => {
                     text={'모든 순간을'}
                     type={'Bold'}
                     size={font(25)}
+                    color={COLORS.white}
                 />
                 <CustomText
                     text={'기록 해보세요'}
                     type={'Bold'}
                     size={font(25)}
+                    color={COLORS.white}
                 />
             </MotiView>
             <BottomLoginView>
@@ -84,13 +87,13 @@ const Splash = ({ navigation: { reset } }) => {
                 }
             </BottomLoginView>
             <TopView>
-                <CustomCenterView>
+                <CustomCenterView backColor={COLORS.black}>
                     <MotiView style={{ width: "100%", height: "100%", justifyContent: "flex-end", alignItems: "center" }}>
                         <Image
                             source={IMAGE.main}
                             style={{
                                 width: "100%",
-                                height: "100%"
+                                height: "100%",
                             }}
                         />
                     </MotiView>
