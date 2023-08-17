@@ -141,13 +141,18 @@ const Splash = ({ navigation: { reset } }) => {
                         ))
                         : null
                 }
-                <AppleButton
-                    style={{ width: wt(350), height: ht(350) }}
-                    cornerRadius={10}
-                    buttonStyle={AppleButton.Style.WHITE}
-                    buttonType={AppleButton.Type.CONTINUE}
-                    onPress={() => onAppleButtonPress()}
-                />
+                {
+                    !checkUid
+                        ?
+                        <AppleButton
+                            style={{ width: wt(350), height: ht(350) }}
+                            cornerRadius={10}
+                            buttonStyle={AppleButton.Style.WHITE}
+                            buttonType={AppleButton.Type.CONTINUE}
+                            onPress={() => onAppleButtonPress()}
+                        />
+                        : null
+                }
             </BottomLoginView>
             <TopView>
                 <CustomCenterView backColor={COLORS.black}>
