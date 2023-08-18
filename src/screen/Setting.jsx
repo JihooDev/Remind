@@ -32,6 +32,8 @@ const Setting = ({ navigation: { push, reset } }) => {
         return push('FolderSetting');
       case "signout":
         return onLogOut();
+      case "withdrawal":
+        return withdrawalFuc();
     }
   }
 
@@ -56,6 +58,11 @@ const Setting = ({ navigation: { push, reset } }) => {
       setModalState(false);
       await AsyncStorage.setItem('pincode', pincode);
     }
+  }
+
+  // 회원 탈퇴 함수
+  const withdrawalFuc = async () => {
+
   }
 
   return (
