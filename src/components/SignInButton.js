@@ -2,7 +2,7 @@ import React from 'react'
 import { styled } from 'styled-components'
 import { ht, wt } from '../../responsive/responsive'
 import { COLORS } from '../asset/colors'
-import { Image } from 'react-native'
+import { Alert, Image } from 'react-native'
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { FIREBASE_API_KEY } from '@env';
@@ -34,10 +34,14 @@ const SignInButton = ({ data }) => {
                     const userCheck = await getUser(res.user.uid, setLoading);
 
                     if (userCheck.data) {
-                        await AsyncStorage.setItem('user', JSON.stringify({ uid: userCheck.data.uid, user_name: userCheck.data.user_name }));
-                        await AsyncStorage.setItem('pincode', userCheck.data.pin_code);
-                        setUserDataBox({ uid: userCheck.data.uid, user_name: userCheck.data.user_name });
-                        navigation.reset({ routes: [{ name: 'Home' }] });
+                        if (userCheck.data.active) {
+                            await AsyncStorage.setItem('user', JSON.stringify({ uid: userCheck.data.uid, user_name: userCheck.data.user_name }));
+                            await AsyncStorage.setItem('pincode', userCheck.data.pin_code);
+                            setUserDataBox({ uid: userCheck.data.uid, user_name: userCheck.data.user_name });
+                            navigation.reset({ routes: [{ name: 'Home' }] });
+                        } else {
+                            Alert.alert('이미 탈퇴 한 회원입니다', '복구 시 wlgn829@gmail.com 으로 메일을 남겨주세요.');
+                        }
                     } else {
                         navigation.reset({ routes: [{ name: 'SignUp' }] });
                     }

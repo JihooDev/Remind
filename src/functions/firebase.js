@@ -14,7 +14,8 @@ export const addUser = async (uid, user_name, pinCode) => {
             date_created: moment().unix(),
             folder: [],
             pin_code: pinCode,
-            plan: []
+            plan: [],
+            active: true
         })
 
         return {
@@ -440,4 +441,28 @@ export const resetNicName = async (value) => {
     }
 }
 
+// 유저 탈퇴 함수
+export const userOutFuc = async () => {
+    try {
+        const uid = await AsyncStorage.getItem('uid');
+
+        await user_list.where('uid', '==', uid).get().then((query) => {
+            query.forEach(doc => {
+                user_list.doc(uid).update({
+                    active: false
+                })
+            })
+        })
+
+        return {
+            status: true
+        }
+    } catch (error) {
+        console.error(error);
+        return {
+            status: false,
+            error_message: error
+        }
+    }
+}
 

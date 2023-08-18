@@ -12,6 +12,7 @@ import { useRecoilState } from 'recoil'
 import { pinCodeState } from '../recoil/control'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { userData } from '../recoil/user'
+import { userOutFuc } from '../functions/firebase'
 
 const Withdrawal = ({ navigation: { reset } }) => {
 
@@ -20,13 +21,21 @@ const Withdrawal = ({ navigation: { reset } }) => {
 
     // 핀코드 입력 이후 진행되야할 함수
     const actionWithdrawal = async () => {
-        await AsyncStorage.removeItem('uid');
-        await AsyncStorage.removeItem('user');
-        await AsyncStorage.removeItem('pincode');
 
-        setUserDataBox([]);
+        const postServer = await userOutFuc();
 
-        reset({ routes: [{ name: 'Splash' }] })
+        if (postServer['status']) {
+            setModalStatus(false);
+            setTimeout(async () => {
+                await AsyncStorage.removeItem('uid');
+                await AsyncStorage.removeItem('user');
+                await AsyncStorage.removeItem('pincode');
+
+                setUserDataBox([]);
+                reset({ routes: [{ name: 'Splash' }] })
+            }, 500)
+
+        }
     }
 
     return (
