@@ -17,6 +17,7 @@ import Planer from '../screen/Planer';
 import Setting from '../screen/Setting';
 import ChangeNicName from '../screen/ChangeNicName'
 import FolderSetting from '../screen/FolderSetting';
+import Withdrawal from '../screen/Withdrawal';
 
 const StackNavigation = () => {
 
@@ -53,6 +54,8 @@ const StackNavigation = () => {
                 <Stack.Screen name="Setting" component={Setting} />
                 {/* 폴더 관리 */}
                 <Stack.Screen name="FolderSetting" component={FolderSetting} />
+                {/* 회원 탈퇴 */}
+                <Stack.Screen name="Withdrawal" component={Withdrawal} />
                 {/* Bottom Navigation */}
                 {/* <Stack.Screen name="Home" component={BottomNavigation} /> */}
             </Stack.Navigator>

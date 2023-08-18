@@ -62,7 +62,7 @@ const Setting = ({ navigation: { push, reset } }) => {
 
   // 회원 탈퇴 함수
   const withdrawalFuc = async () => {
-
+    push('Withdrawal');
   }
 
   return (

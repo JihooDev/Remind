@@ -21,6 +21,12 @@ export const settingMenu = [
     },
     {
         id: 4,
+        title: "회원 탈퇴",
+        icon: ICON.withdrawal,
+        type: 'withdrawal'
+    },
+    {
+        id: 5,
         title: '로그아웃',
         icon: ICON.sign_out,
         type: 'signout'

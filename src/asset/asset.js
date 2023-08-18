@@ -19,6 +19,7 @@ export const ICON = {
     lock: require('./icon/lock.png'),
     sign_out: require('./icon/sign_out.png'),
     folder: require('./icon/folder.png'),
+    withdrawal: require('./icon/user_out.png'),
 }
 
 export const IMAGE = {
