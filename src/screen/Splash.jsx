@@ -5,7 +5,7 @@ import { font, ht, wt } from '../../responsive/responsive'
 import CustomCenterView from '../components/CustomCenterView'
 import CustomText from '../components/CustomText'
 import { MotiView } from 'moti'
-import { Image } from 'react-native'
+import { Alert, Image } from 'react-native'
 import { ICON, IMAGE } from '../asset/asset'
 import SignInButton from '../components/SignInButton'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
@@ -91,10 +91,14 @@ const Splash = ({ navigation: { reset } }) => {
                 const userCheck = await getUser(decodeData['sub'], setLoading);
 
                 if (userCheck.data) {
-                    await AsyncStorage.setItem('user', JSON.stringify({ uid: userCheck.data.uid, user_name: userCheck.data.user_name }));
-                    await AsyncStorage.setItem('pincode', userCheck.data.pin_code);
-                    setUserDataBox({ uid: userCheck.data.uid, user_name: userCheck.data.user_name });
-                    reset({ routes: [{ name: 'Home' }] });
+                    if (userCheck.data.active) {
+                        await AsyncStorage.setItem('user', JSON.stringify({ uid: userCheck.data.uid, user_name: userCheck.data.user_name }));
+                        await AsyncStorage.setItem('pincode', userCheck.data.pin_code);
+                        setUserDataBox({ uid: userCheck.data.uid, user_name: userCheck.data.user_name });
+                        reset({ routes: [{ name: 'Home' }] });
+                    } else {
+                        Alert.alert('이미 탈퇴 한 회원입니다', '복구 시 wlgn829@gmail.com 으로 메일을 남겨주세요.');
+                    }
                 } else {
                     reset({ routes: [{ name: 'SignUp' }] });
                 }
