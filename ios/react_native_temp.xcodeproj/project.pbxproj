@@ -514,7 +514,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = react_native_temp/react_native_tempDebug.entitlements;
-				CURRENT_PROJECT_VERSION = 23081801;
+				CURRENT_PROJECT_VERSION = 23082001;
 				DEVELOPMENT_TEAM = BD7FN8T4TL;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = react_native_temp/Info.plist;
@@ -523,7 +523,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -544,7 +544,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = react_native_temp/react_native_tempRelease.entitlements;
-				CURRENT_PROJECT_VERSION = 23081801;
+				CURRENT_PROJECT_VERSION = 23082001;
 				DEVELOPMENT_TEAM = BD7FN8T4TL;
 				INFOPLIST_FILE = react_native_temp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "리마인드";
@@ -552,7 +552,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
