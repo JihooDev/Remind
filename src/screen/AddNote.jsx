@@ -22,7 +22,6 @@ const AddNote = ({ navigation: { pop } }) => {
     const [memoName, setMemoName] = useState('');
     const [content, setContent] = useState('');
     const [pageData, setPageData] = useRecoilState(detailData);
-    const [keyboardHeight, setKeyboardHeight] = useState(0);
     const [keyboardShowState, setKeyboardShowState] = useState(false);
     const [fontType, setFontType] = useState('Medium');
     const [fontColor, setFontColor] = useState(COLORS.white);
@@ -41,20 +40,6 @@ const AddNote = ({ navigation: { pop } }) => {
             keyboardDidHideListener.remove();
         };
     }, []);
-
-    // 옵션을 변경하는 함수
-    const changeOption = type => {
-        switch (type) {
-            case "Bold":
-                setFontType('Bold')
-                return
-            case "Medium":
-                setFontType('Medium')
-                return;
-            case "Color":
-                return setColorList('Red')
-        }
-    }
 
     // 메모를 생성하는 함수
     const createMemo = async () => {

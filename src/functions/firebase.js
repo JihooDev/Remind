@@ -86,7 +86,6 @@ export const createMemoPost = async (folderId, uid, postData) => {
     try {
         await user_list.where('uid', '==', uid).get().then((query) => {
             query.forEach(doc => {
-                const documentId = doc.id;
                 const folderData = doc.data().folder;
 
 

@@ -22,6 +22,7 @@ const AddFolder = ({ navigation: { reset } }) => {
 
     const [folderName, setFolderName] = useState('');
     const [security, setSecurity] = useState(false);
+    const [shareState, setShareState] = useState(false);
     const [loading, setLoading] = useRecoilState(loadingControl);
 
     const createFolder = async () => {

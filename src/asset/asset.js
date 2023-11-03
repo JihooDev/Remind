@@ -20,6 +20,7 @@ export const ICON = {
     sign_out: require('./icon/sign_out.png'),
     folder: require('./icon/folder.png'),
     withdrawal: require('./icon/user_out.png'),
+    share: require('./icon/share.png')
 }
 
 export const IMAGE = {
