@@ -10,7 +10,7 @@ import CustomText from '../components/CustomText'
 import { MotiView } from 'moti'
 import { ht, wt } from '../../responsive/responsive'
 import { ICON } from '../asset/asset'
-import { FlatList, Image } from 'react-native'
+import { FlatList, Image, TouchableOpacity } from 'react-native'
 import MemoList from '../components/MemoList'
 import { deleteMemo, getRefleshMemoData } from '../functions/firebase'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -120,7 +120,17 @@ const FolderDetail = ({ navigation: { push } }) => {
             <CustomStatusBar
                 title={pageData?.name}
                 back={true}
-            />
+            >
+                <TouchableOpacity
+                    activeOpacity={.8}
+                >
+                    <Image
+                        source={ICON.share}
+                        style={{ width: wt(120) }}
+                        resizeMode='contain'
+                    />
+                </TouchableOpacity>
+            </CustomStatusBar>
             {
                 contentList.length > 0 &&
                 <FIlterBar

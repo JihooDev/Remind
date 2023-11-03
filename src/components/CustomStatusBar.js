@@ -11,7 +11,8 @@ const CustomStatusBar = ({
     back = false,
     title,
     type,
-    closeFuc
+    closeFuc,
+    children
 }) => {
 
     const navigation = useNavigation();
@@ -50,7 +51,9 @@ const CustomStatusBar = ({
                     color={COLORS.white}
                 />
             </CenterView>
-            <SideView></SideView>
+            <SideView>
+                {children}
+            </SideView>
         </HeaderView>
     )
 }
